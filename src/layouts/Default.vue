@@ -72,8 +72,7 @@ import {
     PieChartOutlined,
     UserOutlined,
     TeamOutlined,
-    FileOutlined,
-    HomeOutlined
+    FileOutlined
 } from '@ant-design/icons-vue';
 import { useRoute } from "vue-router";
 
