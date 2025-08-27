@@ -15,8 +15,10 @@
             </a-col>
             <a-col :span="24">
                 <a-table :columns="UserCol.getColumns()" :data-source="UserList" :pagination="false">
-                    <template #name="{ text }">
-                        <a>{{ text }}</a>
+                    <template #bodyCell="{ column, record }">
+                        <template v-if="column.key === 'role'">
+                            <a-tag :color="record.role === 'admin' ? 'blue' : 'green'">{{ record.role }}</a-tag>
+                        </template>
                     </template>
                 </a-table>
             </a-col>

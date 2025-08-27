@@ -17,5 +17,9 @@
     "update": "Update",
     "search": "Search",
     "created_at": "Created At",
-    "updated_at": "Updated At"
+    "updated_at": "Updated At",
+    "no": "No",
+    "yes": "Yes",
+    "No":"No",
+    "phone": "Phone"
 }

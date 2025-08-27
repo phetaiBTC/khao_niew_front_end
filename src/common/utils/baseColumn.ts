@@ -1,4 +1,5 @@
 import type { TableColumnsType } from "ant-design-vue"
+import { tI18n } from "./i18n"
 interface BaseColumn {
     dataIndex: string
     align?: "left" | "center" | "right"
@@ -11,7 +12,7 @@ interface BaseColumn {
 export class BaseColumns<T> {
     protected columns: TableColumnsType<T> = [
         {
-            title: "ລໍາດັບ",
+            title: tI18n("No"),
             key: "index",
             dataIndex: "index",
             align: "center",
@@ -24,7 +25,7 @@ export class BaseColumns<T> {
             this.columns.push(...initialColumns.map(col => ({
                 key: col.dataIndex,
                 dataIndex: col.dataIndex,
-                title: col.dataIndex,
+                title: tI18n(col.dataIndex),
                 align: col.align || "left",
                 width: col.width,
                 fixed: col.fixed,
@@ -56,7 +57,7 @@ export class BaseColumns<T> {
         this.columns.push({
             key: column.dataIndex,
             dataIndex: column.dataIndex,
-            title: column.dataIndex,
+            title: tI18n(column.dataIndex),
             align: column.align || "left",
             width: column.width,
             fixed: column.fixed,
