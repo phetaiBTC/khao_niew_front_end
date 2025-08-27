@@ -36,9 +36,9 @@
                 <a-breadcrumb style="margin: 10px 0">
                     <a-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
                         <router-link v-if="index < breadcrumbList.length - 1" :to="item.path">
-                            {{ item.title }}
+                            {{ $t(item.title.toLowerCase()) }}
                         </router-link>
-                        <span v-else>{{ item.title }}</span>
+                        <span v-else>{{ $t(item.title.toLowerCase()) }}</span>
                     </a-breadcrumb-item>
                 </a-breadcrumb>
                 <div :style="{ background: '#fff', borderRadius: '10px', boxShadow: '0 0 5px rgba(0, 0, 0, 0.2)' }">

@@ -1,12 +1,26 @@
 import type { TableColumnsType } from "ant-design-vue"
 import { tI18n } from "./i18n"
-interface BaseColumn {
+import dayjs from "dayjs"
+import type { BaseEntity } from "../interface/baseEntity"
+const laMonths = [
+    "ມັງກອນ", "ກຸມພາ", "ມີນາ", "ເມສາ", "ພຶດສະພາ",
+    "ມິຖຸນາ", "ກໍລະກົດ", "ສິງຫາ", "ກັນຍາ", "ຕຸລາ", "ພະຈິກ", "ທັນວາ"
+]
+
+function formatDayJs(date: string) {
+    const day = dayjs(date)
+    const weekday = ["ອາທິດ", "ຈັນ", "ອັງຄານ", "ພຸດ", "ພະຫັດ", "ສຸກ", "ເສົາ"][day.day()]
+    const month = laMonths[day.month()]
+    return `${weekday} ${day.date()} / ${day.month() + 1} ${month} / ປີ ${day.year()}`
+}
+interface BaseColumn<T = any> {
     dataIndex: string
     align?: "left" | "center" | "right"
     width?: number
     fixed?: "left" | "right"
     ellipsis?: boolean,
-    sorter?: boolean
+    sorter?: boolean | ((a: T, b: T) => number)
+    sortDirections?: ("ascend" | "descend")[]
 }
 
 export class BaseColumns<T> {
@@ -32,21 +46,26 @@ export class BaseColumns<T> {
                     width: col.width,
                     fixed: col.fixed,
                     ellipsis: col.ellipsis,
-                    sorter: col.sorter
+                    sorter: col.sorter,
+                    sortDirections: col.sortDirections
                 })),
                 {
                     title: "ສ້າງເມື່ອ",
                     key: "created_At",
                     dataIndex: "created_At",
                     align: "center",
-                    width: 150
+                    ellipsis: true,
+                    width: 280,
+                    customRender: ({ record }) => formatDayJs((record as BaseEntity).created_At)
                 },
                 {
                     title: "ແກ້ໄຂເມື່ອ",
                     key: "updated_At",
                     dataIndex: "updated_At",
                     align: "center",
-                    width: 150
+                    width: 280,
+                    customRender: ({ record }) => formatDayJs((record as BaseEntity).updated_At),
+                    ellipsis: true
                 },
                 {
                     title: "ການດຳເນີນການ",

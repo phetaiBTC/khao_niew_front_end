@@ -17,7 +17,7 @@
         <a-row :gutter="[16, 16]">
             <a-col :span="24">
                 <a-table :columns="UserCol.getColumns()" :data-source="UserList.data" :loading="loadingUser"
-                    :scroll="{ x: 1500, y: 300 }" :pagination="false">
+                    :scroll="{ x: 1500, y: 1900 }" :pagination="false" size="small">
                     <template #bodyCell="{ column, record }">
                         <template v-if="column.key === 'role'">
                             <a-tag :color="record.role === 'admin' ? 'blue' : 'green'"
@@ -67,10 +67,11 @@ import { DeleteOutlined, EditOutlined, PhoneOutlined, UserOutlined } from '@ant-
 import { onMounted, ref } from 'vue';
 import { useUser } from '../composables/useUser';
 import { BaseColumns } from '@/common/utils/baseColumn';
+import type { UserEntity } from '../type';
 
-const UserCol = new BaseColumns([
-    { dataIndex: 'username', ellipsis: true, fixed: 'left', sorter: true },
-    { dataIndex: 'email', sorter: true },
+const UserCol = new BaseColumns<UserEntity>([
+    { dataIndex: 'username', ellipsis: true, fixed: 'left', sorter: (a: UserEntity, b: UserEntity) => a.username.localeCompare(b.username) },
+    { dataIndex: 'email' },
     { dataIndex: 'phone' },
     { dataIndex: 'role' }
 ])
