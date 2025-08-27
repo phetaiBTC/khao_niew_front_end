@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-row>
+        <a-row :gutter="[16, 16]">
             <a-col :span="24">
                 <div class="flex justify-between">
                     <div class="flex items-center gap-2">
@@ -14,7 +14,7 @@
                 </div>
             </a-col>
             <a-col :span="24">
-                <a-table :columns="UserColumns" :data-source="UserList" :pagination="false">
+                <a-table :columns="UserCol.getColumns()" :data-source="UserList" :pagination="false">
                     <template #name="{ text }">
                         <a>{{ text }}</a>
                     </template>
@@ -27,13 +27,21 @@
 <script setup lang="ts">
 import { UserOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from 'vue';
-import { UserColumns } from '../type';
 import { useUser } from '../composables/useUser';
+import { BaseColumns } from '@/common/utils/baseColumn';
+
+const UserCol = new BaseColumns([
+    { dataIndex: 'username' },
+    { dataIndex: 'email' },
+    { dataIndex: 'phone' },
+    { dataIndex: 'role' }
+])
 const { UserList, fetchUserList } = useUser()
 
 const search = ref<string>('');
 onMounted(async () => {
     await fetchUserList();
+    console.log(UserCol);
 })
 </script>
 
