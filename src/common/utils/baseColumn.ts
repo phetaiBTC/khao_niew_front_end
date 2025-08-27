@@ -17,34 +17,46 @@ export class BaseColumns<T> {
             dataIndex: "index",
             align: "center",
             width: 70,
+            fixed: "left",
             customRender: ({ index }) => index + 1
         }
     ]
     constructor(initialColumns?: BaseColumn[]) {
         if (initialColumns) {
-            this.columns.push(...initialColumns.map(col => ({
-                key: col.dataIndex,
-                dataIndex: col.dataIndex,
-                title: tI18n(col.dataIndex),
-                align: col.align || "left",
-                width: col.width,
-                fixed: col.fixed,
-                ellipsis: col.ellipsis,
-                sorter: col.sorter
-            })), {
-                title: "ສ້າງເມື່ອ",
-                key: "created_At",
-                dataIndex: "created_At",
-                align: "center",
-                width: 150
-            },
+            this.columns.push(
+                ...initialColumns.map(col => ({
+                    key: col.dataIndex,
+                    dataIndex: col.dataIndex,
+                    title: tI18n(col.dataIndex),
+                    align: col.align || "left",
+                    width: col.width,
+                    fixed: col.fixed,
+                    ellipsis: col.ellipsis,
+                    sorter: col.sorter
+                })),
+                {
+                    title: "ສ້າງເມື່ອ",
+                    key: "created_At",
+                    dataIndex: "created_At",
+                    align: "center",
+                    width: 150
+                },
                 {
                     title: "ແກ້ໄຂເມື່ອ",
                     key: "updated_At",
                     dataIndex: "updated_At",
                     align: "center",
                     width: 150
-                })
+                },
+                {
+                    title: "ການດຳເນີນການ",
+                    key: "actions",
+                    dataIndex: "actions",
+                    align: "center",
+                    width: 190,
+                    fixed: "right"
+                }
+            )
 
         }
     }

@@ -9,45 +9,31 @@
                 <h1 v-show="!collapsed" class="text-center text-white text-2xl">Khao Niew</h1>
             </div>
             <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-                <a-menu-item key="1">
-                    <pie-chart-outlined />
-                    <span>{{ $t('dashboard') }}</span>
-                </a-menu-item>
-                <a-menu-item key="2">
-                    <user-outlined />
-                    <span><router-link :to="{ name: 'user' }">{{ $t('user') }}</router-link></span>
-                </a-menu-item>
-                <a-sub-menu key="sub1">
-                    <template #title>
+                <template v-for="item in menuItems" :key="item.key">
+                    <a-sub-menu v-if="item.children" :key="item.key">
+                        <template #title>
+                            <span>
+                                <component :is="item.icon" />
+                                <span>{{ item.label }}</span>
+                            </span>
+                        </template>
+                        <a-menu-item v-for="child in item.children" :key="child.key">
+                            <router-link :to="child.to">{{ child.label }}</router-link>
+                        </a-menu-item>
+                    </a-sub-menu>
+                    <a-menu-item v-else :key="item.key + '-' + item.label">
+                        <component :is="item.icon" />
                         <span>
-                            <user-outlined />
-                            <span>User</span>
+                            <router-link :to="item.to">{{ item.label }}</router-link>
                         </span>
-                    </template>
-                    <a-menu-item key="3">Tom</a-menu-item>
-                    <a-menu-item key="4">Bill</a-menu-item>
-                    <a-menu-item key="5">Alex</a-menu-item>
-                </a-sub-menu>
-                <a-sub-menu key="sub2">
-                    <template #title>
-                        <span>
-                            <team-outlined />
-                            <span>Team</span>
-                        </span>
-                    </template>
-                    <a-menu-item key="6">Team 1</a-menu-item>
-                    <a-menu-item key="8">Team 2</a-menu-item>
-                </a-sub-menu>
-                <a-menu-item key="9">
-                    <file-outlined />
-                    <span>File</span>
-                </a-menu-item>
+                    </a-menu-item>
+                </template>
             </a-menu>
         </a-layout-sider>
         <a-layout class="min-h-screen">
             <a-layout-header style="background: #fff; padding: 0" />
             <a-layout-content style="margin: 0 16px">
-                <a-breadcrumb style="margin: 10px 0" >
+                <a-breadcrumb style="margin: 10px 0">
                     <a-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
                         <router-link v-if="index < breadcrumbList.length - 1" :to="item.path">
                             {{ item.title }}
@@ -55,8 +41,7 @@
                         <span v-else>{{ item.title }}</span>
                     </a-breadcrumb-item>
                 </a-breadcrumb>
-                <div
-                    :style="{ padding: '15px', background: '#fff', minHeight: '90%', borderRadius: '10px', boxShadow: '0 0 5px rgba(0, 0, 0, 0.2)' }">
+                <div :style="{ background: '#fff', borderRadius: '10px', boxShadow: '0 0 5px rgba(0, 0, 0, 0.2)' }">
                     <router-view></router-view>
                 </div>
             </a-layout-content>
@@ -68,15 +53,10 @@
     </a-layout>
 </template>
 <script lang="ts" setup>
-import {
-    PieChartOutlined,
-    UserOutlined,
-    TeamOutlined,
-    FileOutlined
-} from '@ant-design/icons-vue';
-import { useRoute } from "vue-router";
 
+import { useRoute } from "vue-router";
 import { computed, ref } from 'vue';
+import { menuItems } from "./menuItem";
 const route = useRoute();
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
