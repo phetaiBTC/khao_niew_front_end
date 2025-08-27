@@ -3,6 +3,7 @@ export const AuthRouter = [
     {
         path: '/login',
         name: 'Login',
-        component: LoginPage
+        component: LoginPage,
+        meta: { title: 'Login', public_auth: true }
     }
 ]

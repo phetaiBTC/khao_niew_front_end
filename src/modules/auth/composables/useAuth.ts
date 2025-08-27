@@ -2,13 +2,15 @@ import { clientApi } from "@/plugins/axiosPlugin"
 import { message } from "ant-design-vue"
 import { useAuthStore } from "../store/useAuthStore"
 import { storeToRefs } from "pinia"
-import { router } from "@/router"
+import router from "@/router"
 export const useAuth = () => {
+    const authStore = useAuthStore()
     const { loadingAuth } = storeToRefs(useAuthStore())
     const Login = async (fromState: { email: string, password: string }): Promise<void> => {
         loadingAuth.value = true
         try {
             const { data } = await clientApi.post('/auth/login', fromState)
+            authStore.login(data.access_token)
             localStorage.setItem('token', data.access_token)
             message.success("ລ໊ອກອິນສຳເລັດ")
             await router.push({ name: "user" })

@@ -3,6 +3,7 @@ import { UserRouter } from "@/modules/users/router"
 import { createRouter, createWebHistory } from "vue-router"
 import DefaultLayout from "@/layouts/Default.vue"
 import AuthorizedPage from "@/components/Authorized.vue"
+import { authGuard } from "./guard/authGuard"
 const routes = [
     {
         path: '/',
@@ -22,7 +23,11 @@ const routes = [
 
 ]
 
-export const router = createRouter({
+const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes
 })
+
+router.beforeEach(authGuard)
+
+export default router
