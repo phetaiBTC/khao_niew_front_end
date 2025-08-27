@@ -1,0 +1,21 @@
+{
+    "login": "Login",
+    "username": "Username",
+    "password": "Password",
+    "user": "User",
+    "logout": "Logout",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "active": "Active",
+    "actions": "Actions",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "update": "Update",
+    "search": "Search",
+    "created_at": "Created At",
+    "updated_at": "Updated At"
+}
