@@ -22,7 +22,7 @@
 import BaseCRUD from '@/components/BaseCRUD/BaseCRUD.vue';
 import { PhoneOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from 'vue';
-import ManageUser from '../components/ManageUser.vue';
+import ManageUser from '../components/manageUser.vue';
 import { useUser } from '../composables/useUser';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { UserEntity } from '../type';
