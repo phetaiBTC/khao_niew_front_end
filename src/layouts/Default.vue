@@ -9,19 +9,19 @@
                 <h1 v-show="!collapsed" class="text-center text-white text-2xl">Khao Niew</h1>
             </div>
             <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-                <template v-for="item in menuItems" :key="item.key">
-                    <a-sub-menu v-if="item.children" :key="item.key">
+                <template v-for="item in menuItems" :key="item.label">
+                    <a-sub-menu v-if="item.children" :key="item.label">
                         <template #title>
                             <span>
                                 <component :is="item.icon" />
                                 <span>{{ $t(item.label.toLowerCase()) }}</span>
                             </span>
                         </template>
-                        <a-menu-item v-for="child in item.children" :key="child.key">
+                        <a-menu-item v-for="child in item.children" :key="child.label">
                             <router-link :to="child.to">{{ $t(child.label.toLowerCase()) }}</router-link>
                         </a-menu-item>
                     </a-sub-menu>
-                    <a-menu-item v-else :key="item.key + '-' + item.label">
+                    <a-menu-item v-else :key="item.label + '-' + item.label">
                         <component :is="item.icon" />
                         <span>
                             <router-link :to="item.to">{{ $t(item.label.toLowerCase()) }}</router-link>
