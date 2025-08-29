@@ -7,9 +7,9 @@
                     <img src="/src/assets/images/logoKhaoNiew.png" alt="" srcset="" class="w-35 mx-auto">
                 </div>
                 <FormInputString v-model="formState.email" label="email" placeholder="example@gmail.com"
-                    :prefix="UserOutlined" autocomplete="email"/>
+                    :prefix="UserOutlined" autocomplete="email" />
                 <FormInputString v-model="formState.password" label="password" placeholder="*******"
-                    :prefix="LockOutlined" :type="'password'" autocomplete="current-password"/>
+                    :prefix="LockOutlined" :type="'password'" autocomplete="current-password" />
                 <a-form-item>
                     <a-button :loading="loadingAuth" :disabled="disabled" type="primary" html-type="submit"
                         class="login-form-button w-full">
@@ -35,6 +35,7 @@ const formState = reactive<IFromLogin>({
 const disabled = computed(() => {
     return !(formState.email && formState.password);
 });
+
 </script>
 <style scoped>
 #components-form-demo-normal-login .login-form {

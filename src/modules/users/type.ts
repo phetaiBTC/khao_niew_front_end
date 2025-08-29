@@ -7,3 +7,11 @@ export interface UserEntity {
     created_At: string,
     updated_At: string
 }
+
+export interface IUser {
+    id?: number | null,
+    username: string,
+    email: string,
+    phone: string
+    password: string
+}

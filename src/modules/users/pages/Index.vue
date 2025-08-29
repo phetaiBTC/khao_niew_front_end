@@ -10,7 +10,8 @@
             <div class="flex justify-between">
                 <div class="flex items-center gap-2">
                     <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch" />
-                    <a-button type="primary">{{ $t('add') + ' ' + $t('user') }}</a-button>
+                    <a-button type="primary" @click="() => { open = true; userRecord = null }">{{ $t('add') + ' ' +
+                        $t('user') }}</a-button>
                 </div>
             </div>
         </template>
@@ -31,18 +32,21 @@
                         </template>
                         <template v-else-if="column.key === 'actions'">
                             <div class="flex gap-2 items-center justify-center">
-                                <a-button type="primary" @click="() => { }">
+                                <a-button type="primary" @click="() => { open = true; userRecord = record }">
                                     <template #icon>
                                         <EditOutlined />
                                     </template>
                                     {{ $t('edit') }}
                                 </a-button>
-                                <a-button type="primary" danger ghost @click="() => { }">
-                                    <div>
-                                        <DeleteOutlined />
-                                        {{ $t('delete') }}
-                                    </div>
-                                </a-button>
+                                <a-popconfirm :title="$t('Are_you_sure_delete_this')" @confirm="deleteUser(record.id)"
+                                    :ok-text="$t('yes')" :cancel-text="$t('cancel')">
+                                    <a-button type="primary" danger ghost>
+                                        <div>
+                                            <DeleteOutlined />
+                                            {{ $t('delete') }}
+                                        </div>
+                                    </a-button>
+                                </a-popconfirm>
                             </div>
                         </template>
                     </template>
@@ -53,29 +57,32 @@
                     <a-pagination v-model:current="UserList.pagination.page"
                         v-model:pageSize="UserList.pagination.per_page" :total="UserList.pagination.total"
                         show-size-changer show-quick-jumper :show-total="(total: number) => `ຜູ້ໃຊ້ທັງຫມົດ ${total}`"
-                        :page-size-options="['5', '10', '20', '30']" @change="onQuery">
-
+                        :page-size-options="['6', '10', '20', '30']" @change="onQuery">
                     </a-pagination>
                 </div>
             </a-col>
         </a-row>
+        <manage-user :open="open" @is-open="open = $event" :data="userRecord" />
     </a-card>
 </template>
 
 <script setup lang="ts">
 import { DeleteOutlined, EditOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from 'vue';
+import manageUser from '../components/manageUser.vue';
 import { useUser } from '../composables/useUser';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { UserEntity } from '../type';
 
+const open = ref<boolean>(false)
+const userRecord = ref<UserEntity | null>(null)
 const UserCol = new BaseColumns<UserEntity>([
     { dataIndex: 'username', ellipsis: true, fixed: 'left', sorter: (a: UserEntity, b: UserEntity) => a.username.localeCompare(b.username) },
     { dataIndex: 'email' },
     { dataIndex: 'phone' },
     { dataIndex: 'role' }
 ])
-const { UserList, fetchUserList, loadingUser, setQuery } = useUser()
+const { UserList, loadingUser, fetchUserList, setQuery, deleteUser } = useUser()
 const search = ref<string>('');
 const onSearch = async () => {
     setQuery({
@@ -95,7 +102,6 @@ const onQuery = async (page?: number, pageSize?: number) => {
     })
     await fetchUserList()
 }
-
 onMounted(async () => {
     await fetchUserList();
     console.log(UserCol);

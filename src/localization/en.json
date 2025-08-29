@@ -20,7 +20,10 @@
     "updated_at": "Updated At",
     "no": "No",
     "yes": "Yes",
-    "No":"No",
+    "No": "No",
     "phone": "Phone",
-    "home":"Home"
+    "home": "Home",
+    "Are_you_sure_delete_this": "Are you sure delete",
+    "create": "Create",
+    "information":"Information"
 }
