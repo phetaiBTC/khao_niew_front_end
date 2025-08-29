@@ -80,7 +80,7 @@ export class BaseColumns<T> {
         }
     }
 
-    getColumns(): TableColumnsType<T> {
+    getColumns(): TableColumnsType {
         return this.columns
     }
 

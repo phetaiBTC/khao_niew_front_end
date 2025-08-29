@@ -14,17 +14,17 @@
                         <template #title>
                             <span>
                                 <component :is="item.icon" />
-                                <span>{{ item.label }}</span>
+                                <span>{{ $t(item.label.toLowerCase()) }}</span>
                             </span>
                         </template>
                         <a-menu-item v-for="child in item.children" :key="child.key">
-                            <router-link :to="child.to">{{ child.label }}</router-link>
+                            <router-link :to="child.to">{{ $t(child.label.toLowerCase()) }}</router-link>
                         </a-menu-item>
                     </a-sub-menu>
                     <a-menu-item v-else :key="item.key + '-' + item.label">
                         <component :is="item.icon" />
                         <span>
-                            <router-link :to="item.to">{{ item.label }}</router-link>
+                            <router-link :to="item.to">{{ $t(item.label.toLowerCase()) }}</router-link>
                         </span>
                     </a-menu-item>
                 </template>

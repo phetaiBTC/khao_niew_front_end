@@ -1,5 +1,6 @@
+import type { RouteRecordRaw } from 'vue-router'
 import UserIndex from './pages/Index.vue'
-export const UserRouter = [
+export const UserRouter: RouteRecordRaw[] = [
     {
         path: '/user',
         name: 'user',

@@ -29,7 +29,7 @@
                     <div class="flex justify-end gap-2">
                         <a-button @click="onClose">{{ $t('cancel') }}</a-button>
                         <a-button type="primary" htmlType="submit" :loading="loadingUser">{{ $t('save')
-                        }}</a-button>
+                            }}</a-button>
                     </div>
                 </a-col>
             </a-row>

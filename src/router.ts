@@ -4,13 +4,15 @@ import { createRouter, createWebHistory } from "vue-router"
 import DefaultLayout from "@/layouts/Default.vue"
 import AuthorizedPage from "@/components/Authorized.vue"
 import { authGuard } from "./guard/authGuard"
+import { CompanyRouter } from "./modules/company/router"
 const routes = [
     {
         path: '/',
         component: DefaultLayout,
         meta: { title: 'Home' },
         children: [
-            ...UserRouter
+            ...UserRouter,
+            ...CompanyRouter
         ]
     },
     {

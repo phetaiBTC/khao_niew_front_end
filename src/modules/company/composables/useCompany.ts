@@ -1,21 +1,22 @@
 import { clientApi } from "@/plugins/axiosPlugin"
 import { message } from "ant-design-vue"
-import { useUserStore } from "../store/useUserStore"
+import { useCompanyStore } from "../store/useCompanyStore"
 import { storeToRefs } from "pinia"
 import type { Params } from "@/common/interface/paramsPaginate"
-import type { IUser } from "../type"
-export const useUser = () => {
-    const { UserList, loadingUser, params } = storeToRefs(useUserStore())
-    const fetchUserList = async () => {
-        loadingUser.value = true
+import type { ICompany } from "../type"
+
+export const useCompany = () => {
+    const { CompanyList, loadingCompany, params } = storeToRefs(useCompanyStore())
+    const fetchCompanyList = async () => {
+        loadingCompany.value = true
         try {
-            const { data } = await clientApi.get('/users', { params: params.value })
-            UserList.value = data
+            const { data } = await clientApi.get('/companies', { params: params.value })
+            CompanyList.value = data
         } catch (error: any) {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
         finally {
-            loadingUser.value = false
+            loadingCompany.value = false
         }
     }
     const setQuery = async (newParams: Params) => {
@@ -23,46 +24,46 @@ export const useUser = () => {
         params.value.per_page = newParams.per_page ?? params.value.per_page
         params.value.search = newParams.search ?? params.value.search
         params.value.type = newParams.type ?? params.value.type
-        await fetchUserList()
+        await fetchCompanyList()
     }
 
-    const deleteUser = async (id: number) => {
+    const deleteCompany = async (id: number) => {
         try {
-            const { data } = await clientApi.delete(`/users/${id}`)
-            await fetchUserList()
+            const { data } = await clientApi.delete(`/companies/${id}`)
+            await fetchCompanyList()
             message.success(data.message || "ລົບຂໍ້ມູນສໍາເລັດ")
 
         } catch (error: any) {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
     }
-    const createUser = async (formData: IUser) => {
+    const createUser = async (formData: ICompany) => {
         try {
             const { id, ...rest } = formData
-            const { data } = await clientApi.post('/users', rest)
-            await fetchUserList()
+            const { data } = await clientApi.post('/companies', rest)
+            await fetchCompanyList()
             message.success(data.message || "ບັນທຶກຂໍ້ມູນສໍາເລັດ")
         } catch (error: any) {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
     }
-    const updateUser = async (formData: IUser) => {
+    const updateCompany = async (formData: ICompany) => {
         try {
-            const { password, id, ...rest } = formData
-            const { data } = await clientApi.patch(`/users/${formData.id}`, rest)
-            await fetchUserList()
+            const { user, id, ...rest } = formData
+            const { data } = await clientApi.patch(`/companies/${formData.id}`, rest)
+            await fetchCompanyList()
             message.success(data.message || "ແກ້ໄຂຂໍ້ມູນສໍາເລັດ")
         } catch (error: any) {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
     }
     return {
-        UserList,
-        loadingUser,
-        fetchUserList,
+        CompanyList,
+        loadingCompany,
+        fetchCompanyList,
         setQuery,
-        deleteUser,
+        deleteCompany,
         createUser,
-        updateUser
+        updateCompany
     }
 }

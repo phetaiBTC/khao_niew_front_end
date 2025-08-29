@@ -2,7 +2,8 @@ import {
     PieChartOutlined,
     UserOutlined,
     TeamOutlined,
-    FileOutlined
+    FileOutlined,
+    BankOutlined
 } from '@ant-design/icons-vue';
 export const menuItems = [
     {
@@ -13,9 +14,15 @@ export const menuItems = [
     },
     {
         key: '2',
-        label: 'User',
+        label: 'user',
         icon: UserOutlined,
         to: { name: 'user' }
+    },
+    {
+        key: '2',
+        label: 'company',
+        icon: BankOutlined,
+        to: { name: 'company' }
     },
     {
         key: 'sub1',
