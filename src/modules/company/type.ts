@@ -10,7 +10,7 @@ export interface CompanyEntity {
 }
 
 export interface ICompany {
-    id?: number
+    id?: number | null
     name: string
     contact: string
     user: IUser

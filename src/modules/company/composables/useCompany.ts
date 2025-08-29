@@ -37,7 +37,7 @@ export const useCompany = () => {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
     }
-    const createUser = async (formData: ICompany) => {
+    const createCompany = async (formData: ICompany) => {
         try {
             const { id, ...rest } = formData
             const { data } = await clientApi.post('/companies', rest)
@@ -63,7 +63,7 @@ export const useCompany = () => {
         fetchCompanyList,
         setQuery,
         deleteCompany,
-        createUser,
+        createCompany,
         updateCompany
     }
 }
