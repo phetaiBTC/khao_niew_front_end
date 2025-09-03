@@ -1,11 +1,11 @@
-export interface UserEntity {
+import type { BaseEntity } from "@/common/interface/baseEntity"
+
+export interface UserEntity extends BaseEntity {
     id?: number,
     username: string,
     email: string,
     phone: string,
     role: 'admin' | 'company',
-    created_At: string,
-    updated_At: string
 }
 
 export interface IUser {

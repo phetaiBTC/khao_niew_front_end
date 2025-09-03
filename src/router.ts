@@ -5,6 +5,8 @@ import DefaultLayout from "@/layouts/Default.vue"
 import AuthorizedPage from "@/components/Authorized.vue"
 import { authGuard } from "./guard/authGuard"
 import { CompanyRouter } from "./modules/company/router"
+import { EntertainmentRouter } from "./modules/entertainment/router"
+import { ConcertRouter } from "./modules/concert/router"
 const routes = [
     {
         path: '/',
@@ -12,7 +14,9 @@ const routes = [
         meta: { title: 'Home' },
         children: [
             ...UserRouter,
-            ...CompanyRouter
+            ...CompanyRouter,
+            ...EntertainmentRouter,
+            ...ConcertRouter
         ]
     },
     {

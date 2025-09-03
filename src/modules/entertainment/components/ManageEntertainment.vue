@@ -1,0 +1,103 @@
+<template>
+    <a-modal v-model:open="localOpen" :footer="null" @ok="onClose" @cancel="onClose" :width="'400px'" centered>
+        <template #title>
+            <h1 class="text-xl text-center" style="font-weight: 900;">{{ $t('add') + ' ' + $t('entertainment') }}</h1>
+        </template>
+        <a-form layout="vertical" ref="formRef" :model="formState" :rules="rulesEntertainment" @finish="onSumit">
+            <a-row>
+                <a-divider
+                    style="margin: 0 !important; color: var(--ant-primary-color); border-color: var(--ant-primary-color);">
+                    {{ $t('entertainment') }}
+                </a-divider>
+                <a-col :span="24">
+                    <FormInputString label="title" v-model="formState.title" :placeholder="$t('title')"
+                        :prefix="BulbOutlined" />
+                </a-col>
+                <a-col :span="24">
+                    <FormInputString label="description" v-model="formState.description" placeholder="..."
+                        :prefix="UnorderedListOutlined" />
+                </a-col>
+                <a-col :span="24">
+                    <a-upload v-model:file-list="fileList" name="file" :custom-request="handleUpload">
+                        <a-button>
+                            <UploadOutlined /> เลือกไฟล์
+                        </a-button>
+                    </a-upload>
+                </a-col>
+                <a-col :span="24">
+                    <div class="flex justify-end gap-2">
+                        <a-button @click="onClose">{{ $t('cancel') }}</a-button>
+                        <a-button type="primary" htmlType="submit" :loading="loadingEntertainment">{{ $t('save')
+                            }}</a-button>
+                    </div>
+                </a-col>
+            </a-row>
+        </a-form>
+    </a-modal>
+</template>
+
+<script setup lang="ts">
+import FormInputString from '@/components/FormInputString.vue';
+import { BulbOutlined, UnorderedListOutlined, UploadOutlined } from '@ant-design/icons-vue';
+import { computed, reactive, ref, watch } from 'vue';
+import { rulesEntertainment } from '../rules';
+import type { IEntertainment, EntertainmentEntity } from '../types';
+import { useEntertainment } from '../composables/useEntertainment';
+import { useImage } from '@/modules/images/composables/useImage';
+const fileList = ref([]);
+const { createImage } = useImage()
+const { createEntertainment, updateEntertainment, loadingEntertainment } = useEntertainment()
+const formRef = ref()
+const props = defineProps<{
+    open: boolean,
+    data: EntertainmentEntity | null
+}>()
+const emit = defineEmits(['isOpen'])
+
+const handleUpload = async (options: any) => {
+    try {
+        await createImage({ file: options.file })
+        options.onSuccess()
+    } catch (error) {
+        console.error(error)
+        options.onError()
+    }
+};
+
+const formState = reactive<IEntertainment>({
+    id: null,
+    title: '',
+    description: '',
+    imageIds: null
+})
+const localOpen = computed({
+    get: () => props.open,
+    set: (val) => emit('isOpen', val)
+})
+watch(
+    () => props.data,
+    (value) => {
+        if (value) {
+            formState.id = value.id
+            formState.description = value.description
+            formState.title = value.title
+            formState.imageIds = null
+        }
+    }
+)
+const onClose = () => {
+    formRef.value?.resetFields()
+    emit('isOpen', false)
+    fileList.value = []
+}
+const onSumit = async () => {
+    if (props.data) {
+        await updateEntertainment(formState)
+    } else {
+        await createEntertainment(formState)
+    }
+    onClose()
+}
+</script>
+
+<style scoped></style>

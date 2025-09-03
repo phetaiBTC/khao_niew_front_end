@@ -1,12 +1,10 @@
+import type { BaseEntity } from "@/common/interface/baseEntity"
 import type { IUser, UserEntity } from "../users/type"
-
-export interface CompanyEntity {
+export interface CompanyEntity extends BaseEntity {
     id?: number
     name: string
     user: UserEntity[]
     contact: string
-    created_At: string
-    updated_At: string
 }
 
 export interface ICompany {

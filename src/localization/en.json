@@ -27,5 +27,20 @@
     "create": "Create",
     "information":"Information",
     "company":"Company",
-    "contact":"Contact"
+    "contact":"Contact",
+    "entertainment":"Entertainment",
+    "description":"Description",
+    "title":"Title",
+    "concert":"Concert",
+    "dashboard":"Dashboard",
+    "startTime":"Start Time",
+    "endTime":"End Time",
+    "price":"Price",
+    "limit":"Limit",
+    "date":"Date",
+    "status":"Status",
+    "venue":"Venue",
+    "entertainments":"Entertainments",
+    "seats":"Seats",
+    "Show_time":"Show time"
 }
