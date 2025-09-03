@@ -42,5 +42,8 @@
     "venue":"Venue",
     "entertainments":"Entertainments",
     "seats":"Seats",
-    "Show_time":"Show time"
+    "Show_time":"Show time",
+    "address":"Address",
+    "latitude":"Latitude",
+    "longitude":"Longitude"
 }

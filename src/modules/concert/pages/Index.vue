@@ -42,7 +42,9 @@
                 </div>
             </template>
             <template v-if="column.key === 'Show_time'">
-                <h1 style="margin: 0;">{{ record.startTime + " - " + record.endTime }}</h1>
+                <h1 style="margin: 0;">{{ record.startTime }}
+                    <ArrowRightOutlined style="color: green;" /> {{ record.endTime }}
+                </h1>
             </template>
             <template v-if="column.key === 'entertainments'">
                 <a-tag v-for="r in record.entertainments" :key="r.id" color="blue">
@@ -51,14 +53,14 @@
             </template>
         </template>
     </BaseCRUD>
-    <!-- <manageCompany :open="open" :data="companyRecord" @isOpen="open = $event"></manageCompany> -->
+    <manageConcert :open="open" :data="companyRecord" @isOpen="open = $event"></manageConcert>
 </template>
 
 <script setup lang="ts">
 import BaseCRUD from '@/components/BaseCRUD/BaseCRUD.vue';
-import { UserOutlined, DollarCircleOutlined, AimOutlined, PictureOutlined } from '@ant-design/icons-vue';
+import { UserOutlined, DollarCircleOutlined, AimOutlined, PictureOutlined, ArrowRightOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from 'vue';
-// import manageCompany from '../components/ManageEntertainment.vue';
+import manageConcert from '../components/ManageConcert.vue';
 import { useConcert } from '../composables/useConcert';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { ConcertEntity } from '../types/index';
@@ -67,7 +69,7 @@ const { setQuery, ConcertList, loadingConcert, deleteConcert, fetchConcertList }
 const open = ref<boolean>(false)
 const companyRecord = ref<ConcertEntity | null>(null)
 const onEdit = (record: ConcertEntity) => {
-    console.log(record)
+    // console.log(record)
     companyRecord.value = record
     open.value = true
 }

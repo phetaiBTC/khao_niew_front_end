@@ -7,6 +7,7 @@ import { authGuard } from "./guard/authGuard"
 import { CompanyRouter } from "./modules/company/router"
 import { EntertainmentRouter } from "./modules/entertainment/router"
 import { ConcertRouter } from "./modules/concert/router"
+import { VenueRouter } from "./modules/venue/router"
 const routes = [
     {
         path: '/',
@@ -16,7 +17,8 @@ const routes = [
             ...UserRouter,
             ...CompanyRouter,
             ...EntertainmentRouter,
-            ...ConcertRouter
+            ...ConcertRouter,
+            ...VenueRouter
         ]
     },
     {

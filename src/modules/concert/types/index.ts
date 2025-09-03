@@ -1,17 +1,18 @@
 import type { BaseEntity } from "@/common/interface/baseEntity"
 import type { EntertainmentEntity } from "@/modules/entertainment/types"
 import type { venueEntity } from "@/modules/venue/types"
+import type { Dayjs } from "dayjs"
 
 export interface IConcert {
     id?: number | null
-    startTime: string
-    endTime: string
-    price: number
+    startTime: Dayjs | string
+    endTime: Dayjs | string
+    price: number | null
     limit: number
-    date: string
+    date: Dayjs | string
     status: string
-    venueId: number
-    entertainmentIds: number[]
+    venueId: number | null
+    entertainmentIds: number[] | null
 }
 export interface ConcertEntity extends BaseEntity {
     id?: number

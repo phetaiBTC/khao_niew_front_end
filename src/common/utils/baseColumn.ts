@@ -55,7 +55,7 @@ export class BaseColumns<T> {
                     dataIndex: "created_At",
                     align: "center",
                     ellipsis: true,
-                    width: 280,
+                    // width: 280,
                     customRender: ({ record }) => formatDayJs((record as BaseEntity).created_At)
                 },
                 {
@@ -63,7 +63,7 @@ export class BaseColumns<T> {
                     key: "updated_At",
                     dataIndex: "updated_At",
                     align: "center",
-                    width: 280,
+                    // width: 280,
                     customRender: ({ record }) => formatDayJs((record as BaseEntity).updated_At),
                     ellipsis: true
                 },

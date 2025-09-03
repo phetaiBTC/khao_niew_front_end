@@ -3,11 +3,11 @@ import { message } from "ant-design-vue"
 import { useEntertainmentStore } from "../store/useEntertainmentStore"
 import { storeToRefs } from "pinia"
 import type { Params } from "@/common/interface/paramsPaginate"
-import type { IEntertainment } from "../types/index"
+import type { EntertainmentEntity, IEntertainment } from "../types/index"
 import { useImage } from "@/modules/images/composables/useImage"
 export const useEntertainment = () => {
     const { imagesList } = useImage()
-    const { EntertainmentList, loadingEntertainment, params } = storeToRefs(useEntertainmentStore())
+    const { EntertainmentList, loadingEntertainment, params, optionEntertainment } = storeToRefs(useEntertainmentStore())
     const fetchEntertainmentList = async () => {
         loadingEntertainment.value = true
         try {
@@ -61,6 +61,10 @@ export const useEntertainment = () => {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
     }
+    const getOptionsEntertainment = async () => {
+        const { data } = await clientApi.get('/entertainments', { params: { search: '', type: 'all' } })
+        optionEntertainment.value = data.data.map((item: EntertainmentEntity) => ({ value: item.id, label: item.title }))
+    }
     return {
         EntertainmentList,
         loadingEntertainment,
@@ -68,6 +72,8 @@ export const useEntertainment = () => {
         setQuery,
         deleteEntertainment,
         createEntertainment,
-        updateEntertainment
+        updateEntertainment,
+        getOptionsEntertainment,
+        optionEntertainment
     }
 }
