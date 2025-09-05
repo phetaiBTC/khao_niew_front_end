@@ -3,6 +3,7 @@ export interface Params {
     per_page?: number;
     search?: string;
     type?: 'all' | 'paginate';
+    order_by?: 'ASC' | 'DESC'
 }
 
 export interface PaginateEntity<T> {

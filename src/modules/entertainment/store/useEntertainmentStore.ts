@@ -6,7 +6,8 @@ import type { SelectProps } from "ant-design-vue";
 export const useEntertainmentStore = defineStore("entertainmentStore", () => {
     const loadingEntertainment = ref<boolean>(false)
     const EntertainmentList = ref<PaginateEntity<EntertainmentEntity>>({ data: [], pagination: { page: 1, per_page: 10, total: 0, total_pages: 0 } })
-    const params = ref<Params>({ page: 1, per_page: 6, search: '', type: 'paginate' })
+    const params = ref<Params>({ page: 1, per_page: 6, search: '', type: 'paginate', order_by: 'DESC' })
+
     const optionEntertainment = ref<SelectProps['options']>([]);
 
     return {

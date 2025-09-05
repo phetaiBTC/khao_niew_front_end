@@ -25,12 +25,10 @@
                 <a-tag :color="record.status === 'open' ? 'green' : 'red'">
                     <h1 style="margin: 0;font-size: 1rem;">{{ record.status }}</h1>
                 </a-tag>
-
             </template>
             <template v-if="column.key === 'limit'">
                 <!-- <UsergroupAddOutlined class="text-xl" /> -->
                 <h1 style="margin: 0;">{{ record.limit }} {{ $t('seats') }}</h1>
-
             </template>
             <template v-if="column.key === 'venue'">
                 <div class=" flex items-center justify-center gap-2">

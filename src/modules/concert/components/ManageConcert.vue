@@ -47,7 +47,6 @@
                 <a-col :span="12">
                     <a-form-item name="venue" :label="$t('venue')">
                         <a-select v-model:value="formState.venueId" :placeholder="$t('venue')" :options="optionVenue">
-
                         </a-select>
                     </a-form-item>
                 </a-col>
@@ -96,7 +95,7 @@ const formState = reactive<IConcert>({
     endTime: dayjs('16:00', 'HH:mm'),
     price: null,
     limit: 0,
-    date: '',
+    date: dayjs(),
     status: 'open',
     venueId: null,
     entertainmentIds: []

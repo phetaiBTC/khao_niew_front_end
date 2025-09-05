@@ -9,6 +9,12 @@
         <template #extra>
             <div class="flex justify-between">
                 <div class="flex items-center gap-2">
+                    <a-button type="primary" @click="() => { orderBy = 'ASC'; onQuery() }" v-if="orderBy === 'DESC'">
+                        <VerticalAlignTopOutlined />
+                    </a-button>
+                    <a-button type="primary" @click="() => { orderBy = 'DESC'; onQuery() }" v-if="orderBy === 'ASC'">
+                        <VerticalAlignBottomOutlined />
+                    </a-button>
                     <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch" />
                     <a-button type="primary" @click="onCreate">{{ $t('add') + ' ' +
                         $t(props.title) }}</a-button>
@@ -60,10 +66,12 @@
 </template>
 
 <script setup lang="ts">
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons-vue';
+import { DeleteOutlined, EditOutlined, VerticalAlignBottomOutlined, VerticalAlignTopOutlined } from '@ant-design/icons-vue';
 import { ref, type Component } from 'vue';
 import type { TableColumnsType } from 'ant-design-vue';
 import type { PaginateEntity } from '@/common/interface/paramsPaginate';
+
+const orderBy = ref<"ASC" | "DESC">('DESC')
 const props = withDefaults(
     defineProps<{
         columns: TableColumnsType
@@ -98,6 +106,7 @@ const onQuery = async (page?: number, pageSize?: number) => {
     emit('onQuery', {
         page: page ?? props.data.pagination.page,
         per_page: pageSize ?? props.data.pagination.per_page,
+        order_by: orderBy.value
     })
 }
 </script>

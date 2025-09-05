@@ -14,8 +14,9 @@
                         :prefix="BulbOutlined" />
                 </a-col>
                 <a-col :span="24">
-                    <FormInputString label="description" v-model="formState.description" placeholder="..."
-                        :prefix="UnorderedListOutlined" />
+                    <a-form-item :label="$t('description')" name="description">
+                        <a-textarea v-model:value="formState.description" placeholder="..." allow-clear />
+                    </a-form-item>
                 </a-col>
                 <a-col :span="24">
                     <a-upload v-model:file-list="fileList" name="file" :custom-request="handleUpload">
@@ -38,7 +39,7 @@
 
 <script setup lang="ts">
 import FormInputString from '@/components/FormInputString.vue';
-import { BulbOutlined, UnorderedListOutlined, UploadOutlined } from '@ant-design/icons-vue';
+import { BulbOutlined, UploadOutlined } from '@ant-design/icons-vue';
 import { computed, reactive, ref, watch } from 'vue';
 import { rulesEntertainment } from '../rules';
 import type { IEntertainment, EntertainmentEntity } from '../types';

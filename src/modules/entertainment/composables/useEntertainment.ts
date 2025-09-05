@@ -25,6 +25,8 @@ export const useEntertainment = () => {
         params.value.per_page = newParams.per_page ?? params.value.per_page
         params.value.search = newParams.search ?? params.value.search
         params.value.type = newParams.type ?? params.value.type
+        params.value.order_by = newParams.order_by ?? params.value.order_by
+
         await fetchEntertainmentList()
     }
 

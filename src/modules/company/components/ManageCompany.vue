@@ -3,18 +3,18 @@
         <template #title>
             <h1 class="text-xl text-center" style="font-weight: 900;">{{ $t('add') + ' ' + $t('user') }}</h1>
         </template>
-        <a-form layout="vertical" ref="formRef" :model="formState" :rules="rulesCompany" @finish="onSumit">
+        <a-form layout="vertical" ref="formRef" :model="formData" :rules="rulesCompany" @finish="onSumit">
             <a-row>
                 <a-divider
                     style="margin: 0 !important; color: var(--ant-primary-color); border-color: var(--ant-primary-color);">
                     {{ $t('company') }}
                 </a-divider>
                 <a-col :span="24">
-                    <FormInputString label="name" v-model="formState.name" :placeholder="$t('name')"
+                    <FormInputString label="name" v-model="formData.name" :placeholder="$t('name')"
                         :prefix="BankOutlined" />
                 </a-col>
                 <a-col :span="24">
-                    <FormInputString label="contact" v-model="formState.contact" placeholder="020XXXXXXXX"
+                    <FormInputString label="contact" v-model="formData.contact" placeholder="020XXXXXXXX"
                         :prefix="PhoneOutlined" />
                 </a-col>
                 <div class="w-full" v-if="!props.data">
@@ -23,19 +23,19 @@
                         {{ $t('information') }}
                     </a-divider>
                     <a-col :span="24">
-                        <FormInputString label="username" v-model="formState.user.username"
-                            :placeholder="$t('username')" :prefix="UserOutlined" />
+                        <FormInputString label="username" v-model="formData.username" :placeholder="$t('username')"
+                            :prefix="UserOutlined" />
                     </a-col>
                     <a-col :span="24">
-                        <FormInputString label="email" v-model="formState.user.email" placeholder="example@gmail.com"
+                        <FormInputString label="email" v-model="formData.email" placeholder="example@gmail.com"
                             :prefix="MailOutlined" />
                     </a-col>
                     <a-col :span="24" v-if="!props.data">
-                        <FormInputString v-model="formState.user.password" label="password" placeholder="********"
+                        <FormInputString v-model="formData.password" label="password" placeholder="********"
                             :prefix="LockOutlined" :type="'password'" />
                     </a-col>
                     <a-col :span="24">
-                        <FormInputString label="phone" v-model="formState.user.phone" placeholder="020XXXXXXXX"
+                        <FormInputString label="phone" v-model="formData.phone" placeholder="020XXXXXXXX"
                             :prefix="PhoneOutlined" />
                     </a-col>
                 </div>
@@ -68,7 +68,15 @@ const props = defineProps<{
     data: CompanyEntity | null
 }>()
 const emit = defineEmits(['isOpen'])
-
+const formData = reactive<{ id?: number | null, name: string, contact: string, username: string, email: string, password: string, phone: string }>({
+    id: null,
+    name: '',
+    contact: '',
+    username: '',
+    email: '',
+    password: '',
+    phone: ''
+})
 const formState = reactive<ICompany>({
     id: null,
     name: '',
@@ -89,9 +97,9 @@ watch(
     () => props.data,
     (value) => {
         if (value) {
-            formState.id = value.id
-            formState.name = value.name
-            formState.contact = value.contact
+            formData.id = value.id
+            formData.name = value.name
+            formData.contact = value.contact
         }
     }
 )
@@ -101,8 +109,17 @@ const onClose = () => {
 }
 const onSumit = async () => {
     if (props.data) {
+        formState.id = props.data.id
+        formState.name = formData.name
+        formState.contact = formData.contact
         await updateCompany(formState)
     } else {
+        formState.name = formData.name
+        formState.contact = formData.contact
+        formState.user.username = formData.username
+        formState.user.email = formData.email
+        formState.user.password = formData.password
+        formState.user.phone = formData.phone
         await createCompany(formState)
     }
     onClose()
