@@ -45,5 +45,7 @@
     "Show_time":"Show time",
     "address":"Address",
     "latitude":"Latitude",
-    "longitude":"Longitude"
+    "longitude":"Longitude",
+    "admin":"Admin",
+    "customer":"Customer"
 }

@@ -1,5 +1,4 @@
 import {
-    PieChartOutlined,
     UserOutlined,
     BankOutlined,
     BookOutlined,
@@ -7,7 +6,7 @@ import {
     AimOutlined
 } from '@ant-design/icons-vue';
 import type { Component } from 'vue';
-export const menuItems: {
+export const menuItemsCompany: {
     label: string,
     icon: Component,
     to: string | { name: string },
@@ -17,30 +16,15 @@ export const menuItems: {
         to: string | { name: string },
     }[]
 }[] = [
-        // {
-        //     label: 'Dashboard',
-        //     icon: PieChartOutlined,
-        //     to: '/'
-        // },
         {
             label: 'user',
             icon: UserOutlined,
             to: { name: 'user' }
         },
         {
-            label: 'company',
-            icon: BankOutlined,
-            to: { name: 'company' }
-        },
-        {
-            label: 'entertainment',
-            icon: BookOutlined,
-            to: { name: 'entertainment' }
-        },
-        {
             label: 'concert',
             icon: PictureOutlined,
-            to: { name: 'concert' }
+            to: { name: 'company.concert' }
         },
         {
             label: 'venue',

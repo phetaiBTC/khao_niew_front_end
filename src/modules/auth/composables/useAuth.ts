@@ -12,6 +12,7 @@ export const useAuth = () => {
             const { data } = await clientApi.post('/auth/login', fromState)
             authStore.login(data.access_token)
             localStorage.setItem('token', data.access_token)
+            localStorage.setItem('role', data.role)
             message.success("ລ໊ອກອິນສຳເລັດ")
             await router.push({ name: "user" })
         } catch (error: any) {

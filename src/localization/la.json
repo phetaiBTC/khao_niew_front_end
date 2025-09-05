@@ -45,5 +45,7 @@
     "Show_time": "ເວລາສະແດງ",
     "address": "ທີ່ຢູ່",
     "latitude": "ເສັ້ນຂະໜານ",
-    "longitude": "ເສັ້ນແວງ"
+    "longitude": "ເສັ້ນແວງ",
+    "admin":"ແອັດມິນ",
+    "customer":"ລູກຄ້າ"
 }

@@ -63,7 +63,6 @@
                             }}</a-button>
                     </div>
                 </a-col>
-                {{ typeof (dayjs(formState.date).format('YYYY-MM-DD')) }}
             </a-row>
         </a-form>
     </a-modal>
@@ -76,8 +75,8 @@ import dayjs from 'dayjs';
 import type { IConcert, ConcertEntity } from '../types';
 import { useConcert } from '../composables/useConcert';
 import { UsergroupAddOutlined } from '@ant-design/icons-vue';
-import { useVenue } from '@/modules/venue/composables/useVenue';
-import { useEntertainment } from '@/modules/entertainment/composables/useEntertainment';
+import { useVenue } from '@/modules/admin/venue/composables/useVenue';
+import { useEntertainment } from '@/modules/admin/entertainment/composables/useEntertainment';
 
 const { optionVenue, getOptionsVenue } = useVenue()
 const { optionEntertainment, getOptionsEntertainment } = useEntertainment()

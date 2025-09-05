@@ -1,18 +1,22 @@
 import { AuthRouter } from "@/modules/auth/router"
-import { UserRouter } from "@/modules/users/router"
+import { UserRouter } from "@/modules/admin/users/router"
 import { createRouter, createWebHistory } from "vue-router"
 import DefaultLayout from "@/layouts/Default.vue"
 import AuthorizedPage from "@/components/Authorized.vue"
 import { authGuard } from "./guard/authGuard"
-import { CompanyRouter } from "./modules/company/router"
-import { EntertainmentRouter } from "./modules/entertainment/router"
-import { ConcertRouter } from "./modules/concert/router"
-import { VenueRouter } from "./modules/venue/router"
+import { CompanyRouter } from "./modules/admin/company/router"
+import { EntertainmentRouter } from "./modules/admin/entertainment/router"
+import { ConcertRouter } from "./modules/admin/concert/router"
+import { VenueRouter } from "./modules/admin/venue/router"
+import CompanyLayout from "./layouts/CompanyLayout.vue"
+import BookingInder from "@/modules/company/booking/pages/Index.vue"
+import { BookingRouter } from "./modules/company/booking/router"
+import { CompanyConcertRouter } from "./modules/company/concert/router"
 const routes = [
     {
-        path: '/',
+        path: '/admin',
         component: DefaultLayout,
-        meta: { title: 'Home' },
+        meta: { title: 'Admin' },
         children: [
             ...UserRouter,
             ...CompanyRouter,
@@ -22,13 +26,21 @@ const routes = [
         ]
     },
     {
+        path: '/companies',
+        component: CompanyLayout,
+        meta: { title: 'Companies' },
+        children: [
+            ...BookingRouter,
+            ...CompanyConcertRouter
+        ]
+    },
+    {
         path: '/authorized',
         name: 'authorized',
         component: AuthorizedPage,
         meta: { title: 'Authorized' }
     },
     ...AuthRouter
-
 ]
 
 const router = createRouter({

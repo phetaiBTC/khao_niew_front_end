@@ -57,8 +57,8 @@ import FormInputString from '@/components/FormInputString.vue';
 import { BankOutlined, LockOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { computed, reactive, ref, watch } from 'vue';
 import { rulesCompany } from '../rules.ts';
-import type { ICompany, CompanyEntity } from '../type';
-import { useCompany } from '../composables/useCompany';
+import type { ICompany, CompanyEntity } from '../type.ts';
+import { useCompany } from '../composables/useCompany.ts';
 
 
 const { createCompany, updateCompany, loadingCompany } = useCompany()

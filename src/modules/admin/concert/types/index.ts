@@ -1,6 +1,6 @@
 import type { BaseEntity } from "@/common/interface/baseEntity"
-import type { EntertainmentEntity } from "@/modules/entertainment/types"
-import type { venueEntity } from "@/modules/venue/types"
+import type { EntertainmentEntity } from "@/modules/admin/entertainment/types"
+import type { venueEntity } from "@/modules/admin/venue/types"
 import type { Dayjs } from "dayjs"
 
 export interface IConcert {

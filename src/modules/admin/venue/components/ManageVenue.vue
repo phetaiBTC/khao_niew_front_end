@@ -45,8 +45,8 @@
 import FormInputString from '@/components/FormInputString.vue';
 import { AimOutlined, FullscreenOutlined } from '@ant-design/icons-vue';
 import { computed, reactive, ref, watch } from 'vue';
-import type { IVenue, venueEntity } from '../types';
-import { useVenue } from '../composables/useVenue';
+import type { IVenue, venueEntity } from '../types/index.ts';
+import { useVenue } from '../composables/useVenue.ts';
 import { rulesVenue } from '../rules.ts';
 
 const { createVenue, updateVenue, loadingVenue } = useVenue()
