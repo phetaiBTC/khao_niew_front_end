@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { EyeOutlined, PictureOutlined, ShoppingOutlined } from '@ant-design/icons-vue';
+import { ShoppingOutlined } from '@ant-design/icons-vue';
 import { ref, onMounted } from 'vue';
 import { useConcert } from '@/modules/admin/concert/composables/useConcert';
 const { fetchConcertList, ConcertList } = useConcert()
