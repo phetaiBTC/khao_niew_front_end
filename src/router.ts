@@ -9,7 +9,6 @@ import { EntertainmentRouter } from "./modules/admin/entertainment/router"
 import { ConcertRouter } from "./modules/admin/concert/router"
 import { VenueRouter } from "./modules/admin/venue/router"
 import CompanyLayout from "./layouts/CompanyLayout.vue"
-import BookingInder from "@/modules/company/booking/pages/Index.vue"
 import { BookingRouter } from "./modules/company/booking/router"
 import { CompanyConcertRouter } from "./modules/company/concert/router"
 const routes = [

@@ -1,7 +1,5 @@
 import {
     UserOutlined,
-    BankOutlined,
-    BookOutlined,
     PictureOutlined,
     AimOutlined
 } from '@ant-design/icons-vue';
