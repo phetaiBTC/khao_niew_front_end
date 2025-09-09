@@ -11,11 +11,12 @@ import { VenueRouter } from "./modules/admin/venue/router"
 import CompanyLayout from "./layouts/CompanyLayout.vue"
 import { BookingRouter } from "./modules/company/booking/router"
 import { CompanyConcertRouter } from "./modules/company/concert/router"
+import { roleGuard } from "./guard/roleGuard"
 const routes = [
     {
         path: '/admin',
         component: DefaultLayout,
-        meta: { title: 'Admin' },
+        meta: { title: 'Admin', role: 'admin' },
         children: [
             ...UserRouter,
             ...CompanyRouter,
@@ -27,7 +28,7 @@ const routes = [
     {
         path: '/companies',
         component: CompanyLayout,
-        meta: { title: 'Companies' },
+        meta: { title: 'Companies', role: 'company' },
         children: [
             ...BookingRouter,
             ...CompanyConcertRouter
@@ -48,5 +49,5 @@ const router = createRouter({
 })
 
 router.beforeEach(authGuard)
-
+router.beforeEach(roleGuard)
 export default router

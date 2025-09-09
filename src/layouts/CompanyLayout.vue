@@ -1,6 +1,7 @@
 <template>
     <a-layout class="h-screen">
-        <a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint">
+        <a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
+            :style="{ position: 'fixed', top: '0', height: '100vh', left: '0', zIndex: 1000}">
             <div class="logo">
                 <img src="/src/assets/images/logoKhaoNiew.png" alt="" srcset="" class="w-35 mx-auto"
                     style="filter: drop-shadow(0 5px 10px #fff)">
@@ -29,9 +30,9 @@
             </a-menu>
         </a-layout-sider>
         <a-layout>
-            <a-layout-header :style="{ background: '#fff', padding: 0 }" />
-            <a-layout-content :style="{ margin: '24px 16px 0' }">
-                <div :style="{ background: '#fff', minHeight: '360px' }">
+            <HeaderLayout />
+            <a-layout-content :style="{ margin: '24px 16px 0', minHeight: '280px' }" class=" overflow-scroll">
+                <div :style="{ background: '#fff' }">
                     <router-view></router-view>
                 </div>
             </a-layout-content>
@@ -44,6 +45,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { menuItemsCompany } from './menuItimeCompany';
+import HeaderLayout from "./HeaderLayout.vue";
+
 const onCollapse = (collapsed: boolean, type: string) => {
     console.log(collapsed, type);
 };

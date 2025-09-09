@@ -10,11 +10,15 @@ export const useAuth = () => {
         loadingAuth.value = true
         try {
             const { data } = await clientApi.post('/auth/login', fromState)
-            authStore.login(data.access_token)
-            localStorage.setItem('token', data.access_token)
-            localStorage.setItem('role', data.role)
+            authStore.login(data)
+            if(authStore.role === 'admin'){
+                await router.push({ name: "user" })
+            }
+            else if(authStore.role === 'company'){
+                await router.push('/companies')
+            }
+            // await router.push({ name: "user" })
             message.success("ລ໊ອກອິນສຳເລັດ")
-            await router.push({ name: "user" })
         } catch (error: any) {
             message.error(error.response.data.message || "ລ໊ອກອິນບໍ່ສຳເລັດ")
         }

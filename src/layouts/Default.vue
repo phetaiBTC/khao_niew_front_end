@@ -31,7 +31,7 @@
             </a-menu>
         </a-layout-sider>
         <a-layout class="min-h-screen">
-            <a-layout-header style="background: #fff; padding: 0" />
+            <HeaderLayout />
             <a-layout-content style="margin: 0 16px">
                 <a-breadcrumb style="margin: 10px 0">
                     <a-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
@@ -57,6 +57,7 @@
 import { useRoute } from "vue-router";
 import { computed, ref } from 'vue';
 import { menuItems } from "./menuItem";
+import HeaderLayout from "./HeaderLayout.vue";
 const route = useRoute();
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
