@@ -46,6 +46,10 @@
     "address": "ທີ່ຢູ່",
     "latitude": "ເສັ້ນຂະໜານ",
     "longitude": "ເສັ້ນແວງ",
-    "admin":"ແອັດມິນ",
-    "customer":"ລູກຄ້າ"
+    "admin": "ແອັດມິນ",
+    "customer": "ລູກຄ້າ",
+    "seat": "ບ່ອນນັ່ງ",
+    "total_price": "ລາຄາລວມ",
+    "book_now": "ຈອງດ່ວນ",
+    "upload": "ອັບໂຫລດ"
 }

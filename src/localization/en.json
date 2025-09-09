@@ -47,5 +47,9 @@
     "latitude":"Latitude",
     "longitude":"Longitude",
     "admin":"Admin",
-    "customer":"Customer"
+    "customer":"Customer",
+    "seat":"Seat",
+    "total_price":"Total Price",
+    "book_now":"Book Now",
+    "upload":"Upload"
 }

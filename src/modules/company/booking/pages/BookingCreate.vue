@@ -1,0 +1,116 @@
+<template>
+    <div class="flex flex-col items-center gap-4 p-4" v-if="Concert">
+        <img src="/src/assets/images/qr.jpg" alt="" width="60%">
+        <a-tag color="blue">
+            <h1 class="text-xl">
+                ວັນທີ: {{ Concert?.date }}
+            </h1>
+        </a-tag>
+        <div class="flex flex-col items-start gap-2 w-full">
+            <h1>
+                {{ $t('entertainment') }} : <a-tag v-for="item in Concert.entertainments">{{ item.title }}</a-tag>
+            </h1>
+            <h1>
+                {{ $t('venue') }} : {{ Concert.venue.name }} - {{ Concert.venue.address }} <a
+                    :href="`https://www.google.com/maps/search/?api=1&query=${Concert.venue.latitude},${Concert.venue.longitude}`"
+                    target="_blank" style="color: red;">
+                    <AimOutlined class="ml-2" />
+                </a>
+            </h1>
+            <h1>
+                {{ $t('status') }} : <a-tag :color="Concert.status === 'open' ? 'green' : 'red'">{{ Concert.status
+                }}</a-tag>
+            </h1>
+            <h1>
+                {{ $t('price') }} : <a-tag color="gold">{{ Concert.price.toLocaleString() + ' kip' }}/{{ $t('seat')
+                }}</a-tag>
+            </h1>
+            <h1>
+                {{ $t('limit') }} : {{ Concert.limit }} {{ $t('seat') }}
+            </h1>
+            <h1>
+                {{ $t('Show_time') }} : {{ Concert.startTime }} - {{ Concert.endTime }}
+            </h1>
+            <!-- <div>
+                {{ url }}
+                <a-carousel autoplay>
+                    <div v-for="(image, index) in Concert.entertainments[0].images" :key="index">
+                        <img :src="url + image" alt="" class="w-full h-96 object-cover rounded-lg" />
+                        {{ image }}
+                    </div>
+                </a-carousel>
+            </div> -->
+        </div>
+
+        <a-form class="sticky bottom-0 flex items-center flex-col gap-3 left-0 w-full bg-white"
+            style="padding: 5px 5px;" ref="formRef" :model="formState" @finish="onSumit">
+            <a-tag color="green" style="font-size: 1.2rem;width: 100%;padding: 10px;">
+                {{ $t('total_price') }} : {{ (Concert.price * formState.ticket_quantity).toLocaleString() }} kip
+            </a-tag>
+            <div class="flex justify-between items-center w-full">
+                <a-upload :multiple="false" :max-count="1" :show-upload-list="false">
+                    <a-button type="primary">
+                        <div>
+                            <UploadOutlined />
+                            {{ $t('upload') }}
+                        </div>
+                    </a-button>
+                </a-upload>
+                <div>
+                    <a-space-compact block>
+                        <a-button type="primary"
+                            @click="() => { if (Concert && formState.ticket_quantity > 1) formState.ticket_quantity-- }"
+                            :disabled="formState.ticket_quantity === 1">
+                            -
+                        </a-button>
+                        <a-input-number v-model:value="formState.ticket_quantity" :min="1" :max="Concert.limit"
+                            style="width: 40px;" />
+                        <a-button type="primary"
+                            @click="() => { if (Concert && formState.ticket_quantity < Concert.limit) formState.ticket_quantity++ }"
+                            :disabled="Concert.limit === formState.ticket_quantity">
+                            +
+                        </a-button>
+                    </a-space-compact>
+                </div>
+            </div>
+            <a-button type="primary" class="w-full mt-2" size="large" htmlType="submit">
+                {{ $t('book_now') }}
+            </a-button>
+        </a-form>
+    </div>
+
+</template>
+
+<script setup lang="ts">
+import { onMounted, reactive, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { useConcert } from '@/modules/admin/concert/composables/useConcert'
+import { AimOutlined, UploadOutlined } from '@ant-design/icons-vue'
+import { useBooking } from '../composables/useBooking'
+import type { IBooking } from '../types'
+const { createBooking } = useBooking()
+const formRef = ref()
+const formState = reactive<IBooking>({
+    concert: null,
+    ticket_quantity: 1
+})
+// const url = import.meta.env.VITE_API_BASE_URL
+const { fetchConcert, Concert } = useConcert()
+const route = useRoute()
+const concertId = route.params.concert_id
+const onSumit = async () => {
+    if (Number(concertId)) {
+        formState.concert = Number(concertId)
+        await createBooking({
+            concert: formState.concert,
+            ticket_quantity: formState.ticket_quantity
+        })
+    }
+}
+onMounted(async () => {
+    await fetchConcert(Number(concertId))
+
+})
+</script>
+
+<style scoped></style>

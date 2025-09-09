@@ -5,12 +5,24 @@ import { storeToRefs } from "pinia"
 import type { Params } from "@/common/interface/paramsPaginate"
 import type { IConcert } from "../types"
 export const useConcert = () => {
-    const { ConcertList, loadingConcert, params } = storeToRefs(useConcertStore())
+    const { ConcertList, loadingConcert, params, Concert } = storeToRefs(useConcertStore())
     const fetchConcertList = async () => {
         loadingConcert.value = true
         try {
             const { data } = await clientApi.get('/concerts', { params: params.value })
             ConcertList.value = data
+        } catch (error: any) {
+            message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
+        }
+        finally {
+            loadingConcert.value = false
+        }
+    }
+    const fetchConcert = async (id: number) => {
+        loadingConcert.value = true
+        try {
+            const { data } = await clientApi.get(`/concerts/${id}`)
+            Concert.value = data
         } catch (error: any) {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
@@ -64,6 +76,8 @@ export const useConcert = () => {
         setQuery,
         deleteConcert,
         createConcert,
-        updateConcert
+        updateConcert,
+        fetchConcert,
+        Concert
     }
 }

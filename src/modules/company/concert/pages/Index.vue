@@ -24,10 +24,10 @@
                     <template #cover>
                     </template>
                     <p>ວັນທີ: {{ concert.date }}</p>
-                    <p>ສະຖານນະ: {{ concert.status }}</p>
+                    <a-tag :color="concert.status === 'open' ? 'green' : 'red'">{{ concert.status }}</a-tag>
                     <template #actions>
                         <!-- <EyeOutlined /> -->
-                        <a-button type="primary" class="w-full h-full">
+                        <a-button type="primary" class="w-full h-full" @click="router.push({ name: 'company.booking.create', params: { concert_id: concert.id } })">
                             <div>
                                 <ShoppingOutlined />
                                 booking now
@@ -44,6 +44,7 @@
 import { ShoppingOutlined } from '@ant-design/icons-vue';
 import { ref, onMounted } from 'vue';
 import { useConcert } from '@/modules/admin/concert/composables/useConcert';
+import router from '@/router';
 const { fetchConcertList, ConcertList } = useConcert()
 const search = ref<string>('');
 onMounted(async () => {

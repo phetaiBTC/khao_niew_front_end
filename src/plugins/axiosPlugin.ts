@@ -23,6 +23,11 @@ clientApi.interceptors.response.use(
             localStorage.removeItem("token");
             router.push({ name: "authorized" });
         }
+        if (error.response.status === 403) {
+            localStorage.removeItem("token");
+            router.push({ name: "authorized" });
+        }
         return Promise.reject(error);
+
     }
 );
