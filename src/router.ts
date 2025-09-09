@@ -3,6 +3,7 @@ import { UserRouter } from "@/modules/admin/users/router"
 import { createRouter, createWebHistory } from "vue-router"
 import DefaultLayout from "@/layouts/Default.vue"
 import AuthorizedPage from "@/components/Authorized.vue"
+import NotFound from "./components/NotFound.vue"
 import { authGuard } from "./guard/authGuard"
 import { CompanyRouter } from "./modules/admin/company/router"
 import { EntertainmentRouter } from "./modules/admin/entertainment/router"
@@ -40,7 +41,17 @@ const routes = [
         component: AuthorizedPage,
         meta: { title: 'Authorized' }
     },
-    ...AuthRouter
+    {
+        path: '/not-found',
+        name: 'not-found',
+        component: NotFound,
+        meta: { title: 'Not Found' }
+    },
+    ...AuthRouter,
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: { name: 'not-found' }
+    }
 ]
 
 const router = createRouter({
