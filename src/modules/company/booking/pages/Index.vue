@@ -1,48 +1,50 @@
 <template>
-    <a-list item-layout="vertical" size="large" :pagination="false" :data-source="listData">
-        <template #renderItem="{ item }">
-            <a-list-item :key="item.title">
-                <a-list-item-meta>
-                    <template #title>
-                        <a :href="item.href" class="text-lg font-bold text-blue-950 hover:underline">{{ item.title
-                            }}</a>
-                    </template>
-                    <template #description>
-                        <div class="flex items-center gap-2">
-                            <a-tag color="blue">{{ item.description }}</a-tag>
+    <div>
+        <a-row :gutter="[0, 20]">
+            <a-col :span="24" v-for="item in BookingList.data">
+                <div class="flex justify-between items-center rounded-xl flex-col overflow-hidden m-1"
+                    style="box-shadow: 0px 2px 10px #8A959e;">
+                    <div class="p-4 w-full flex flex-col gap-2">
+                        <div class="flex items-center justify-between w-full">
+                            <div class="text-xl font-bold">
+                                ລາຍການຈອງ : <a-tag color="blue">#{{ item.id }}</a-tag>
+                            </div>
+                            <a-tag
+                                :color="item.payment.status === 'pending' ? 'gold' : item.payment.status === 'success' ? 'green' : 'red'">{{
+                                    $t(item.payment.status) }}</a-tag>
                         </div>
-                    </template>
-                </a-list-item-meta>
-                <div>{{ item.content }}</div>
-                <template #extra>
-                    <a-tag color="gold" v-if="item.status === 'pending'">{{ item.status }}</a-tag>
-                    <a-tag color="green" v-if="item.status === 'success'">{{ item.status }}</a-tag>
-                    <a-tag color="red" v-if="item.status === 'failed'">{{ item.status }}</a-tag>
-                    <a-tag color="red" v-if="item.status === 'refunded'">{{ item.status }}</a-tag>
-                </template>
-            </a-list-item>
-        </template>
-
-    </a-list>
+                        <div class=" bg-blue-100 w-full p-2 my-2 rounded-lg border border-blue-300">
+                            <h1 style="font-weight: bold;">ຂໍ້ມູນການຈອງ</h1>
+                            <h1>ວັນທີ: {{ dayjs(item.concert.date).format('DD-MM-YYYY') }}</h1>
+                            <h1>ເວລາຈັດສະແດງ : {{ item.concert.startTime }} - {{ item.concert.endTime }}</h1>
+                        </div>
+                    </div>
+                    <a-button type="primary" style="width: 100%;">
+                        <div class="flex flex-row items-center justify-between">
+                            <h1>
+                                ຈອງເມື່ອ : {{ dayjs(item.payment.payment_date).format('DD-MM-YYYY') }}
+                            </h1>
+                            <h1>
+                                <EyeOutlined class="mr-1" />
+                                ເບິ່ງລາຍລະອຽດ
+                            </h1>
+                        </div>
+                    </a-button>
+                </div>
+            </a-col>
+        </a-row>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useBooking } from '../composables/useBooking';
 import dayjs from 'dayjs';
+import { EyeOutlined } from '@ant-design/icons-vue';
 const { fetchBookingList, BookingList } = useBooking()
-const listData = ref<Record<string, string>[]>([]);
-// const listData: Record<string, string>[] = [];
 
 onMounted(async () => {
     await fetchBookingList()
-    listData.value = BookingList.value.data.map((item) => ({
-        href: '#',
-        title: `ລາຍການຈອງທີ່ : ${item.id}`,
-        description: `ວັນທີ່: ${dayjs(item.concert.date).format('DD-MM-YYYY')} | ລາຄາ: ${item.concert.price.toLocaleString()} kip`,
-        content: `ຈຳນວນບັດ: ${item.ticket_quantity}`,
-        status: item.payment.status
-    }))
 })
 </script>
 
