@@ -19,14 +19,14 @@
             </h1>
             <h1>
                 {{ $t('status') }} : <a-tag :color="Concert.status === 'open' ? 'green' : 'red'">{{ Concert.status
-                }}</a-tag>
+                    }}</a-tag>
             </h1>
             <h1>
                 {{ $t('price') }} : <a-tag color="gold">{{ Concert.price.toLocaleString() + ' kip' }}/{{ $t('seat')
-                }}</a-tag>
+                    }}</a-tag>
             </h1>
             <h1>
-                {{ $t('limit') }} : {{ Concert.limit }} {{ $t('seat') }}
+                {{ $t('seat') }} : {{ Concert.totalTicket }} / {{ Concert.limit }}
             </h1>
             <h1>
                 {{ $t('Show_time') }} : {{ Concert.startTime }} - {{ Concert.endTime }}
@@ -43,7 +43,7 @@
         </div>
 
         <a-form class="sticky bottom-0 flex items-center flex-col gap-3 left-0 w-full bg-white"
-            style="padding: 5px 5px;" ref="formRef" :model="formState" @finish="onSumit">
+            style="padding: 5px 5px;" ref="formRef" :model="formState" @finish="showPropsConfirm">
             <a-tag color="green" style="font-size: 1.2rem;width: 100%;padding: 10px;">
                 {{ $t('total_price') }} : {{ (Concert.price * formState.ticket_quantity).toLocaleString() }} kip
             </a-tag>
@@ -73,7 +73,8 @@
                     </a-space-compact>
                 </div>
             </div>
-            <a-button type="primary" class="w-full mt-2" size="large" htmlType="submit">
+            <a-button type="primary" class="w-full mt-2" size="large" htmlType="submit"
+                :disabled="Concert.limit === Concert.totalTicket">
                 {{ $t('book_now') }}
             </a-button>
         </a-form>
@@ -82,12 +83,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { createVNode, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useConcert } from '@/modules/admin/concert/composables/useConcert'
-import { AimOutlined, UploadOutlined } from '@ant-design/icons-vue'
+import { AimOutlined, ExclamationCircleOutlined, UploadOutlined } from '@ant-design/icons-vue'
 import { useBooking } from '../composables/useBooking'
 import type { IBooking } from '../types'
+import { Modal } from 'ant-design-vue'
+import { tI18n } from '@/common/utils/i18n'
+
 const { createBooking } = useBooking()
 const formRef = ref()
 const formState = reactive<IBooking>({
@@ -105,12 +109,31 @@ const onSumit = async () => {
             concert: formState.concert,
             ticket_quantity: formState.ticket_quantity
         })
+        await fetchConcert(Number(concertId))
     }
 }
 onMounted(async () => {
     await fetchConcert(Number(concertId))
 
 })
+
+const showPropsConfirm = () => {
+    Modal.confirm({
+        title: 'Confirm Booking',
+        icon: createVNode(ExclamationCircleOutlined),
+        content: 'Are you sure to book ' + formState.ticket_quantity + ' ticket(s)?',
+        okText: tI18n('yes'),
+        cancelText: tI18n('cancel'),
+        centered: true,
+        async onOk() {
+            await onSumit()
+            // router.push({ name: 'company.booking.index' })
+        },
+        onCancel() {
+            console.log('Cancel');
+        },
+    });
+};
 </script>
 
 <style scoped></style>

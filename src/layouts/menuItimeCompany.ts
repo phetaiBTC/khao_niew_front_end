@@ -1,6 +1,7 @@
 import {
 
     PictureOutlined,
+    TagOutlined,
 
 } from '@ant-design/icons-vue';
 import type { Component } from 'vue';
@@ -24,6 +25,11 @@ export const menuItemsCompany: {
             icon: PictureOutlined,
             to: { name: 'company.concert' }
         },
+        {
+            label: 'booking',
+            icon: TagOutlined,
+            to: { name: 'booking' }
+        }
         // {
         //     key: 'sub1',
         //     label: 'User Group',

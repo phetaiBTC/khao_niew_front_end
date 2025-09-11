@@ -15,26 +15,29 @@
         </template>
         <a-row :gutter="[16, 16]">
             <a-col :span="12" v-for="concert in ConcertList.data" :key="concert.id">
-                <a-card>
-                    <template #title>
-                        <div class="flex items-center gap-2">
-                            <h1 class="text-xl" style="margin: 0 !important;">{{ concert.entertainments[0].title }}</h1>
+                <div class="bg-white rounded-lg cursor-pointer flex flex-col justify-center items-center hover:shadow-lg overflow-hidden"
+                    style="box-shadow: 0px 5px 10px #d9d9d9;">
+                    <h1 class="text-center p-2 text-nowrap border-b w-4/5 "
+                        :class="concert.limit != concert.totalTicket ? 'border-green-500' : 'border-red-500'"
+                        style="margin: 0 !important;">{{
+                            dayjs(concert.date).format('DD-MM-YYYY') }}</h1>
+                    <h1 class="text-center p-2 mx-auto text-2xl bg-gray-100 w-4/5 rounded-xl text-blue-950"
+                        style="margin: 10px 0 !important;">{{ concert.totalTicket +
+                            ' / ' +
+                            concert.limit }}</h1>
+                    <a-tag color="green" style="margin: 0 !important;">{{ concert.price.toLocaleString() + ' kip' }} /
+                        {{
+                            $t('seat')
+                        }}</a-tag>
+                    <a-button type="primary" class="w-full" style="margin-top: 5px;" size="large"
+                        @click="router.push({ name: 'company.booking.create', params: { concert_id: concert.id } })"
+                        :disabled="concert.limit === concert.totalTicket">
+                        <div>
+                            <ShoppingOutlined />
+                            {{ $t(concert.limit === concert.totalTicket ? 'sold_out' : 'book_now') }}
                         </div>
-                    </template>
-                    <template #cover>
-                    </template>
-                    <p>ວັນທີ: {{ concert.date }}</p>
-                    <a-tag :color="concert.status === 'open' ? 'green' : 'red'">{{ concert.status }}</a-tag>
-                    <template #actions>
-                        <!-- <EyeOutlined /> -->
-                        <a-button type="primary" class="w-full h-full" @click="router.push({ name: 'company.booking.create', params: { concert_id: concert.id } })">
-                            <div>
-                                <ShoppingOutlined />
-                                booking now
-                            </div>
-                        </a-button>
-                    </template>
-                </a-card>
+                    </a-button>
+                </div>
             </a-col>
         </a-row>
     </a-card>
@@ -43,6 +46,7 @@
 <script setup lang="ts">
 import { ShoppingOutlined } from '@ant-design/icons-vue';
 import { ref, onMounted } from 'vue';
+import dayjs from 'dayjs';
 import { useConcert } from '@/modules/admin/concert/composables/useConcert';
 import router from '@/router';
 const { fetchConcertList, ConcertList } = useConcert()

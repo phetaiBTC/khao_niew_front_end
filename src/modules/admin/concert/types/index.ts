@@ -19,6 +19,7 @@ export interface ConcertEntity extends BaseEntity {
     startTime: string
     endTime: string
     price: number
+    totalTicket: number
     limit: number
     date: string
     status: string

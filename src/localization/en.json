@@ -51,5 +51,7 @@
     "seat":"Seat",
     "total_price":"Total Price",
     "book_now":"Book Now",
-    "upload":"Upload"
+    "upload":"Upload",
+    "sold_out":"Sold Out",
+    "booking":"Booking List"
 }
