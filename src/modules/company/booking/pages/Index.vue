@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import { useBooking } from '../composables/useBooking';
 import dayjs from 'dayjs';
 import { EyeOutlined } from '@ant-design/icons-vue';
