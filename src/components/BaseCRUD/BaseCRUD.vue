@@ -56,7 +56,7 @@
                 <div class="flex justify-end">
                     <a-pagination v-model:current="props.data.pagination.page"
                         v-model:pageSize="props.data.pagination.per_page" :total="props.data.pagination.total"
-                        show-size-changer show-quick-jumper :show-total="(total: number) => `ຜູ້ໃຊ້ທັງຫມົດ ${total}`"
+                        show-size-changer show-quick-jumper :show-total="(total: number) => `ລາຍການທັງຫມົດ ${total}`"
                         :page-size-options="['6', '10', '20', '30']" @change="onQuery">
                     </a-pagination>
                 </div>

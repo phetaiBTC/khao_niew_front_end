@@ -14,9 +14,18 @@
                                     $t(item.payment.status) }}</a-tag>
                         </div>
                         <div class=" bg-blue-100 w-full p-2 my-2 rounded-lg border border-blue-300">
-                            <h1 style="font-weight: bold;">ຂໍ້ມູນການຈອງ</h1>
+                            <h1 style="font-weight: bold;">ຂໍ້ມູນການສະແດງ</h1>
                             <h1>ວັນທີ: {{ dayjs(item.concert.date).format('DD-MM-YYYY') }}</h1>
                             <h1>ເວລາຈັດສະແດງ : {{ item.concert.startTime }} - {{ item.concert.endTime }}</h1>
+                        </div>
+                        <div class="flex items-center justify-between w-full">
+                            <div>
+                                <h1>ລາຄາ: {{ item.concert.price.toLocaleString() }} kip/{{ $t('seat') }}</h1>
+                                <h1>ຈຳນວນທີ່ຈອງ: {{ item.payment.amount }} {{ $t('seat') }}</h1>
+                            </div>
+                            <a-tag color="green" style="padding: 10px;font-weight: bold;">
+                                ລວມ: {{ (item.concert.price * item.payment.amount).toLocaleString() }} kip
+                            </a-tag>
                         </div>
                     </div>
                     <a-button type="primary" style="width: 100%;">
@@ -32,7 +41,17 @@
                     </a-button>
                 </div>
             </a-col>
+            <a-col :span="24">
+                <div class="flex justify-end mb-3">
+                    <a-pagination v-model:current="BookingList.pagination.page"
+                        v-model:pageSize="BookingList.pagination.per_page" :total="BookingList.pagination.total"
+                        show-size-changer show-quick-jumper :show-total="(total: number) => `ລາຍການທັງຫມົດ ${total}`"
+                        :page-size-options="['6', '10', '20', '30']" @change="onQuery">
+                    </a-pagination>
+                </div>
+            </a-col>
         </a-row>
+
     </div>
 </template>
 
@@ -41,8 +60,10 @@ import { onMounted } from 'vue';
 import { useBooking } from '../composables/useBooking';
 import dayjs from 'dayjs';
 import { EyeOutlined } from '@ant-design/icons-vue';
-const { fetchBookingList, BookingList } = useBooking()
-
+const { fetchBookingList, BookingList, setQuery } = useBooking()
+const onQuery = async () => {
+    await setQuery({ page: BookingList.value.pagination.page, per_page: BookingList.value.pagination.per_page })
+}
 onMounted(async () => {
     await fetchBookingList()
 })
