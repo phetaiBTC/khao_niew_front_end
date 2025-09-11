@@ -3,7 +3,8 @@ import {
     BankOutlined,
     BookOutlined,
     PictureOutlined,
-    AimOutlined
+    AimOutlined,
+    TagOutlined
 } from '@ant-design/icons-vue';
 import type { Component } from 'vue';
 export const menuItems: {
@@ -46,6 +47,11 @@ export const menuItems: {
             icon: AimOutlined,
             to: { name: 'venue' }
         },
+        {
+            label: 'booking',
+            icon: TagOutlined,
+            to: { name: 'booking' }
+        }
         // {
         //     key: 'sub1',
         //     label: 'User Group',

@@ -1,12 +1,10 @@
 import { clientApi } from "@/plugins/axiosPlugin"
 import { message } from "ant-design-vue"
-// import { storeToRefs } from "pinia"
-import { useBookigStore } from "../store"
+import { useBookigStore, type BookingQuery } from "../store"
 import { storeToRefs } from "pinia"
-import type { Params } from "@/common/interface/paramsPaginate"
 
 export const useBooking = () => {
-    const { BookingList, loadingUser, params } = storeToRefs(useBookigStore())
+    const { BookingList, loadingBooking, params } = storeToRefs(useBookigStore())
 
     const createBooking = async (formData: { concert: number, ticket_quantity: number }) => {
         try {
@@ -17,7 +15,7 @@ export const useBooking = () => {
         }
     }
     const fetchBookingList = async () => {
-        loadingUser.value = true
+        loadingBooking.value = true
         try {
             const { data } = await clientApi.get('/booking/all-bookings', { params: params.value })
             BookingList.value = data
@@ -25,23 +23,33 @@ export const useBooking = () => {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
         finally {
-            loadingUser.value = false
+            loadingBooking.value = false
         }
     }
-    const setQuery = async (newParams: Params) => {
+    const updateStatus = async (id: number, status: string) => {
+        try {
+            const { data } = await clientApi.patch(`/payment/status/${id}`, { status })
+            message.success(data.message || "ອັບເດດຂໍ້ມູນສໍາເລັດ")
+            await fetchBookingList()
+        } catch (error: any) {
+            message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
+        }
+    }
+    const setQuery = async (newParams: BookingQuery) => {
         params.value.page = newParams.page ?? params.value.page
         params.value.per_page = newParams.per_page ?? params.value.per_page
         params.value.search = newParams.search ?? params.value.search
         params.value.type = newParams.type ?? params.value.type
         params.value.order_by = newParams.order_by ?? params.value.order_by
-
+        params.value.status = newParams.status ?? params.value.status
         await fetchBookingList()
     }
     return {
         createBooking,
         fetchBookingList,
         BookingList,
-        loadingUser,
-        setQuery
+        loadingBooking,
+        setQuery,
+        updateStatus
     }
 }

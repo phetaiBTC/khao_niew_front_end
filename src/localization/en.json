@@ -57,5 +57,6 @@
     "pending": "Pending",
     "success": "Success",
     "failed": "Failed",
-    "refunded": "Refunded"
+    "refunded": "Refunded",
+    "booking_id": "Booking ID"
 }

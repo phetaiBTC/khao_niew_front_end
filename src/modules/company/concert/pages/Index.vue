@@ -17,10 +17,11 @@
             <a-col :span="12" v-for="concert in ConcertList.data" :key="concert.id">
                 <div class="bg-white rounded-lg cursor-pointer flex flex-col justify-center items-center hover:shadow-lg overflow-hidden"
                     style="box-shadow: 0px 5px 10px #d9d9d9;">
-                    <h1 class="text-center p-2 text-nowrap border-b w-4/5 "
+                    <h1 class="text-center py-1 text-nowrap border-b w-4/5 "
                         :class="concert.limit != concert.totalTicket ? 'border-green-500' : 'border-red-500'"
-                        style="margin: 0 !important;">{{
-                            dayjs(concert.date).format('DD-MM-YYYY') }}</h1>
+                        style="margin: 0 !important;">
+                        {{ dayjs(concert.date).format('dddd DD-MM-YYYY') }}
+                    </h1>
                     <h1 class="text-center p-2 mx-auto text-2xl bg-gray-100 w-4/5 rounded-xl text-blue-950"
                         style="margin: 10px 0 !important;">{{ concert.totalTicket +
                             ' / ' +
@@ -47,6 +48,8 @@
 import { ShoppingOutlined } from '@ant-design/icons-vue';
 import { ref, onMounted } from 'vue';
 import dayjs from 'dayjs';
+import 'dayjs/locale/lo';
+dayjs.locale('lo');
 import { useConcert } from '@/modules/admin/concert/composables/useConcert';
 import router from '@/router';
 const { fetchConcertList, ConcertList } = useConcert()

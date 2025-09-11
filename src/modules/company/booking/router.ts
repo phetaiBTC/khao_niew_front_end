@@ -1,10 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router'
 import BookingIndex from './pages/Index.vue'
 import BookingCreate from './pages/BookingCreate.vue'
-export const BookingRouter: RouteRecordRaw[] = [
+export const BookingCompanyRouter: RouteRecordRaw[] = [
     {
         path: 'booking',
-        name: 'booking',
+        name: 'company.booking',
         component: BookingIndex,
         meta: { title: 'booking' },
     },

@@ -10,9 +10,10 @@ import { EntertainmentRouter } from "./modules/admin/entertainment/router"
 import { ConcertRouter } from "./modules/admin/concert/router"
 import { VenueRouter } from "./modules/admin/venue/router"
 import CompanyLayout from "./layouts/CompanyLayout.vue"
-import { BookingRouter } from "./modules/company/booking/router"
+import { BookingCompanyRouter } from "./modules/company/booking/router"
 import { CompanyConcertRouter } from "./modules/company/concert/router"
 import { roleGuard } from "./guard/roleGuard"
+import { BookingRouter } from "./modules/admin/booking/router"
 const routes = [
     {
         path: '/admin',
@@ -23,7 +24,8 @@ const routes = [
             ...CompanyRouter,
             ...EntertainmentRouter,
             ...ConcertRouter,
-            ...VenueRouter
+            ...VenueRouter,
+            ...BookingRouter
         ]
     },
     {
@@ -31,7 +33,7 @@ const routes = [
         component: CompanyLayout,
         meta: { title: 'Companies', role: 'company' },
         children: [
-            ...BookingRouter,
+            ...BookingCompanyRouter,
             ...CompanyConcertRouter
         ]
     },

@@ -28,7 +28,7 @@ export const menuItemsCompany: {
         {
             label: 'booking',
             icon: TagOutlined,
-            to: { name: 'booking' }
+            to: { name: 'company.booking' }
         }
         // {
         //     key: 'sub1',
