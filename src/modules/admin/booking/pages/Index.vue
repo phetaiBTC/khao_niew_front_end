@@ -17,9 +17,9 @@
                     </a-button>
                     <a-select v-model:value="status" @change="setQuery({ status: status || undefined, page: 1 })"
                         :placeholder="$t('status')">
+                        <a-select-option value="pending">{{ $t('pending') }}</a-select-option>
                         <a-select-option value="success">{{ $t('success') }}</a-select-option>
                         <a-select-option value="failed">{{ $t('failed') }}</a-select-option>
-                        <a-select-option value="pending">{{ $t('pending') }}</a-select-option>
                     </a-select>
                     <a-select :options="optionCompany" v-model:value="company_id" :placeholder="$t('company')"
                         style="width: 200px;" @change="setQuery({ companyId: company_id || undefined, page: 1 })">
