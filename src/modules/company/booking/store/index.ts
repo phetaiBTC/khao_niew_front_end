@@ -4,6 +4,7 @@ import type { BookingEntity } from "../types";
 import type { PaginateEntity, Params } from "@/common/interface/paramsPaginate";
 export interface BookingQuery extends Params {
     status?: string
+    companyId?: number
 }
 export const useBookigStore = defineStore("bookginStore", () => {
     const loadingBooking = ref<boolean>(false)

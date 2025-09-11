@@ -3,10 +3,10 @@ import { message } from "ant-design-vue"
 import { useCompanyStore } from "../store/useCompanyStore"
 import { storeToRefs } from "pinia"
 import type { Params } from "@/common/interface/paramsPaginate"
-import type { ICompany } from "../type"
+import type { CompanyEntity, ICompany } from "../type"
 
 export const useCompany = () => {
-    const { CompanyList, loadingCompany, params } = storeToRefs(useCompanyStore())
+    const { CompanyList, loadingCompany, params, optionCompany } = storeToRefs(useCompanyStore())
     const fetchCompanyList = async () => {
         loadingCompany.value = true
         try {
@@ -58,6 +58,10 @@ export const useCompany = () => {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
     }
+    const getOptionsCompany = async () => {
+        const { data } = await clientApi.get('/companies', { params: { search: '', type: 'all' } })
+        optionCompany.value = data.data.map((item: CompanyEntity) => ({ value: item.id, label: item.name }))
+    }
     return {
         CompanyList,
         loadingCompany,
@@ -65,6 +69,8 @@ export const useCompany = () => {
         setQuery,
         deleteCompany,
         createCompany,
-        updateCompany
+        updateCompany,
+        getOptionsCompany,
+        optionCompany
     }
 }

@@ -17,6 +17,7 @@ export const useBooking = () => {
     const fetchBookingList = async () => {
         loadingBooking.value = true
         try {
+            console.log(params.value);
             const { data } = await clientApi.get('/booking/all-bookings', { params: params.value })
             BookingList.value = data
         } catch (error: any) {
@@ -42,6 +43,7 @@ export const useBooking = () => {
         params.value.type = newParams.type ?? params.value.type
         params.value.order_by = newParams.order_by ?? params.value.order_by
         params.value.status = newParams.status ?? params.value.status
+        params.value.companyId = newParams.companyId ?? params.value.companyId
         await fetchBookingList()
     }
     return {

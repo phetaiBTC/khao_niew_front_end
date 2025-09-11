@@ -15,6 +15,16 @@
                     <a-button type="primary" @click="() => { orderBy = 'DESC'; onQuery() }" v-if="orderBy === 'ASC'">
                         <VerticalAlignBottomOutlined />
                     </a-button>
+                    <a-select v-model:value="status" @change="setQuery({ status: status || undefined, page: 1 })"
+                        :placeholder="$t('status')">
+                        <a-select-option value="success">{{ $t('success') }}</a-select-option>
+                        <a-select-option value="failed">{{ $t('failed') }}</a-select-option>
+                        <a-select-option value="pending">{{ $t('pending') }}</a-select-option>
+                    </a-select>
+                    <a-select :options="optionCompany" v-model:value="company_id" :placeholder="$t('company')"
+                        style="width: 200px;" @change="setQuery({ companyId: company_id || undefined, page: 1 })">
+                    </a-select>
+
                     <!-- <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch" />
                     <a-button type="primary" @click="onCreate">{{ $t('add') + ' ' +
                         $t(props.title) }}</a-button> -->
@@ -56,8 +66,8 @@
                                         <CheckOutlined />
                                     </div>
                                 </a-button>
-                                <a-button type="primary" size="small"
-                                    @click="updateStatus(record.payment.id, 'failed')" style="background: red;">
+                                <a-button type="primary" size="small" @click="updateStatus(record.payment.id, 'failed')"
+                                    style="background: red;">
                                     <div>
                                         <CloseOutlined />
                                     </div>
@@ -88,14 +98,19 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/lo';
 import { onMounted, ref } from 'vue';
 import { useBooking } from '@/modules/company/booking/composables/useBooking';
-
+import { useCompany } from '../../company/composables/useCompany';
 dayjs.locale('lo');
 const { BookingList, fetchBookingList, loadingBooking, setQuery, updateStatus } = useBooking()
+const { getOptionsCompany, optionCompany } = useCompany()
 const orderBy = ref<"ASC" | "DESC">('DESC')
-const search = ref<string>('');
-const onQuery = async (page?: number, pageSize?: number) => {
-    await setQuery({ page: page || BookingList.value.pagination.page, per_page: pageSize || BookingList.value.pagination.per_page, search: search.value, order_by: orderBy.value })
+const company_id = ref<number | null>(null)
+const status = ref<string | null>('pending')
+const onQuery = async () => {
+    setQuery({
+        order_by: orderBy.value
+    })
 }
+
 
 const BookingCol = new BaseColumns<BookingEntity>([
     { dataIndex: 'booking_id' },
@@ -105,6 +120,7 @@ const BookingCol = new BaseColumns<BookingEntity>([
 ])
 
 onMounted(async () => {
+    await getOptionsCompany();
     await fetchBookingList();
 })
 
