@@ -3,7 +3,7 @@
         <a-row :gutter="[0, 16]">
             <a-col :span="24" v-for="item in Booking.details">
                 <div class=" flex justify-between m-2 shadow p-2">
-                    <a-qrcode :value="item.id"></a-qrcode>
+                    <a-qrcode :value="String(item.id)" />
                     <div>
                         <h1 class="text-lg font-bold text-center">
                             <a-tag color="blue"># {{ item.id }}</a-tag>
