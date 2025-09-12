@@ -29,8 +29,8 @@ import type { IFromLogin } from '../interface';
 import { rules } from '../rules';
 const { Login, loadingAuth } = useAuth();
 const formState = reactive<IFromLogin>({
-    email: 'admin@gmail.com',
-    password: 'password'
+    email: '',
+    password: ''
 });
 const disabled = computed(() => {
     return !(formState.email && formState.password);
