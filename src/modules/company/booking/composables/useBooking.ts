@@ -4,7 +4,7 @@ import { useBookigStore, type BookingQuery } from "../store"
 import { storeToRefs } from "pinia"
 
 export const useBooking = () => {
-    const { BookingList, loadingBooking, params } = storeToRefs(useBookigStore())
+    const { BookingList, loadingBooking, params, Booking } = storeToRefs(useBookigStore())
 
     const createBooking = async (formData: { concert: number, ticket_quantity: number }) => {
         try {
@@ -36,6 +36,18 @@ export const useBooking = () => {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
     }
+    const fetchBooking = async (id: number) => {
+        loadingBooking.value = true
+        try {
+            const { data } = await clientApi.get(`/booking/get-one/${id}`)
+            Booking.value = data
+        } catch (error: any) {
+            message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
+        }
+        finally {
+            loadingBooking.value = false
+        }
+    }
     const setQuery = async (newParams: BookingQuery) => {
         params.value.page = newParams.page ?? params.value.page
         params.value.per_page = newParams.per_page ?? params.value.per_page
@@ -52,6 +64,8 @@ export const useBooking = () => {
         BookingList,
         loadingBooking,
         setQuery,
-        updateStatus
+        updateStatus,
+        fetchBooking,
+        Booking
     }
 }

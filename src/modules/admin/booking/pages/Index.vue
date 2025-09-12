@@ -9,14 +9,15 @@
         <template #extra>
             <div class="flex justify-between">
                 <div class="flex items-center gap-2">
+                   
                     <a-button type="primary" @click="() => { orderBy = 'ASC'; onQuery() }" v-if="orderBy === 'DESC'">
                         <VerticalAlignTopOutlined />
                     </a-button>
                     <a-button type="primary" @click="() => { orderBy = 'DESC'; onQuery() }" v-if="orderBy === 'ASC'">
                         <VerticalAlignBottomOutlined />
                     </a-button>
-                    <a-select v-model:value="status" @change="setQuery({ status: status || undefined, page: 1 })"
-                        :placeholder="$t('status')">
+                    <a-select v-model:value="status" :placeholder="$t('status')"
+                        @change="setQuery({ status: status !== 'all' ? status : '', page: 1 })">
                         <a-select-option value="pending">{{ $t('pending') }}</a-select-option>
                         <a-select-option value="success">{{ $t('success') }}</a-select-option>
                         <a-select-option value="failed">{{ $t('failed') }}</a-select-option>
@@ -61,13 +62,14 @@
                                     :color="record.payment.status === 'pending' ? 'gold' : record.payment.status === 'success' ? 'green' : 'red'">{{
                                         $t(record.payment.status) }}</a-tag>
                                 <a-button type="primary" size="small"
-                                    @click="updateStatus(record.payment.id, 'success')" style="background: #13c2c2;">
+                                    @click="updateStatus(record.payment.id, 'success')"
+                                    v-show="record.payment.status === 'pending'" style="background: #13c2c2;">
                                     <div>
                                         <CheckOutlined />
                                     </div>
                                 </a-button>
                                 <a-button type="primary" size="small" @click="updateStatus(record.payment.id, 'failed')"
-                                    style="background: red;">
+                                    style="background: red;" v-show="record.payment.status === 'pending'">
                                     <div>
                                         <CloseOutlined />
                                     </div>
@@ -104,9 +106,11 @@ const { BookingList, fetchBookingList, loadingBooking, setQuery, updateStatus } 
 const { getOptionsCompany, optionCompany } = useCompany()
 const orderBy = ref<"ASC" | "DESC">('DESC')
 const company_id = ref<number | null>(null)
-const status = ref<string | null>('pending')
-const onQuery = async () => {
+const status = ref<string | undefined>('pending')
+const onQuery = async (page?: number, pageSize?: number) => {
     setQuery({
+        page: page,
+        per_page: pageSize,
         order_by: orderBy.value
     })
 }

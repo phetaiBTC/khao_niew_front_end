@@ -58,5 +58,11 @@
     "success": "Success",
     "failed": "Failed",
     "refunded": "Refunded",
-    "booking_id": "Booking ID"
+    "booking_id": "Booking ID",
+    "all": "All",
+    "not_checked_in":"Not Checked In",
+    "checked_in":"Checked In",
+    "export_excel":"Export Excel",
+    "report":"Report",
+    "report_year":"Report Year"
 }

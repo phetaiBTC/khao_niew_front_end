@@ -1,7 +1,11 @@
 <template>
     <BaseCRUD :columns="UserCol.getColumns()" :data="ConcertList" :loading="loadingConcert" :icon="PictureOutlined"
         title="concert" @on-delete="deleteConcert" @on-edit="onEdit($event)" @on-query="setQuery($event)"
-        @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 1800 }">
+        @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 1800 }" :input-search="false">
+        <template #extra>
+            <a-date-picker v-model:value="datePicker" format="DD-MM-YYYY" placeholder="ຄົ້ນຫາຕາມວັນທີ"
+                @change="setQuery({ search: datePicker ? dayjs(datePicker).format('YYYY-MM-DD') : '', page: 1 })" />
+        </template>
         <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'user'">
                 <a-tag color="blue">
@@ -28,7 +32,14 @@
             </template>
             <template v-if="column.key === 'limit'">
                 <!-- <UsergroupAddOutlined class="text-xl" /> -->
-                <h1 style="margin: 0;">{{ record.limit }} {{ $t('seats') }}</h1>
+                <div class="flex">
+                    <a-tag
+                        :color="record.totalTicket === record.limit ? 'red' : record.totalTicket > record.limit ? 'orange' : 'green'">
+                        {{ record.totalTicket === record.limit ? 'ເຕັມ' : record.totalTicket > record.limit ? 'ເກີນ' :
+                            'ວ່າງ' }}
+                    </a-tag>
+                    <h1 style="margin: 0;">{{ record.totalTicket + " / " + record.limit }}</h1>
+                </div>
             </template>
             <template v-if="column.key === 'venue'">
                 <div class=" flex items-center justify-center gap-2">
@@ -62,6 +73,10 @@ import manageConcert from '../components/ManageConcert.vue';
 import { useConcert } from '../composables/useConcert';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { ConcertEntity } from '../types/index';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+
+const datePicker = ref<Dayjs | null>(null);
 const { setQuery, ConcertList, loadingConcert, deleteConcert, fetchConcertList } = useConcert()
 
 const open = ref<boolean>(false)

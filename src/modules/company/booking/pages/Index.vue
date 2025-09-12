@@ -1,7 +1,19 @@
 <template>
     <div>
+
         <a-row :gutter="[0, 20]">
-            <a-col :span="24" v-for="item in BookingList.data">
+            <div class="flex justify-end items-center p-2">
+                <a-select v-model:value="status" :placeholder="$t('status')"
+                    @change="setQuery({ status: status ? status : '', page: 1 })">
+                    <a-select-option value="pending">{{ $t('pending') }}</a-select-option>
+                    <a-select-option value="success">{{ $t('success') }}</a-select-option>
+                    <a-select-option value="failed">{{ $t('failed') }}</a-select-option>
+                </a-select>
+            </div>
+            <a-col :span="24">
+                <a-card :loading="loadingBooking" v-if="loadingBooking">whatever content</a-card>
+            </a-col>
+            <a-col :span="24" v-for="item in BookingList.data" v-show="!loadingBooking">
                 <div class="flex justify-between items-center rounded-xl flex-col overflow-hidden m-1"
                     style="box-shadow: 0px 2px 10px #8A959e;">
                     <div class="p-4 w-full flex flex-col gap-2">
@@ -28,7 +40,8 @@
                             </a-tag>
                         </div>
                     </div>
-                    <a-button type="primary" style="width: 100%;">
+                    <a-button type="primary" style="width: 100%;"
+                        @click="router.push({ name: 'company.booking.detail', params: { id: item.id } })">
                         <div class="flex flex-row items-center justify-between">
                             <h1>
                                 ຈອງເມື່ອ : {{ dayjs(item.payment.payment_date).format('DD-MM-YYYY') }}
@@ -56,11 +69,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useBooking } from '../composables/useBooking';
 import dayjs from 'dayjs';
 import { EyeOutlined } from '@ant-design/icons-vue';
-const { fetchBookingList, BookingList, setQuery } = useBooking()
+import router from '@/router';
+const status = ref<string>("pending");
+
+const { fetchBookingList, BookingList, setQuery, loadingBooking } = useBooking()
 const onQuery = async () => {
     await setQuery({ page: BookingList.value.pagination.page, per_page: BookingList.value.pagination.per_page })
 }

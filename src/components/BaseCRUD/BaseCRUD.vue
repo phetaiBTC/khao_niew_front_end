@@ -15,7 +15,11 @@
                     <a-button type="primary" @click="() => { orderBy = 'DESC'; onQuery() }" v-if="orderBy === 'ASC'">
                         <VerticalAlignBottomOutlined />
                     </a-button>
-                    <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch" />
+                    <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch"
+                        v-show="props.inputSearch" />
+                    <slot name="extra">
+
+                    </slot>
                     <a-button type="primary" @click="onCreate">{{ $t('add') + ' ' +
                         $t(props.title) }}</a-button>
                 </div>
@@ -83,9 +87,11 @@ const props = withDefaults(
             x?: number | string
             y?: number | string
         }
+        inputSearch?: boolean
     }>(),
     {
         scroll: () => ({ x: 1500, y: 1900 })
+        , inputSearch: true
     }
 )
 const emit = defineEmits(['onDelete', 'onEdit', 'onCreate', 'onQuery', 'onSearch'])

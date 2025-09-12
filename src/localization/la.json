@@ -58,5 +58,11 @@
     "success": "ສຳເລັດ",
     "failed": "ລົ້ມເຫຼວ",
     "refunded": "ຄືນເງິນ",
-    "booking_id": "ລະຫັດການຈອງ"
+    "booking_id": "ລະຫັດການຈອງ",
+    "all": "ທັງໝົດ",
+    "not_checked_in": "ຍັງບໍ່ສະແກນ",
+    "checked_in": "ສະແກນແລ້ວ",
+    "export_excel": "ດາວໂຫລດ Excel",
+    "report": "ລາຍງານ",
+    "report_year": "ລາຍງານປະຈຳປີ"
 }

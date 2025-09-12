@@ -14,6 +14,8 @@ import { BookingCompanyRouter } from "./modules/company/booking/router"
 import { CompanyConcertRouter } from "./modules/company/concert/router"
 import { roleGuard } from "./guard/roleGuard"
 import { BookingRouter } from "./modules/admin/booking/router"
+import { ReportsRouter } from "./modules/admin/reports/router"
+import { ScanRouter } from "./modules/admin/scan/router"
 const routes = [
     {
         path: '/admin',
@@ -25,7 +27,9 @@ const routes = [
             ...EntertainmentRouter,
             ...ConcertRouter,
             ...VenueRouter,
-            ...BookingRouter
+            ...BookingRouter,
+            ...ReportsRouter,
+            ...ScanRouter
         ]
     },
     {

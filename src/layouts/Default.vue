@@ -17,8 +17,10 @@
                                 <span>{{ $t(item.label.toLowerCase()) }}</span>
                             </span>
                         </template>
-                        <a-menu-item v-for="child in item.children" :key="child.label">
-                            <router-link :to="child.to">{{ $t(child.label.toLowerCase()) }}</router-link>
+                        <a-menu-item v-for="child in item.children" :key="child.label"
+                            @click="router.push({ name: 'report.year' })">
+                            {{ $t(child.label.toLowerCase()) }}
+                            <!-- <router-link :to="child.to">{{ $t(child.label.toLowerCase()) }}</router-link> -->
                         </a-menu-item>
                     </a-sub-menu>
                     <a-menu-item v-else :key="item.label + '-' + item.label">
@@ -58,6 +60,7 @@ import { useRoute } from "vue-router";
 import { computed, ref } from 'vue';
 import { menuItems } from "./menuItem";
 import HeaderLayout from "./HeaderLayout.vue";
+import router from "@/router";
 const route = useRoute();
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);

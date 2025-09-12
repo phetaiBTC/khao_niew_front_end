@@ -4,7 +4,9 @@ import {
     BookOutlined,
     PictureOutlined,
     AimOutlined,
-    TagOutlined
+    TagOutlined,
+    MenuOutlined,
+    CompressOutlined
 } from '@ant-design/icons-vue';
 import type { Component } from 'vue';
 export const menuItems: {
@@ -13,7 +15,7 @@ export const menuItems: {
     to: string | { name: string },
     children?: {
         label: string,
-        icon: Component,
+        // icon: Component,
         to: string | { name: string },
     }[]
 }[] = [
@@ -51,17 +53,23 @@ export const menuItems: {
             label: 'booking',
             icon: TagOutlined,
             to: { name: 'booking' }
-        }
-        // {
-        //     key: 'sub1',
-        //     label: 'User Group',
-        //     icon: UserOutlined,
-        //     children: [
-        //         { key: '3', label: 'Tom', to: '/tom' },
-        //         { key: '4', label: 'Bill', to: '/bill' },
-        //         { key: '5', label: 'Alex', to: '/alex' }
-        //     ]
-        // },
+        },
+        {
+            label: 'scan',
+            icon: CompressOutlined,
+            to: { name: 'scan' }
+        },
+        {
+            label: 'report',
+            to: { name: 'report' },
+            icon: MenuOutlined,
+            children: [
+                {
+                    label: 'Report_year',
+                    to: { name: 'report.year' }
+                },
+            ]
+        },
         // {
         //     key: 'sub2',
         //     label: 'Team',

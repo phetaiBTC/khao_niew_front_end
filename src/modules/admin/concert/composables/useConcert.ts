@@ -9,6 +9,7 @@ export const useConcert = () => {
     const fetchConcertList = async () => {
         loadingConcert.value = true
         try {
+            
             const { data } = await clientApi.get('/concerts', { params: params.value })
             ConcertList.value = data
         } catch (error: any) {

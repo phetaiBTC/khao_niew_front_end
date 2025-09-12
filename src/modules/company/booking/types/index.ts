@@ -21,5 +21,9 @@ export interface BookingEntity extends BaseEntity {
         status: string
         created_At: string
         updated_At: string
-    }
+    },
+    details:{
+        id: number
+        status: string
+    }[]
 }
