@@ -1,19 +1,33 @@
 <script setup lang="ts">
-import { QrcodeStream } from "vue-qrcode-reader"
-import { ref } from "vue"
-import { message } from "ant-design-vue"
-
+import { BrowserQRCodeReader } from '@zxing/browser'
+import { onMounted, ref } from 'vue'
+import { clientApi } from '@/plugins/axiosPlugin'
+import { message } from 'ant-design-vue'
 const result = ref("")
+const videoRef = ref<HTMLVideoElement | null>(null)
 
-function onDecode(content: string) {
-    result.value = content
-    message.success("ສະແດງຂໍ້ມູນສໍາເລັດ")
-}
+onMounted(async () => {
+    const codeReader = new BrowserQRCodeReader()
+    const devices = await BrowserQRCodeReader.listVideoInputDevices()
+    if (devices.length > 0) {
+        codeReader.decodeFromVideoDevice(devices[0].deviceId, videoRef.value!, async (res, _err) => {
+            if (res) {
+                result.value = res.getText()
+                await clientApi.post('/check-in/create-check-in', { booking_details: Number(result.value) })
+                    .then(() => {
+                        message.success("Check-in successful")
+                    }).catch(() => {
+                        message.error("Check-in failed")
+                    })
+            }
+        })
+    }
+})
 </script>
 
 <template>
     <div>
-        <qrcode-stream @decode="onDecode" />
-        <p>ผลลัพธ์: {{ result }}</p>
+        <video ref="videoRef" style="width: 100%; border: 1px solid #ccc;" autoplay></video>
+        <p class="text-3xl">ผลลัพธ์: {{ result }}</p>
     </div>
 </template>
