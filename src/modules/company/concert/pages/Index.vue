@@ -1,62 +1,99 @@
 <template>
-    <a-card class="w-full">
-        <template #title>
-            <!-- <div class="flex items-center gap-2">
+  <a-card class="w-full">
+    <template #title>
+      <!-- <div class="flex items-center gap-2">
                 <PictureOutlined></PictureOutlined>
                 <h1 class="text-xl" style="margin: 0 !important;">{{ $t('concert') }}</h1>
             </div> -->
-        </template>
-        <template #extra>
-            <div class="flex justify-between">
-                <div class="flex items-center gap-2">
-                    <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="" />
-                </div>
-            </div>
-        </template>
-        <a-row :gutter="[16, 16]">
-            <a-col :span="12" v-for="concert in ConcertList.data" :key="concert.id">
-                <div class="bg-white rounded-lg cursor-pointer flex flex-col justify-center items-center hover:shadow-lg overflow-hidden"
-                    style="box-shadow: 0px 5px 10px #d9d9d9;">
-                    <h1 class="text-center py-1 text-nowrap border-b w-4/5 "
-                        :class="concert.limit != concert.totalTicket ? 'border-green-500' : 'border-red-500'"
-                        style="margin: 0 !important;">
-                        {{ dayjs(concert.date).format('dddd DD-MM-YYYY') }}
-                    </h1>
-                    <h1 class="text-center p-2 mx-auto text-2xl bg-gray-100 w-4/5 rounded-xl text-blue-950"
-                        style="margin: 10px 0 !important;">{{ concert.totalTicket +
-                            ' / ' +
-                            concert.limit }}</h1>
-                    <a-tag color="green" style="margin: 0 !important;">{{ concert.price.toLocaleString() + ' kip' }} /
-                        {{
-                            $t('seat')
-                        }}</a-tag>
-                    <a-button type="primary" class="w-full" style="margin-top: 5px;" size="large"
-                        @click="router.push({ name: 'company.booking.create', params: { concert_id: concert.id } })"
-                        :disabled="concert.limit === concert.totalTicket">
-                        <div>
-                            <ShoppingOutlined />
-                            {{ $t(concert.limit === concert.totalTicket ? 'sold_out' : 'book_now') }}
-                        </div>
-                    </a-button>
-                </div>
-            </a-col>
-        </a-row>
-    </a-card>
+    </template>
+    <template #extra>
+      <div class="flex justify-between">
+        <div class="flex items-center gap-2">
+          <a-date-picker v-model:value="search" valueFormat="YYYY-MM-DD" placeholder="ຄົ້ນຫາ..." @change="setQuery({ search: search, page: 1 })" />
+        </div>
+      </div>
+    </template>
+    <a-row :gutter="[16, 16]">
+      <a-col
+        v-for="concert in ConcertList.data"
+        :key="concert.id"
+        :xs="24"
+        :sm="12"
+        :md="8"
+        :lg="6"
+      >
+        <div
+          class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-200 overflow-hidden flex flex-col items-center"
+        >
+          <div
+            class="w-full text-center py-2 font-semibold"
+            :class="
+              concert.limit != concert.totalTicket
+                ? 'bg-green-100 text-green-700'
+                : 'bg-red-100 text-red-700'
+            "
+          >
+            {{ dayjs(concert.date).format("dddd DD-MM-YYYY") }}
+          </div>
+
+          <div class="w-full h-48 overflow-hidden">
+            <img v-if="concert.entertainments[0].images.length > 0"
+              :src="pathBack + concert.entertainments[0].images[0].url"
+              alt="..."
+              class="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
+            />
+          </div>
+
+          <div class="flex justify-between items-center w-4/5 my-2">
+            <a-tag color="green">{{
+              concert.price.toLocaleString() + " kip"
+            }}</a-tag>
+            <span class="text-gray-600 text-sm">
+              {{ concert.totalTicket }} / {{ concert.limit }}
+            </span>
+          </div>
+
+          <a-button
+            block
+            size="large"
+            :type="
+              concert.limit === concert.totalTicket ? 'default' : 'primary'
+            "
+            :disabled="concert.limit === concert.totalTicket"
+            @click="
+              router.push({
+                name: 'company.booking.create',
+                params: { concert_id: concert.id },
+              })
+            "
+          >
+            <template #icon><ShoppingOutlined /></template>
+            {{
+              $t(
+                concert.limit === concert.totalTicket ? "sold_out" : "book_now"
+              )
+            }}
+          </a-button>
+        </div>
+      </a-col>
+    </a-row>
+  </a-card>
 </template>
 
 <script setup lang="ts">
-import { ShoppingOutlined } from '@ant-design/icons-vue';
-import { ref, onMounted } from 'vue';
-import dayjs from 'dayjs';
-import 'dayjs/locale/lo';
-dayjs.locale('lo');
-import { useConcert } from '@/modules/admin/concert/composables/useConcert';
-import router from '@/router';
-const { fetchConcertList, ConcertList } = useConcert()
-const search = ref<string>('');
+import { ShoppingOutlined } from "@ant-design/icons-vue";
+import { ref, onMounted } from "vue";
+import dayjs from "dayjs";
+import "dayjs/locale/lo";
+dayjs.locale("lo");
+import { useConcert } from "@/modules/admin/concert/composables/useConcert";
+import router from "@/router";
+const pathBack = import.meta.env.VITE_API_BASE_URL;
+const { fetchConcertList, ConcertList,setQuery } = useConcert();
+const search = ref<string>("");
 onMounted(async () => {
-    await fetchConcertList()
-})
+  await fetchConcertList();
+});
 </script>
 
 <style scoped></style>

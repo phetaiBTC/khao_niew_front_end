@@ -1,7 +1,7 @@
 <template>
     <BaseCRUD :columns="UserCol.getColumns()" :data="ConcertList" :loading="loadingConcert" :icon="PictureOutlined"
         title="concert" @on-delete="deleteConcert" @on-edit="onEdit($event)" @on-query="setQuery($event)"
-        @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 1800 }" :input-search="false">
+        @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 1800 }" :input-search="false" :view="true" @on-view="router.push({name:'concert.detail',params:{id:$event}})">
         <template #extra>
             <a-date-picker v-model:value="datePicker" format="DD-MM-YYYY" placeholder="ຄົ້ນຫາຕາມວັນທີ"
                 @change="setQuery({ search: datePicker ? dayjs(datePicker).format('YYYY-MM-DD') : '', page: 1 })" />
@@ -75,6 +75,7 @@ import { BaseColumns } from '@/common/utils/baseColumn';
 import type { ConcertEntity } from '../types/index';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+import router from '@/router';
 
 const datePicker = ref<Dayjs | null>(null);
 const { setQuery, ConcertList, loadingConcert, deleteConcert, fetchConcertList } = useConcert()
