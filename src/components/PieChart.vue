@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { Pie } from "vue-chartjs";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 
 const props = defineProps<{
   labels: string[];
@@ -16,14 +16,16 @@ const props = defineProps<{
 }>();
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const data = reactive({
-  labels: props.labels,
-  datasets: [
-    {
-      backgroundColor: props.colors,
-      data: props.datas,
-    },
-  ],
+const data = computed(() => {
+  return {
+    labels: props.labels,
+    datasets: [
+      {
+        backgroundColor: props.colors,
+        data: props.datas,
+      },
+    ],
+  };
 });
 
 const options = reactive({

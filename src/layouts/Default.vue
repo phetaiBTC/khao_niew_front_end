@@ -1,6 +1,6 @@
 <template>
   <a-layout style="min-height: 100vh">
-    <a-layout-sider v-model:collapsed="collapsed" collapsible fixed />
+    <a-layout-sider v-model:collapsed="collapsed" fixed />
     <a-layout-sider
       v-model:collapsed="collapsed"
       collapsible
@@ -13,7 +13,14 @@
         top: 0,
         bottom: 0,
       }"
+      style="background-color: #1055c9"
     >
+      <template #trigger>
+        <div style="width: 100%; height: 100%; background: #05339c">
+          <LeftOutlined v-show="!collapsed" />
+          <RightOutlined v-show="collapsed" />
+        </div>
+      </template>
       <div class="logo">
         <img
           src="/src/assets/images/logoKhaoNiew.png"
@@ -26,7 +33,12 @@
           Khao Niew
         </h1>
       </div>
-      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
+      <a-menu
+        v-model:selectedKeys="selectedKeys"
+        theme="dark"
+        mode="inline"
+        style="background-color: #1055c9"
+      >
         <template v-for="item in menuItems" :key="item.label">
           <a-sub-menu v-if="item.children" :key="item.label">
             <template #title>
@@ -97,6 +109,7 @@ import { computed, ref } from "vue";
 import { menuItems } from "./menuItem";
 import HeaderLayout from "./HeaderLayout.vue";
 import router from "@/router";
+import {  LeftOutlined, RightOutlined } from "@ant-design/icons-vue";
 const route = useRoute();
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(["1"]);

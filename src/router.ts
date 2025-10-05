@@ -17,6 +17,7 @@ import { BookingRouter } from "./modules/admin/booking/router";
 import { ReportsRouter } from "./modules/admin/reports/router";
 import { ScanRouter } from "./modules/admin/scan/router";
 import { CompanyUserRouter } from "./modules/company/users/router";
+import { DashboardRouter } from "./modules/admin/dashboard/router";
 const routes = [
   {
     path: "/admin",
@@ -30,6 +31,7 @@ const routes = [
       ...VenueRouter,
       ...BookingRouter,
       ...ReportsRouter,
+      ...DashboardRouter
     ],
   },
   {
