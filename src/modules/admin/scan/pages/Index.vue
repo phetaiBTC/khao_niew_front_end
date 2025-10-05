@@ -51,7 +51,7 @@ onMounted(async () => {
 
     <!-- overlay 1:1 -->
     <div
-      class="absolute top-1/2 left-1/2 w-1/3 aspect-square border-4 border-red-500 -translate-x-1/2 -translate-y-1/2"
+      class="absolute top-1/2 left-1/2 h-1/2 aspect-square border-4 border-red-500 -translate-x-1/2 -translate-y-1/2"
     ></div>
   </div>
 </template>
