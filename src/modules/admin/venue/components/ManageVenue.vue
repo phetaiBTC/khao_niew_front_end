@@ -100,10 +100,6 @@ import { useVenue } from "../composables/useVenue.ts";
 import { rulesVenue } from "../rules.ts";
 import PickMap from "./PickMap.vue";
 
-const handleMapClick = (lat: number, lng: number) => {
-  formState.latitude = lat;
-  formState.longitude = lng;
-};
 
 const { createVenue, updateVenue, loadingVenue } = useVenue();
 const formRef = ref();
