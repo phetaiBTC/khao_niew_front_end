@@ -1,5 +1,15 @@
 <template>
-  <a-card class="w-full">
+  <a-card
+    class="w-full"
+    :tab-list="props.tabList"
+    :active-tab-key="activeKey"
+    @tabChange="onTabChange"
+  >
+    <template #customTab="{ key: tabKey }">
+      <span v-if="tabKey === 'table'"> <table-outlined /> Table </span>
+      <span v-else-if="tabKey === 'card'"> <appstore-outlined /> Card </span>
+      <span v-else>kk</span>
+    </template>
     <template #title>
       <div class="flex items-center gap-2">
         <component :is="props.icon" style="font-size: 1.5rem"></component>
@@ -49,7 +59,10 @@
       </div>
     </template>
     <a-row :gutter="[16, 16]">
-      <a-col :span="24">
+      <a-col v-if="activeKey == 'card'" :span="6" v-for="value in data.data">
+        <slot name="card" :value="value"> </slot>
+      </a-col>
+      <a-col :span="24" v-if="activeKey == 'table'">
         <a-table
           :columns="props.columns"
           :data-source="props.data.data"
@@ -98,6 +111,7 @@
           </template>
         </a-table>
       </a-col>
+
       <a-col :span="24">
         <div class="flex justify-end">
           <a-pagination
@@ -124,6 +138,8 @@ import {
   EyeOutlined,
   VerticalAlignBottomOutlined,
   VerticalAlignTopOutlined,
+  TableOutlined,
+  AppstoreOutlined,
 } from "@ant-design/icons-vue";
 import { ref, type Component } from "vue";
 import type { TableColumnsType } from "ant-design-vue";
@@ -138,6 +154,7 @@ const props = withDefaults(
     icon: Component;
     title: string;
     view?: boolean;
+    tabList?: boolean | { key: string; tab: string }[];
     scroll?: {
       x?: number | string;
       y?: number | string;
@@ -148,8 +165,15 @@ const props = withDefaults(
     scroll: () => ({ x: 1500, y: 1900 }),
     inputSearch: true,
     view: false,
+    tabList: false,
   }
 );
+
+const activeKey = ref("table");
+const onTabChange = (key: string) => {
+  activeKey.value = key;
+};
+
 const emit = defineEmits([
   "onDelete",
   "onEdit",
