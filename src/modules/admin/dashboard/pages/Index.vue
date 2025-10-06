@@ -8,6 +8,10 @@
           valueFormat="YYYY"
           @change="setQueryYear(queryYear)"
         />
+        <a-button type="primary" @click="exportExcelYear(queryYear)"
+            style="margin-left: 20px;">
+            {{ $t('export_excel') }}
+        </a-button>
       </template>
       <StackedBarChart
         :labels="data.labels"
@@ -25,7 +29,10 @@ import { colorFromId } from "@/common/utils/colorById";
 import dayjs from "dayjs";
 import "dayjs/locale/lo";
 dayjs.locale("lo");
+import { useReport } from "../../reports/composables/useReport";
 
+
+const { exportExcelYear } = useReport()
 const {
   fetchReportRevenue,
   queryYear,

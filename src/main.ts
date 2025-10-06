@@ -4,6 +4,8 @@ import App from './App.vue'
 import 'ant-design-vue/dist/reset.css';
 import Antd from 'ant-design-vue';
 import router from './router';
+import 'leaflet/dist/leaflet.css';
+
 import { i18n } from './plugins/i18nPlugin';
 import { createPinia } from 'pinia';
 const pinia = createPinia()

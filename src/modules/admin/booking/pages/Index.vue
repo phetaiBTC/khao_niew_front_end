@@ -117,8 +117,8 @@ const onQuery = async (page?: number, pageSize?: number) => {
 
 
 const BookingCol = new BaseColumns<BookingEntity>([
-    { dataIndex: 'booking_id' },
-    { dataIndex: 'company' },
+    { dataIndex: 'booking_id',width:100 },
+    { dataIndex: 'company',width:100 },
     { dataIndex: 'price' },
     { dataIndex: 'concert' },
 ])
@@ -133,5 +133,8 @@ onMounted(async () => {
 <style scoped>
 :deep(.ant-table) {
     border: 1px solid rgb(204, 204, 204);
+}
+h1{
+    margin-bottom: 0 !important;
 }
 </style>

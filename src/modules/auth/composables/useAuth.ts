@@ -12,7 +12,7 @@ export const useAuth = () => {
             const { data } = await clientApi.post('/auth/login', fromState)
             authStore.login(data)
             if(authStore.role === 'admin'){
-                await router.push({ name: "user" })
+                await router.push({ name: "dashboard" })
             }
             else if(authStore.role === 'company'){
                 await router.push('/companies')

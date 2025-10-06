@@ -45,7 +45,7 @@ const options = reactive<ChartOptions<"bar">>({
   responsive: true,
   plugins: {
     legend: { position: "top" as const },
-    title: { display: true, text: "Stacked Bar Chart รายได้บริษัท" },
+    title: { display: true, text: "Stacked Bar Chart ລາຍໄດ້" },
   },
   scales: {
     x: { stacked: true },
@@ -53,12 +53,4 @@ const options = reactive<ChartOptions<"bar">>({
   },
 });
 
-// const data = reactive({
-//   labels: ["Jan", "Feb", "Mar", "Apr"],
-//   datasets: [
-//     { label: "บริษัท A", data: [30, 50, 70, 40], backgroundColor: "#41B883" },
-//     { label: "บริษัท B", data: [20, 30, 50, 25], backgroundColor: "#E46651" },
-//     { label: "บริษัท C", data: [10, 20, 30, 15], backgroundColor: "#00D8FF" },
-//   ],
-// });
 </script>
