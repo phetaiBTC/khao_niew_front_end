@@ -23,17 +23,14 @@ import { UserOutlined, AimOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from 'vue';
 import ManageVenue from '../components/ManageVenue.vue';
 import { useVenue } from '../composables/useVenue';
-// import PickMap from '../components/PickMap.vue';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { venueEntity } from '../types/index';
 const { setQuery, VenueList, loadingVenue, deleteVenue, fetchVenueList } = useVenue()
-// const handleMapClick = (lat: number, lng: number) => {
-//   console.log('Parent received:', lat, lng);
-// }
+
 const open = ref<boolean>(false)
 const companyRecord = ref<venueEntity | null>(null)
 const onEdit = (record: venueEntity) => {
-    console.log(record)
+    // console.log(record)
     companyRecord.value = record
     open.value = true
 }

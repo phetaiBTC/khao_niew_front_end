@@ -3,69 +3,64 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import L from "leaflet";
 
-const emit = defineEmits<{
-  (e: "onClick", lat: number, lng: number): void;
-  (e: "location", lat: number, lng: number): void;
+const props = defineProps<{
+  modelValueLat: number | null;
+  modelValueLng: number | null;
 }>();
-
-const clickedLat = ref<number | null>(null);
-const clickedLng = ref<number | null>(null);
+const emit = defineEmits<{
+  (e: "update:modelValueLat", val: number): void;
+  (e: "update:modelValueLng", val: number): void;
+}>();
 
 onMounted(() => {
   const map = L.map("map");
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "&copy; OpenStreetMap contributors",
-  }).addTo(map);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
   let marker: L.Marker | null = null;
 
-  // Geolocation
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        clickedLat.value = lat;
-        clickedLng.value = lng;
-        emit("location",lat,lng);
+  // initial position
+  const initLat = props.modelValueLat ?? 13.7563;
+  const initLng = props.modelValueLng ?? 100.5018;
+  map.setView([initLat, initLng], 13);
 
-        map.setView([lat, lng], 13);
+  marker = L.marker([initLat, initLng]).addTo(map);
 
-        marker = L.marker([lat, lng])
-          .addTo(map)
-          .bindPopup(`คุณอยู่ที่นี่: [${lat.toFixed(5)}, ${lng.toFixed(5)}]`)
-          .openPopup();
-      },
-      () => {
-        map.setView([13.7563, 100.5018], 13); // fallback
-      }
-    );
-  } else {
-    map.setView([13.7563, 100.5018], 13); // fallback
+  // geolocation only if props are null
+  if (
+    props.modelValueLat == 0 &&
+    props.modelValueLng == 0 &&
+    navigator.geolocation
+  ) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      map.setView([lat, lng], 13);
+      marker!.setLatLng([lat, lng]);
+      emit("update:modelValueLat", lat);
+      emit("update:modelValueLng", lng);
+    });
   }
 
   // click map
   map.on("click", (e: L.LeafletMouseEvent) => {
     const { lat, lng } = e.latlng;
-    clickedLat.value = lat;
-    clickedLng.value = lng;
-    emit("onClick", lat, lng);
-
-    if (marker) {
-      marker
-        .setLatLng([lat, lng])
-        .setPopupContent(`ເລືອກ: [${lat.toFixed(5)}, ${lng.toFixed(5)}]`)
-        .openPopup();
-    } else {
-      marker = L.marker([lat, lng])
-        .addTo(map)
-        .bindPopup(`ເລືອກ: [${lat.toFixed(5)}, ${lng.toFixed(5)}]`)
-        .openPopup();
-    }
+    marker!.setLatLng([lat, lng]);
+    emit("update:modelValueLat", lat);
+    emit("update:modelValueLng", lng);
   });
+
+  // watch parent props → update marker
+  watch(
+    () => [props.modelValueLat, props.modelValueLng],
+    ([lat, lng]) => {
+      if (lat != null && lng != null && marker) {
+        marker.setLatLng([lat, lng]);
+        map.setView([lat, lng], map.getZoom());
+      }
+    }
+  );
 });
 </script>

@@ -18,9 +18,9 @@
       :model="formState"
       :rules="rulesVenue"
       @finish="onSumit"
-      style="height:85vh;"
+      style="height: 85vh"
     >
-      <a-row :gutter="[16, 0]" style="height: 100%;">
+      <a-row :gutter="[16, 0]" style="height: 100%">
         <a-divider
           style="
             margin: 0 !important;
@@ -30,9 +30,12 @@
         >
           {{ $t("information") }}
         </a-divider>
-        <a-col span="16" style="height: 90%;">
+        <a-col span="16" style="height: 90%">
           <div class="w-full h-full">
-            <PickMap @on-click="handleMapClick" @location="getLocation"></PickMap>
+            <PickMap
+              v-model:modelValueLat="formState.latitude"
+              v-model:modelValueLng="formState.longitude"
+            />
           </div>
         </a-col>
         <a-col span="8">
@@ -77,8 +80,9 @@
                 type="primary"
                 htmlType="submit"
                 :loading="loadingVenue"
-                >{{ $t("save") }}</a-button
               >
+                {{ $t("save") }}
+              </a-button>
             </div>
           </a-col>
         </a-col>
@@ -97,13 +101,10 @@ import { rulesVenue } from "../rules.ts";
 import PickMap from "./PickMap.vue";
 
 const handleMapClick = (lat: number, lng: number) => {
-  formState.latitude = lat
-  formState.longitude = lng
+  formState.latitude = lat;
+  formState.longitude = lng;
 };
-const getLocation = (lat: number, lng: number) => {
-  formState.latitude = lat
-  formState.longitude = lng
-};
+
 const { createVenue, updateVenue, loadingVenue } = useVenue();
 const formRef = ref();
 const props = defineProps<{
@@ -132,6 +133,12 @@ watch(
       formState.address = value.address;
       formState.latitude = value.latitude;
       formState.longitude = value.longitude;
+    }
+    if (value == null) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        formState.latitude = position.coords.latitude;
+        formState.longitude = position.coords.longitude;
+      });
     }
   }
 );
