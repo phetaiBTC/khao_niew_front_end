@@ -17,12 +17,15 @@
       <a-card
         hoverable
         style="width: 100%; box-shadow: 0 5px 10px #f4f4f4; overflow: hidden"
-        
       >
         <template #cover>
           <a-carousel autoplay>
             <div v-for="item in value.images">
-              <img alt="..." :src="baseUrl + item.url" class="aspect-square w-full" />
+              <img
+                alt="..."
+                :src="baseUrl + item.url"
+                class="aspect-square w-full"
+              />
             </div>
           </a-carousel>
         </template>
@@ -34,9 +37,7 @@
             :ok-text="$t('yes')"
             :cancel-text="$t('cancel')"
           >
-            <DeleteOutlined
-              key="delete"
-            ></DeleteOutlined>
+            <DeleteOutlined key="delete"></DeleteOutlined>
           </a-popconfirm>
         </template>
         <a-card-meta :title="value.title" :description="value.description">
