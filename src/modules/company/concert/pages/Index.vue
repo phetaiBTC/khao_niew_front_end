@@ -9,7 +9,12 @@
     <template #extra>
       <div class="flex justify-between">
         <div class="flex items-center gap-2">
-          <a-date-picker v-model:value="search" valueFormat="YYYY-MM-DD" placeholder="ຄົ້ນຫາ..." @change="setQuery({ search: search, page: 1 })" />
+          <a-date-picker
+            v-model:value="search"
+            valueFormat="YYYY-MM-DD"
+            placeholder="ຄົ້ນຫາ..."
+            @change="setQuery({ search: search, page: 1 })"
+          />
         </div>
       </div>
     </template>
@@ -37,11 +42,17 @@
           </div>
 
           <div class="w-full h-48 overflow-hidden">
-            <img v-if="concert.entertainments[0].images.length > 0"
-              :src="pathBack + concert.entertainments[0].images[0].url"
-              alt="..."
-              class="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
-            />
+            <a-carousel autoplay>
+              <div
+                v-for="(entertainment, i) in concert.entertainments"
+                :key="i"
+              >
+                <div v-for="(img, j) in entertainment.images" :key="j">
+                  <img :src="baseUrl + img.url" class="w-full object-cover" />
+                  <p class="text-center">{{ entertainment.title }}</p>
+                </div>
+              </div>
+            </a-carousel>
           </div>
 
           <div class="flex justify-between items-center w-4/5 my-2">
@@ -85,11 +96,12 @@ import { ShoppingOutlined } from "@ant-design/icons-vue";
 import { ref, onMounted } from "vue";
 import dayjs from "dayjs";
 import "dayjs/locale/lo";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
 dayjs.locale("lo");
 import { useConcert } from "@/modules/admin/concert/composables/useConcert";
 import router from "@/router";
-const pathBack = import.meta.env.VITE_API_BASE_URL;
-const { fetchConcertList, ConcertList,setQuery } = useConcert();
+const { fetchConcertList, ConcertList, setQuery } = useConcert();
 const search = ref<string>("");
 onMounted(async () => {
   await fetchConcertList();
