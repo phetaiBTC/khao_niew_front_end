@@ -1,7 +1,7 @@
 <template>
     <BaseCRUD :columns="UserCol.getColumns()" :data="CompanyList" :loading="loadingCompany" :icon="BankOutlined"
         title="company" @on-delete="deleteCompany" @on-edit="onEdit($event)" @on-query="setQuery($event)"
-        @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 'max-content' }">
+        @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 'max-content' }" :view="true" >
         <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'user'">
                 <a-tag color="blue">

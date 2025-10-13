@@ -2,6 +2,7 @@ import {
 
     PictureOutlined,
     TagOutlined,
+    UserOutlined,
 
 } from '@ant-design/icons-vue';
 import type { Component } from 'vue';
@@ -15,11 +16,11 @@ export const menuItemsCompany: {
         to: string | { name: string },
     }[]
 }[] = [
-        // {
-        //     label: 'user',
-        //     icon: UserOutlined,
-        //     to: { name: 'user' }
-        // },
+        {
+            label: 'user',
+            icon: UserOutlined,
+            to: { name: 'company.user' }
+        },
         {
             label: 'concert',
             icon: PictureOutlined,
