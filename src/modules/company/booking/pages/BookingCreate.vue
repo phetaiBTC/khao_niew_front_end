@@ -50,10 +50,10 @@
             </a-tag>
             <div class="w-full flex flex-row gap-2" v-if="!isToken">
                 <a-form-item name="email" :label="$t('email')" :rules="[{ required: true }, { type: 'email' }]">
-                    <a-input v-model:value="formState.email" :placeholder="$t('name')" />
+                    <a-input v-model:value="formState.email" :placeholder="$t('email')" />
                 </a-form-item>
-                <a-form-item name="phone" :label="$t('phone')" :rules="[{ required: true }]">
-                    <a-input v-model:value="formState.phone" :placeholder="$t('phone')" />
+                <a-form-item name="username" :label="$t('username')" :rules="[{ required: true }]">
+                    <a-input v-model:value="formState.username" :placeholder="$t('username')" />
                 </a-form-item>
             </div>
             <div class="flex justify-between items-center w-full">
