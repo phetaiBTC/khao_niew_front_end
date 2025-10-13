@@ -40,7 +40,7 @@
                         <template v-if="column.key === 'booking_id'">
                             <a-tag color="blue">{{ "# " + record.id }}</a-tag>
                             <a v-if="record.payment.images.length > 0"
-                                :href="base_api + '/' + record.payment.images[0].url" target="_blank">
+                                :href="base_api + record.payment.images[0].url" target="_blank">
                                 <FileImageOutlined style="cursor: pointer;"></FileImageOutlined>
                             </a>
                         </template>
