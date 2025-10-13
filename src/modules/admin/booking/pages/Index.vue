@@ -9,7 +9,7 @@
         <template #extra>
             <div class="flex justify-between">
                 <div class="flex items-center gap-2">
-                   
+
                     <a-button type="primary" @click="() => { orderBy = 'ASC'; onQuery() }" v-if="orderBy === 'DESC'">
                         <VerticalAlignTopOutlined />
                     </a-button>
@@ -39,6 +39,10 @@
                     <template #bodyCell="{ column, record }">
                         <template v-if="column.key === 'booking_id'">
                             <a-tag color="blue">{{ "# " + record.id }}</a-tag>
+                            <a v-if="record.payment.images.length > 0"
+                                :href="base_api + '/' + record.payment.images[0].url" target="_blank">
+                                <FileImageOutlined style="cursor: pointer;"></FileImageOutlined>
+                            </a>
                         </template>
                         <template v-if="column.key === 'company'">
                             <h1>
@@ -93,7 +97,7 @@
 </template>
 
 <script setup lang="ts">
-import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined, TagOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons-vue';
+import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined, TagOutlined, CheckOutlined, CloseOutlined, FileImageOutlined } from '@ant-design/icons-vue';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { BookingEntity } from '@/modules/company/booking/types';
 import dayjs from 'dayjs';
@@ -107,6 +111,7 @@ const { getOptionsCompany, optionCompany } = useCompany()
 const orderBy = ref<"ASC" | "DESC">('DESC')
 const company_id = ref<number | null>(null)
 const status = ref<string | undefined>('pending')
+const base_api = import.meta.env.VITE_API_BASE_URL
 const onQuery = async (page?: number, pageSize?: number) => {
     setQuery({
         page: page,
@@ -117,8 +122,8 @@ const onQuery = async (page?: number, pageSize?: number) => {
 
 
 const BookingCol = new BaseColumns<BookingEntity>([
-    { dataIndex: 'booking_id',width:100 },
-    { dataIndex: 'company',width:100 },
+    { dataIndex: 'booking_id', width: 100 },
+    { dataIndex: 'company', width: 100 },
     { dataIndex: 'price' },
     { dataIndex: 'concert' },
 ])
@@ -134,7 +139,8 @@ onMounted(async () => {
 :deep(.ant-table) {
     border: 1px solid rgb(204, 204, 204);
 }
-h1{
+
+h1 {
     margin-bottom: 0 !important;
 }
 </style>

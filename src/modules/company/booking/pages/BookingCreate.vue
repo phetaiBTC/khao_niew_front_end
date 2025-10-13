@@ -19,11 +19,11 @@
             </h1>
             <h1>
                 {{ $t('status') }} : <a-tag :color="Concert.status === 'open' ? 'green' : 'red'">{{ Concert.status
-                }}</a-tag>
+                    }}</a-tag>
             </h1>
             <h1>
                 {{ $t('price') }} : <a-tag color="gold">{{ Concert.price.toLocaleString() + ' kip' }}/{{ $t('seat')
-                }}</a-tag>
+                    }}</a-tag>
             </h1>
             <h1>
                 {{ $t('seat') }} : {{ Concert.totalTicket }} / {{ Concert.limit }}
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <a-button type="primary" class="w-full mt-2" size="large" htmlType="submit"
-                :disabled="Concert.limit === Concert.totalTicket">
+                :disabled="Concert.limit === Concert.totalTicket || imagesList.length === 0">
                 {{ $t('book_now') }}
             </a-button>
         </a-form>
@@ -98,7 +98,7 @@ const formState = reactive<IBooking>({
     ticket_quantity: 1
 })
 const fileList = ref([]);
-const { createImage } = useImage()
+const { createImage,imagesList } = useImage()
 const handleUpload = async (options: any) => {
     try {
         await createImage({ file: options.file })

@@ -1,55 +1,35 @@
 <template>
-  <BaseCRUD
-    :columns="UserCol.getColumns()"
-    :data="EntertainmentList"
-    :loading="loadingEntertainment"
-    :icon="BookOutlined"
-    title="entertainment"
-    @on-delete="deleteEntertainment"
-    @on-edit="onEdit($event)"
-    @on-query="setQuery($event)"
-    @on-create="onCreate"
-    @on-search="setQuery($event)"
-    :scroll="{ x: 'max-content' }"
-    :tab-list="tabList"
-  >
+  <BaseCRUD :columns="UserCol.getColumns()" :data="EntertainmentList" :loading="loadingEntertainment"
+    :icon="BookOutlined" title="entertainment" @on-delete="deleteEntertainment" @on-edit="onEdit($event)"
+    @on-query="setQuery($event)" @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 'max-content' }"
+    :tab-list="tabList">
     <template #card="{ value }">
-      <a-card
-        hoverable
-        style="width: 100%; box-shadow: 0 5px 10px #f4f4f4; overflow: hidden"
-      >
+      <a-card hoverable style="width: 100%; box-shadow: 0 5px 10px #f4f4f4; overflow: hidden">
         <template #cover>
           <a-carousel autoplay>
             <div v-for="item in value.images">
-              <img
-                alt="..."
-                :src="baseUrl + item.url"
-                class="aspect-square w-full"
-              />
+              <img alt="..." :src="baseUrl + item.url" class="aspect-square w-full object-cover" />
             </div>
           </a-carousel>
         </template>
         <template #actions>
           <EditOutlined key="edit" @click="onEdit(value)" />
-          <a-popconfirm
-            :title="$t('Are_you_sure_delete_this')"
-            @confirm="deleteEntertainment(value.id)"
-            :ok-text="$t('yes')"
-            :cancel-text="$t('cancel')"
-          >
+          <a-popconfirm :title="$t('Are_you_sure_delete_this')" @confirm="deleteEntertainment(value.id)"
+            :ok-text="$t('yes')" :cancel-text="$t('cancel')">
             <DeleteOutlined key="delete"></DeleteOutlined>
           </a-popconfirm>
         </template>
-        <a-card-meta :title="value.title" :description="value.description">
+        <a-card-meta :title="value.title">
+          <template #description>
+            <span class="text-nowrap overflow-hidden text-ellipsis block max-w-[200px]">
+              {{ value.description }}
+            </span>
+          </template>
         </a-card-meta>
       </a-card>
     </template>
   </BaseCRUD>
-  <manageCompany
-    :open="open"
-    :data="companyRecord"
-    @isOpen="open = $event"
-  ></manageCompany>
+  <manageCompany :open="open" :data="companyRecord" @isOpen="open = $event"></manageCompany>
 </template>
 
 <script setup lang="ts">
