@@ -2,13 +2,8 @@
   <a-layout-header style="background: #fff; padding: 0">
     <div class="w-full h-full items-center flex px-4 justify-between">
       <div class="flex items-center gap-4">
-        <!-- ปุ่ม toggle -->
-        <component
-          :is="collapsed ? MenuUnfoldOutlined : MenuFoldOutlined"
-          class="text-2xl cursor-pointer"
-          @click="$emit('toggleSidebar')"
-          v-show="showbutton"
-        />
+        <component :is="collapsed ? MenuUnfoldOutlined : MenuFoldOutlined" class="text-2xl cursor-pointer"
+          @click="$emit('toggleSidebar')" v-show="showbutton" />
         <span>{{ text }}</span>
       </div>
 
@@ -16,7 +11,11 @@
         <a-badge count="" class="cursor-pointer">
           <BellOutlined />
         </a-badge>
-        <a-button type="primary" @click="useAuthStore().logout()">
+        <a-button type="primary" @click="confirmLogout" class="flex items-center">
+          <a-badge count="" class="cursor-pointer" style="margin-right: 5px ; color: #fff;" >
+            <LogoutOutlined />
+          </a-badge>
+
           {{ $t('logout') }}
         </a-button>
       </div>
@@ -26,7 +25,8 @@
 
 <script setup lang="ts">
 import { useAuthStore } from "@/modules/auth/store/useAuthStore";
-import { BellOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue";
+import { BellOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from "@ant-design/icons-vue";
+import { Modal } from "ant-design-vue";
 
 defineProps({
   collapsed: {
@@ -41,4 +41,23 @@ defineProps({
 });
 
 defineEmits(["toggleSidebar"]);
+
+const auth = useAuthStore()
+
+const confirmLogout = () => {
+  Modal.confirm({
+    title: "ອອກຈາກລະບົບ?",
+    content: "ທ່ານແນ່ໃຈວ່າຕ້ອງການອອກຈາກລະບົບບໍ?",
+    okText: "ຕົກລົງ",
+    cancelText: "ຍົກເລິກ",
+    okType: "danger",
+    centered: true,
+    onOk() {
+      auth.logout()
+    },
+  })
+}
+
+
+
 </script>

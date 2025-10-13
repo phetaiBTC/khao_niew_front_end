@@ -19,7 +19,7 @@
 
                 <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
                     <template v-for="item in menuItemsCompany" :key="item.label">
-                 
+
                         <a-sub-menu v-if="item.children" :key="item.label">
                             <template #title>
                                 <span>
@@ -35,10 +35,9 @@
                             </a-menu-item>
                         </a-sub-menu>
 
-                      
                         <a-menu-item v-else :key="item.label" @click="handleMenuSelect">
-                            <component :is="item.icon" />
-                            <router-link :to="item.to">
+                            <component :is="item.icon"/>
+                            <router-link :to="item.to" class="ml-2">
                                 {{ $t(item.label.toLowerCase()) }}
                             </router-link>
                         </a-menu-item>
@@ -64,15 +63,38 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { menuItemsCompany } from "./menuItimeCompany";
 import HeaderLayout from "./HeaderLayout.vue";
-
+import { useRoute } from 'vue-router';
 const collapsed = ref(true);
 const selectedKeys = ref<string[]>(["4"]);
 const handleMenuSelect = () => {
     collapsed.value = true;
 };
+
+
+const route = useRoute();
+
+// map route.name -> menu key
+const routeToMenuKey: Record<string, string> = {
+  'company.profile': 'profile',
+  'company.user': 'user',
+  'company.concert': 'concert',
+  'company.booking': 'booking',
+};
+
+watch(
+  () => route.name,
+  (routeName : any) => {
+    if (routeName) {
+      const menuKey = routeToMenuKey[routeName as string];
+      selectedKeys.value = menuKey ? [menuKey] : [];
+    }
+  },
+  { immediate: true }
+);
+
 
 </script>
 
