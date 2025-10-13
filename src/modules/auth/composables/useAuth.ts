@@ -15,7 +15,7 @@ export const useAuth = () => {
                 await router.push({ name: "dashboard" })
             }
             else if(authStore.role === 'company'){
-                await router.push('/companies/user')
+                await router.push('/companies/concert')
             }
             // await router.push({ name: "user" })
             message.success("ລ໊ອກອິນສຳເລັດ")

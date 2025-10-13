@@ -31,15 +31,16 @@
             <h1>
                 {{ $t('Show_time') }} : {{ Concert.startTime }} - {{ Concert.endTime }}
             </h1>
-            <!-- <div>
-                {{ url }}
+            <div>
                 <a-carousel autoplay>
-                    <div v-for="(image, index) in Concert.entertainments[0].images" :key="index">
-                        <img :src="url + image" alt="" class="w-full h-96 object-cover rounded-lg" />
-                        {{ image }}
+                    <div v-for="item in listImages">
+                        <!-- {{ base_api + item }} -->
+
+                        <img :src="base_api + item" alt="..." class="w-full h-96 object-cover rounded-lg" />
                     </div>
                 </a-carousel>
-            </div> -->
+
+            </div>
         </div>
 
         <a-form class="sticky bottom-0 flex items-center flex-col gap-3 left-0 w-full bg-white"
@@ -80,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { createVNode, onMounted, reactive, ref } from 'vue'
+import { computed, createVNode, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useConcert } from '@/modules/admin/concert/composables/useConcert'
 import { AimOutlined, ExclamationCircleOutlined, UploadOutlined } from '@ant-design/icons-vue'
@@ -90,7 +91,7 @@ import { Modal } from 'ant-design-vue'
 import { tI18n } from '@/common/utils/i18n'
 import { useImage } from '@/modules/images/composables/useImage'
 import router from '@/router'
-
+const base_api = import.meta.env.VITE_API_BASE_URL
 const { createBooking } = useBooking()
 const formRef = ref()
 const formState = reactive<IBooking>({
@@ -98,7 +99,7 @@ const formState = reactive<IBooking>({
     ticket_quantity: 1
 })
 const fileList = ref([]);
-const { createImage,imagesList } = useImage()
+const { createImage, imagesList } = useImage()
 const handleUpload = async (options: any) => {
     try {
         await createImage({ file: options.file })
@@ -111,6 +112,10 @@ const handleUpload = async (options: any) => {
 const { fetchConcert, Concert } = useConcert()
 const route = useRoute()
 const concertId = route.params.concert_id
+const listImages = computed(() =>
+    Concert.value?.entertainments.flatMap(e => e.images.map(i => i.url)) ?? []
+)
+
 const onSumit = async () => {
     if (Number(concertId)) {
         formState.concert = Number(concertId)
