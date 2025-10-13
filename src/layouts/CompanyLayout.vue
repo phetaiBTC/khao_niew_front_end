@@ -1,62 +1,83 @@
 <template>
-    <a-layout class="h-screen">
-        <a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
-            :style="{ position: 'fixed', top: '0', height: '100vh', left: '0', zIndex: 1000 }">
-            <div class="logo">
-                <img src="/src/assets/images/logoKhaoNiew.png" alt="" srcset="" class="w-35 mx-auto"
-                    style="filter: drop-shadow(0 5px 10px #fff)">
-                <h1 class="text-center text-white text-2xl">Khao Niew</h1>
-            </div>
-            <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-                <template v-for="item in menuItemsCompany" :key="item.label">
-                    <a-sub-menu v-if="item.children" :key="item.label">
-                        <template #title>
-                            <span>
-                                <component :is="item.icon" />
-                                <span>{{ $t(item.label.toLowerCase()) }}</span>
-                            </span>
-                        </template>
-                        <a-menu-item v-for="child in item.children" :key="child.label">
-                            <router-link :to="child.to">{{ $t(child.label.toLowerCase()) }}</router-link>
+    <a-layout class="h-screen relative overflow-hidden">
+
+        <transition name="slide">
+            <a-layout-sider v-if="!collapsed" key="sidebar" collapsed-width="0" width="250" theme="dark" :trigger="null"
+                :style="{
+                    position: 'fixed',
+                    top: '0',
+                    left: '0',
+                    height: '100vh',
+                    zIndex: 2000,
+                    transition: 'all 0.3s ease'
+                }">
+                <div class="logo py-4">
+                    <img src="/src/assets/images/logoKhaoNiew.png" alt="" class="w-35 mx-auto"
+                        style="filter: drop-shadow(0 5px 10px #fff)" />
+                    <h1 class="text-center text-white text-2xl">Khao Niew</h1>
+                </div>
+
+                <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
+                    <template v-for="item in menuItemsCompany" :key="item.label">
+                 
+                        <a-sub-menu v-if="item.children" :key="item.label">
+                            <template #title>
+                                <span>
+                                    <component :is="item.icon" />
+                                    <span>{{ $t(item.label.toLowerCase()) }}</span>
+                                </span>
+                            </template>
+
+                            <a-menu-item v-for="child in item.children" :key="child.label" @click="handleMenuSelect">
+                                <router-link :to="child.to">
+                                    {{ $t(child.label.toLowerCase()) }}
+                                </router-link>
+                            </a-menu-item>
+                        </a-sub-menu>
+
+                      
+                        <a-menu-item v-else :key="item.label" @click="handleMenuSelect">
+                            <component :is="item.icon" />
+                            <router-link :to="item.to">
+                                {{ $t(item.label.toLowerCase()) }}
+                            </router-link>
                         </a-menu-item>
-                    </a-sub-menu>
-                    <a-menu-item v-else :key="item.label + '-' + item.label" v-if="true">
-                        <component :is="item.icon" />
-                        <span>
-                            <router-link :to="item.to">{{ $t(item.label.toLowerCase()) }}</router-link>
-                        </span>
-                    </a-menu-item>
-                </template>
-            </a-menu>
-        </a-layout-sider>
+                    </template>
+                </a-menu>
+            </a-layout-sider>
+        </transition>
+
+        <div v-if="!collapsed" class="fixed inset-0  bg-opacity-60 z-[1500]" @click="collapsed = true"></div>
+
         <a-layout>
-            <HeaderLayout />
-            <a-layout-content :style="{ margin: '24px 16px 0', minHeight: '280px' }" class=" overflow-scroll">
+            <HeaderLayout :collapsed="collapsed" @toggleSidebar="collapsed = !collapsed" :text="$t('khaoNiewLaos')"
+                :showbutton="true" />
+
+            <a-layout-content :style="{ margin: '24px 16px 0', minHeight: '280px', transition: 'margin-left 0.2s' }"
+                class="overflow-scroll">
                 <div :style="{ background: '#fff' }">
                     <router-view></router-view>
                 </div>
             </a-layout-content>
-            <!-- <a-layout-footer style="text-align: center">
-                Created by Khao Niew
-            </a-layout-footer> -->
         </a-layout>
     </a-layout>
 </template>
+
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { menuItemsCompany } from './menuItimeCompany';
+import { ref } from "vue";
+import { menuItemsCompany } from "./menuItimeCompany";
 import HeaderLayout from "./HeaderLayout.vue";
 
-const onCollapse = (collapsed: boolean, type: string) => {
-    console.log(collapsed, type);
+const collapsed = ref(true);
+const selectedKeys = ref<string[]>(["4"]);
+const handleMenuSelect = () => {
+    collapsed.value = true;
 };
 
-const onBreakpoint = (broken: boolean) => {
-    console.log(broken);
-};
-
-const selectedKeys = ref<string[]>(['4']);
 </script>
+
+
+
 <style scoped>
 #components-layout-demo-responsive .logo {
     height: 32px;
@@ -74,5 +95,18 @@ const selectedKeys = ref<string[]>(['4']);
 
 [data-theme='dark'] .site-layout-sub-header-background {
     background: #141414;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.3s ease;
+}
+
+.slide-enter-from {
+    transform: translateX(-100%);
+}
+
+.slide-leave-to {
+    transform: translateX(-100%);
 }
 </style>
