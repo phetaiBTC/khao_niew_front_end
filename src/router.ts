@@ -38,7 +38,7 @@ const routes = [
   {
     path: "/companies",
     component: CompanyLayout,
-    meta: { title: "Companies", role: "company" },
+    meta: { title: "Companies"},
     children: [
       ...BookingCompanyRouter,
       ...CompanyConcertRouter,
