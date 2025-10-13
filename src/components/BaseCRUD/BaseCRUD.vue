@@ -1,10 +1,5 @@
 <template>
-  <a-card
-    class="w-full"
-    :tab-list="props.tabList"
-    :active-tab-key="activeKey"
-    @tabChange="onTabChange"
-  >
+  <a-card class="w-full" :tab-list="props.tabList" :active-tab-key="activeKey" @tabChange="onTabChange">
     <template #customTab="{ key: tabKey }">
       <span v-if="tabKey === 'table'"> <table-outlined /> Table </span>
       <span v-else-if="tabKey === 'card'"> <appstore-outlined /> Card </span>
@@ -21,40 +16,28 @@
     <template #extra>
       <div class="flex justify-between">
         <div class="flex items-center gap-2">
-          <a-button
-            type="primary"
-            @click="
-              () => {
-                orderBy = 'ASC';
-                onQuery();
-              }
-            "
-            v-if="orderBy === 'DESC'"
-          >
+          <a-button type="primary" @click="
+            () => {
+              orderBy = 'ASC';
+              onQuery();
+            }
+          " v-if="orderBy === 'DESC'">
             <VerticalAlignTopOutlined />
           </a-button>
-          <a-button
-            type="primary"
-            @click="
-              () => {
-                orderBy = 'DESC';
-                onQuery();
-              }
-            "
-            v-if="orderBy === 'ASC'"
-          >
+          <a-button type="primary" @click="
+            () => {
+              orderBy = 'DESC';
+              onQuery();
+            }
+          " v-if="orderBy === 'ASC'">
             <VerticalAlignBottomOutlined />
           </a-button>
-          <a-input-search
-            v-model:value="search"
-            placeholder="ຄົ້ນຫາ..."
-            @search="onSearch"
-            v-show="props.inputSearch"
-          />
+          <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch"
+            v-show="props.inputSearch" />
           <slot name="extra"> </slot>
           <a-button type="primary" @click="onCreate">{{
             $t("add") + " " + $t(props.title)
-          }}</a-button>
+            }}</a-button>
         </div>
       </div>
     </template>
@@ -63,24 +46,15 @@
         <slot name="card" :value="value"> </slot>
       </a-col>
       <a-col :span="24" v-if="activeKey == 'table'">
-        <a-table
-          :columns="props.columns"
-          :data-source="props.data.data"
-          :loading="loading"
-          :scroll="props.scroll"
-          :pagination="false"
-          size="small"
-        >
+        <a-table :columns="props.columns" :data-source="props.data.data" :loading="loading" :scroll="props.scroll"
+          :pagination="false" size="small">
           <template #bodyCell="{ column, record }">
             <slot name="bodyCell" :column="column" :record="record"> </slot>
             <template v-if="column.key === 'actions'">
               <div class="flex gap-2 items-center justify-center">
+                <slot name="actions" :record="record"></slot>
                 <a-tooltip :title="$t('view')">
-                  <a-button
-                    type="primary"
-                    @click="onView(record.id)"
-                    v-if="props.view"
-                  >
+                  <a-button type="primary" @click="onView(record.id)" v-if="props.view">
                     <div>
                       <EyeOutlined />
                       <!-- {{ $t("view") }} -->
@@ -93,12 +67,8 @@
                   </a-button>
                 </a-tooltip>
 
-                <a-popconfirm
-                  :title="$t('Are_you_sure_delete_this')"
-                  @confirm="emit('onDelete', record.id)"
-                  :ok-text="$t('yes')"
-                  :cancel-text="$t('cancel')"
-                >
+                <a-popconfirm :title="$t('Are_you_sure_delete_this')" @confirm="emit('onDelete', record.id)"
+                  :ok-text="$t('yes')" :cancel-text="$t('cancel')">
                   <a-button type="primary" danger ghost>
                     <div>
                       <DeleteOutlined />
@@ -114,16 +84,10 @@
 
       <a-col :span="24">
         <div class="flex justify-end">
-          <a-pagination
-            v-model:current="props.data.pagination.page"
-            v-model:pageSize="props.data.pagination.per_page"
-            :total="props.data.pagination.total"
-            show-size-changer
-            show-quick-jumper
-            :show-total="(total: number) => `ລາຍການທັງຫມົດ ${total}`"
-            :page-size-options="['6', '10', '20', '30']"
-            @change="onQuery"
-          >
+          <a-pagination v-model:current="props.data.pagination.page" v-model:pageSize="props.data.pagination.per_page"
+            :total="props.data.pagination.total" show-size-changer show-quick-jumper
+            :show-total="(total: number) => `ລາຍການທັງຫມົດ ${total}`" :page-size-options="['6', '10', '20', '30']"
+            @change="onQuery">
           </a-pagination>
         </div>
       </a-col>

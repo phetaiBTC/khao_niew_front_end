@@ -10,6 +10,7 @@ export interface UserEntity extends BaseEntity {
 
 export interface IUser {
     id?: number | null,
+    companyId?: number
     username: string,
     email: string,
     phone: string

@@ -39,7 +39,7 @@ const onCreate = () => {
     open.value = true
 }
 const UserCol = new BaseColumns<UserEntity>([
-    { dataIndex: 'username', ellipsis: true, fixed: 'left', sorter: (a: UserEntity, b: UserEntity) => a.username.localeCompare(b.username) },
+    { dataIndex: 'username', ellipsis: true, sorter: (a: UserEntity, b: UserEntity) => a.username.localeCompare(b.username) },
     { dataIndex: 'email' },
     { dataIndex: 'phone' },
     { dataIndex: 'role' }

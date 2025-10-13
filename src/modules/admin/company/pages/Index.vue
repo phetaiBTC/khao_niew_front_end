@@ -12,13 +12,24 @@
                 </a-tag>
             </template>
         </template>
+        <template #actions="{ record }">
+            <a-tooltip :title="$t('add') + ' ' + $t('user')">
+                <a-button type="primary" @click="()=>{open1 = true; company_id = record.id}">
+                    <div>
+                        <UserAddOutlined />
+                    </div>
+                </a-button>
+            </a-tooltip>
+        </template>
     </BaseCRUD>
     <manageCompany :open="open" :data="companyRecord" @isOpen="open = $event"></manageCompany>
+    <ManageUser :open="open1" :company-id="company_id" @isOpen="open1 = $event"></ManageUser>
 </template>
 
 <script setup lang="ts">
 import BaseCRUD from '@/components/BaseCRUD/BaseCRUD.vue';
-import { UserOutlined, BankOutlined } from '@ant-design/icons-vue';
+import ManageUser from '../components/addUserCompany.vue';
+import { UserOutlined, BankOutlined, UserAddOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from 'vue';
 import manageCompany from '../components/ManageCompany.vue';
 import { useCompany } from '../composables/useCompany';
@@ -27,6 +38,8 @@ import type { CompanyEntity } from '../type';
 const { setQuery, CompanyList, loadingCompany, deleteCompany, fetchCompanyList, } = useCompany()
 
 const open = ref<boolean>(false)
+const open1 = ref<boolean>(false)
+const company_id = ref<number | null>(null)
 const companyRecord = ref<CompanyEntity | null>(null)
 const onEdit = (record: CompanyEntity) => {
     console.log(record)
