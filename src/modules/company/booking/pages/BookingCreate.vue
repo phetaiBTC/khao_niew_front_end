@@ -19,11 +19,11 @@
             </h1>
             <h1>
                 {{ $t('status') }} : <a-tag :color="Concert.status === 'open' ? 'green' : 'red'">{{ Concert.status
-                    }}</a-tag>
+                }}</a-tag>
             </h1>
             <h1>
                 {{ $t('price') }} : <a-tag color="gold">{{ Concert.price.toLocaleString() + ' kip' }}/{{ $t('seat')
-                    }}</a-tag>
+                }}</a-tag>
             </h1>
             <h1>
                 {{ $t('seat') }} : {{ Concert.totalTicket }} / {{ Concert.limit }}
@@ -48,12 +48,9 @@
                 {{ $t('total_price') }} : {{ (Concert.price * formState.ticket_quantity).toLocaleString() }} kip
             </a-tag>
             <div class="flex justify-between items-center w-full">
-                <a-upload :multiple="false" :max-count="1" :show-upload-list="false">
-                    <a-button type="primary">
-                        <div>
-                            <UploadOutlined />
-                            {{ $t('upload') }}
-                        </div>
+                <a-upload v-model:file-list="fileList" name="file" :custom-request="handleUpload">
+                    <a-button>
+                        <UploadOutlined /> เลือกไฟล์
                     </a-button>
                 </a-upload>
                 <div>
@@ -91,6 +88,8 @@ import { useBooking } from '../composables/useBooking'
 import type { IBooking } from '../types'
 import { Modal } from 'ant-design-vue'
 import { tI18n } from '@/common/utils/i18n'
+import { useImage } from '@/modules/images/composables/useImage'
+import router from '@/router'
 
 const { createBooking } = useBooking()
 const formRef = ref()
@@ -98,7 +97,17 @@ const formState = reactive<IBooking>({
     concert: null,
     ticket_quantity: 1
 })
-// const url = import.meta.env.VITE_API_BASE_URL
+const fileList = ref([]);
+const { createImage } = useImage()
+const handleUpload = async (options: any) => {
+    try {
+        await createImage({ file: options.file })
+        options.onSuccess()
+    } catch (error) {
+        console.error(error)
+        options.onError()
+    }
+};
 const { fetchConcert, Concert } = useConcert()
 const route = useRoute()
 const concertId = route.params.concert_id
@@ -111,6 +120,7 @@ const onSumit = async () => {
         })
         await fetchConcert(Number(concertId))
     }
+    router.push({ name: 'company.booking' })
 }
 onMounted(async () => {
     await fetchConcert(Number(concertId))

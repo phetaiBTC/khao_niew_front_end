@@ -2,13 +2,18 @@ import { clientApi } from "@/plugins/axiosPlugin"
 import { message } from "ant-design-vue"
 import { useBookigStore, type BookingQuery } from "../store"
 import { storeToRefs } from "pinia"
+import { useImage } from "@/modules/images/composables/useImage"
 
 export const useBooking = () => {
     const { BookingList, loadingBooking, params, Booking } = storeToRefs(useBookigStore())
+    const { imagesList } = useImage()
 
     const createBooking = async (formData: { concert: number, ticket_quantity: number }) => {
         try {
-            const { data } = await clientApi.post('/booking/create', formData)
+            const { data } = await clientApi.post('/booking/create', {
+                ...formData,
+                imageIds: imagesList.value
+            })
             message.success(data.message || "ບັນທຶກຂໍ້ມູນສໍາເລັດ")
         } catch (error: any) {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")

@@ -36,9 +36,9 @@
                     <router-view></router-view>
                 </div>
             </a-layout-content>
-            <a-layout-footer style="text-align: center">
+            <!-- <a-layout-footer style="text-align: center">
                 Created by Khao Niew
-            </a-layout-footer>
+            </a-layout-footer> -->
         </a-layout>
     </a-layout>
 </template>
