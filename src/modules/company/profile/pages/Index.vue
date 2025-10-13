@@ -34,23 +34,44 @@
 
         <a-divider class="my-4" />
 
-        <div>
-            <h3 class="font-semibold mb-2 text-sm px-3 text-gray-700">ສະຖານະ</h3>
-            <div class="space-y-2 text-sm px-3">
-                <div class="flex justify-between">
-                    <span class="text-gray-500">ກຳລັງດຳເນິນການ</span>
-                    <span class="text-yellow-500 font-semibold">{{ companyProfileTotal.payment_status.pending }}</span>
+        <div class="bg-white rounded-2xl shadow-sm p-5">
+            <h3 class="font-semibold mb-4 text-gray-800 text-base border-b border-gray-200 pb-2">
+                ສະຖານະການຈອງໃນປະຈຸບັນ
+            </h3>
+
+            <div class="space-y-3 text-sm">
+                <div class="flex justify-between items-center bg-yellow-50 px-4 py-2 rounded-xl">
+                    <span class="text-gray-600 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                        ກຳລັງດຳເນິນການ
+                    </span>
+                    <span class="text-yellow-600 font-bold">
+                        {{ companyProfileTotal.payment_status.pending }}
+                    </span>
                 </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-500">ສຳເລັດ</span>
-                    <span class="text-green-600 font-semibold">{{ companyProfileTotal.payment_status.completed }}</span>
+
+                <div class="flex justify-between items-center bg-green-50 px-4 py-2 rounded-xl">
+                    <span class="text-gray-600 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                        ສຳເລັດ
+                    </span>
+                    <span class="text-green-600 font-bold">
+                        {{ companyProfileTotal.payment_status.completed }}
+                    </span>
                 </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-500">ຍົກເລິກ</span>
-                    <span class="text-red-500 font-semibold">{{ companyProfileTotal.payment_status.failed }}</span>
+
+                <div class="flex justify-between items-center bg-red-50 px-4 py-2 rounded-xl">
+                    <span class="text-gray-600 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                        ຍົກເລິກ
+                    </span>
+                    <span class="text-red-600 font-bold">
+                        {{ companyProfileTotal.payment_status.failed }}
+                    </span>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
