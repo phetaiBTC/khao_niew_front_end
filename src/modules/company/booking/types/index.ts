@@ -5,6 +5,9 @@ import type { UserEntity } from "@/modules/admin/users/type"
 export interface IBooking {
     concert: number | null
     ticket_quantity: number
+    email?: string
+    userId?: number
+    phone?: string
 }
 export interface BookingEntity extends BaseEntity {
     id: number

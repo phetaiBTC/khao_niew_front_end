@@ -1,7 +1,7 @@
 <template>
     <a-layout class="h-screen">
         <a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
-            :style="{ position: 'fixed', top: '0', height: '100vh', left: '0', zIndex: 1000}">
+            :style="{ position: 'fixed', top: '0', height: '100vh', left: '0', zIndex: 1000 }">
             <div class="logo">
                 <img src="/src/assets/images/logoKhaoNiew.png" alt="" srcset="" class="w-35 mx-auto"
                     style="filter: drop-shadow(0 5px 10px #fff)">
@@ -20,7 +20,7 @@
                             <router-link :to="child.to">{{ $t(child.label.toLowerCase()) }}</router-link>
                         </a-menu-item>
                     </a-sub-menu>
-                    <a-menu-item v-else :key="item.label + '-' + item.label">
+                    <a-menu-item v-else :key="item.label + '-' + item.label" v-if="true">
                         <component :is="item.icon" />
                         <span>
                             <router-link :to="item.to">{{ $t(item.label.toLowerCase()) }}</router-link>

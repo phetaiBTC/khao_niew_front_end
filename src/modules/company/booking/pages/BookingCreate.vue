@@ -19,11 +19,11 @@
             </h1>
             <h1>
                 {{ $t('status') }} : <a-tag :color="Concert.status === 'open' ? 'green' : 'red'">{{ Concert.status
-                    }}</a-tag>
+                }}</a-tag>
             </h1>
             <h1>
                 {{ $t('price') }} : <a-tag color="gold">{{ Concert.price.toLocaleString() + ' kip' }}/{{ $t('seat')
-                    }}</a-tag>
+                }}</a-tag>
             </h1>
             <h1>
                 {{ $t('seat') }} : {{ Concert.totalTicket }} / {{ Concert.limit }}
@@ -48,6 +48,14 @@
             <a-tag color="green" style="font-size: 1.2rem;width: 100%;padding: 10px;">
                 {{ $t('total_price') }} : {{ (Concert.price * formState.ticket_quantity).toLocaleString() }} kip
             </a-tag>
+            <div class="w-full flex flex-row gap-2" v-if="!isToken">
+                <a-form-item name="email" :label="$t('email')" :rules="[{ required: true }, { type: 'email' }]">
+                    <a-input v-model:value="formState.email" :placeholder="$t('name')" />
+                </a-form-item>
+                <a-form-item name="phone" :label="$t('phone')" :rules="[{ required: true }]">
+                    <a-input v-model:value="formState.phone" :placeholder="$t('phone')" />
+                </a-form-item>
+            </div>
             <div class="flex justify-between items-center w-full">
                 <a-upload v-model:file-list="fileList" name="file" :custom-request="handleUpload">
                     <a-button>
@@ -90,10 +98,12 @@ import type { IBooking } from '../types'
 import { Modal } from 'ant-design-vue'
 import { tI18n } from '@/common/utils/i18n'
 import { useImage } from '@/modules/images/composables/useImage'
-import router from '@/router'
+import { jwtDecode } from 'jwt-decode'
+
 const base_api = import.meta.env.VITE_API_BASE_URL
 const { createBooking } = useBooking()
 const formRef = ref()
+const isToken = computed(() => localStorage.getItem('token'))
 const formState = reactive<IBooking>({
     concert: null,
     ticket_quantity: 1
@@ -118,18 +128,16 @@ const listImages = computed(() =>
 
 const onSumit = async () => {
     if (Number(concertId)) {
+        if (isToken.value) {
+            formState.userId = jwtDecode<any>(isToken.value).id
+        }
         formState.concert = Number(concertId)
-        await createBooking({
-            concert: formState.concert,
-            ticket_quantity: formState.ticket_quantity
-        })
+        await createBooking(formState)
         await fetchConcert(Number(concertId))
     }
-    router.push({ name: 'company.booking' })
 }
 onMounted(async () => {
     await fetchConcert(Number(concertId))
-
 })
 
 const showPropsConfirm = () => {
