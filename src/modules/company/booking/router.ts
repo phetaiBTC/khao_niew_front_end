@@ -13,7 +13,7 @@ export const BookingCompanyRouter: RouteRecordRaw[] = [
     path: "booking/:id",
     name: "company.booking.detail",
     component: BookingDetails,
-    meta: { title: "booking" },
+    meta: { title: "booking",public_auth: true },
   },
   {
     path: "booking/create/:concert_id",

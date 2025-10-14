@@ -5,7 +5,6 @@ import {
   PictureOutlined,
   AimOutlined,
   TagOutlined,
-  MenuOutlined,
   CompressOutlined,
   PieChartOutlined,
 } from "@ant-design/icons-vue";
