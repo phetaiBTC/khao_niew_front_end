@@ -17,13 +17,13 @@
                         <VerticalAlignBottomOutlined />
                     </a-button>
                     <a-select v-model:value="status" :placeholder="$t('status')"
-                        @change="setQuery({ status: status !== 'all' ? status : '', page: 1 })">
+                        @change="onChange">
                         <a-select-option value="pending">{{ $t('pending') }}</a-select-option>
                         <a-select-option value="success">{{ $t('success') }}</a-select-option>
                         <a-select-option value="failed">{{ $t('failed') }}</a-select-option>
                     </a-select>
                     <a-select :options="optionCompany" v-model:value="company_id" :placeholder="$t('company')"
-                        style="width: 200px;" @change="setQuery({ companyId: company_id || undefined, page: 1 })">
+                        style="width: 200px;" @change="onCompany">
                     </a-select>
 
                     <!-- <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch" />
@@ -137,7 +137,21 @@ const onQuery = async (page?: number, pageSize?: number) => {
         per_page: pageSize,
         order_by: orderBy.value
     })
+    await fetchBookingList();
 }
+const onChange = async () => {
+    setQuery({ status: status.value !== 'all' ? status.value : '', page: 1 })
+    await fetchBookingList();
+}
+
+const onCompany = async () => {
+  setQuery({
+    companyId: company_id.value !== null ? Number(company_id.value) : undefined,
+    page: 1
+  })
+  await fetchBookingList();
+}
+
 
 
 const BookingCol = new BaseColumns<BookingEntity>([

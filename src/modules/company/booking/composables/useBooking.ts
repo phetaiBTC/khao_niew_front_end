@@ -36,7 +36,11 @@ export const useBooking = () => {
       loadingBooking.value = false;
     }
   };
-  const fetchBookingListByEmail = async (email: string,page: number,per_page: number) => {
+  const fetchBookingListByEmail = async (
+    email: string,
+    page: number,
+    per_page: number
+  ) => {
     loadingBooking.value = true;
     try {
       const { data } = await clientApi.get("/booking/get-bookings-by-email", {
@@ -83,7 +87,6 @@ export const useBooking = () => {
     params.value.order_by = newParams.order_by ?? params.value.order_by;
     params.value.status = newParams.status ?? params.value.status;
     params.value.companyId = newParams.companyId ?? params.value.companyId;
-
   };
   return {
     createBooking,
