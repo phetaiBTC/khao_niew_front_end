@@ -135,6 +135,8 @@ const onSumit = async () => {
         await createBooking(formState)
         await fetchConcert(Number(concertId))
     }
+    formState.ticket_quantity = 1
+    fileList.value = []
 }
 onMounted(async () => {
     await fetchConcert(Number(concertId))
