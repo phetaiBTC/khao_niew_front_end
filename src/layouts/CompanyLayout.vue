@@ -1,6 +1,6 @@
 <template>
     <a-layout class="h-screen relative overflow-hidden">
-        <a :href="`https://wa.me/8562022017342}`" target="_blank">
+        <a :href="`https://wa.me/8562055411147}`" target="_blank">
             <a-float-button @click="">
                 <template #icon>
                     <PhoneOutlined style="color: green;" />
