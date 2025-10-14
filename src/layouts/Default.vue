@@ -49,7 +49,7 @@
       </a-menu>
     </a-layout-sider>
     <a-layout class="min-h-screen">
-      <HeaderLayout :text="$t('Admin')"
+      <HeaderLayout :text="'Admin'"
         :showbutton="false" />
       <a-layout-content style="margin: 0 16px">
         <a-breadcrumb style="margin: 10px 0">

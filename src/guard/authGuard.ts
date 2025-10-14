@@ -1,5 +1,5 @@
-// router/authGuard.ts
 import { useAuthStore } from "@/modules/auth/store/useAuthStore";
+import { storeToRefs } from "pinia";
 import type { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 
 export function authGuard(
@@ -7,28 +7,38 @@ export function authGuard(
   _from: RouteLocationNormalized,
   next: NavigationGuardNext
 ) {
-  const authStore = useAuthStore();
-
-  // ✅ 1. route สาธารณะ (ไม่ต้อง login)
+  // const authStore = useAuthStore();
+  const { isAuthenticated, role } = storeToRefs(useAuthStore());
+  // ✅ 1. หน้า public (ไม่ต้อง login)
   if (to.meta.public_auth) {
-    return next();
+    // ถ้าไปหน้า Login แต่ token ยังอยู่ → redirect ตาม role
+    if (to.name === "Login" && isAuthenticated.value) {
+      console.log(role.value);
+      const roleRedirectMap: Record<string, string> = {
+        admin: "dashboard",
+        company: "company.concert",
+      };
+      const redirectTo = roleRedirectMap[role.value] || "dashboard";
+      return next({ name: redirectTo });
+    }
+
+    return next(); // เข้า page public ได้
   }
 
-  // ✅ 2. ยังไม่ login → ไปหน้า Login
-  if (!authStore.isAuthenticated) {
-    return next({ name: "company.aboutus" });
+  // ✅ 2. ถ้ายังไม่ได้ login → ไป Login
+  if (!isAuthenticated.value) {
+    return next({ name: "login" });
   }
 
-  // ✅ 3. ถ้ามีการกำหนด role ที่อนุญาตไว้ใน meta (ยืดหยุ่นกว่า)
+  // ✅ 3. ตรวจ role ถ้ามี meta.roles
   if (to.meta.roles && Array.isArray(to.meta.roles)) {
     const allowedRoles = to.meta.roles as string[];
-    if (!allowedRoles.includes(authStore.role)) {
-      // 🔒 ถ้า role ไม่ตรง → redirect ไปหน้าหลักของ role นั้น
+    if (!allowedRoles.includes(role.value)) {
       const redirectMap: Record<string, string> = {
         admin: "dashboard",
         company: "company.concert",
       };
-      const redirectTo = redirectMap[authStore.role] || "Login";
+      const redirectTo = redirectMap[role.value] || "login";
       return next({ name: redirectTo });
     }
   }
