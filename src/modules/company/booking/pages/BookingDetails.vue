@@ -46,6 +46,10 @@
                     </div>
                 </div>
             </a-col>
+            <div v-else class=" flex justify-center m-2 shadow p-2 w-full items-center flex-col">
+                <HistoryOutlined style="font-size: 100px;" />
+                <h1 class="text-lg font-bold text-center">ກຳລັງດຳເນີນການ</h1>
+            </div>
         </a-row>
     </div>
 </template>
@@ -55,6 +59,7 @@ import { useRoute } from 'vue-router';
 import { onMounted } from 'vue';
 import { useBooking } from '../composables/useBooking';
 import dayjs from 'dayjs';
+import { HistoryOutlined } from '@ant-design/icons-vue';
 const { Booking, fetchBooking, loadingBooking } = useBooking()
 const route = useRoute()
 const bookingId = route.params.id
