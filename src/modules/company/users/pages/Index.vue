@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import BaseCRUD from '@/components/BaseCRUD/BaseCRUD.vue';
-import { PhoneOutlined, UserOutlined } from '@ant-design/icons-vue';
+import { LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from 'vue';
 import ManageUser from '../components/manageUser.vue';
 import { useUser } from '../composables/useUser';

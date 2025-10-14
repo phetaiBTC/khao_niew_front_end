@@ -27,7 +27,7 @@ export function authGuard(
 
   // ✅ 2. ถ้ายังไม่ได้ login → ไป Login
   if (!isAuthenticated.value) {
-    return next({ name: "login" });
+    return next({ name: "Login" });
   }
 
   // ✅ 3. ตรวจ role ถ้ามี meta.roles
@@ -38,7 +38,7 @@ export function authGuard(
         admin: "dashboard",
         company: "company.concert",
       };
-      const redirectTo = redirectMap[role.value] || "login";
+      const redirectTo = redirectMap[role.value] || "Login";
       return next({ name: redirectTo });
     }
   }
