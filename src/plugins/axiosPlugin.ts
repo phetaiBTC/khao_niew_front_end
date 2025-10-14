@@ -21,9 +21,11 @@ clientApi.interceptors.response.use(
     (error) => {
         if (error.response.status === 401) {
             localStorage.removeItem("token");
+            localStorage.removeItem("role");
             router.push({ name: "authorized" });
         }
         if (error.response.status === 403) {
+            localStorage.removeItem("role");
             localStorage.removeItem("token");
             router.push({ name: "authorized" });
         }
