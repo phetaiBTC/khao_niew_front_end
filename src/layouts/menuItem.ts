@@ -60,17 +60,17 @@ export const menuItems: {
     icon: CompressOutlined,
     to: { name: "scan" },
   },
-  {
-    label: "report",
-    to: { name: "report" },
-    icon: MenuOutlined,
-    children: [
-      {
-        label: "Report_year",
-        to: { name: "report.year" },
-      },
-    ],
-  },
+  // {
+  //   label: "report",
+  //   to: { name: "report" },
+  //   icon: MenuOutlined,
+  //   children: [
+  //     {
+  //       label: "Report_year",
+  //       to: { name: "report.year" },
+  //     },
+  //   ],
+  // },
   // {
   //     key: 'sub2',
   //     label: 'Team',
