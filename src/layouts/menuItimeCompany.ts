@@ -5,7 +5,6 @@ import {
   UserOutlined,
 } from "@ant-design/icons-vue";
 import { type Component } from "vue";
-
 export const menuItemsCompany: {
   label: string;
   icon: Component;
@@ -16,6 +15,7 @@ export const menuItemsCompany: {
     icon: Component;
     to: string | { name: string };
   }[];
+  guard?: boolean;
 }[] = [
   {
     label: "concert",
@@ -29,6 +29,7 @@ export const menuItemsCompany: {
   },
   {
     label: "company",
+    guard: localStorage.getItem("token") ? false : true,
     icon: AuditOutlined, // icon ของ parent menu
     children: [
       {
@@ -46,6 +47,7 @@ export const menuItemsCompany: {
   {
     label: "aboutus",
     icon: AuditOutlined,
+    
     to: { name: "company.aboutus" },
   },
   // {

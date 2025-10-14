@@ -40,7 +40,7 @@
                     style="background-color: #1055c9">
                     <template v-for="item in menuItemsCompany" :key="item.label">
 
-                        <a-sub-menu v-if="item.children" :key="item.label">
+                        <a-sub-menu v-if="item.children && !item.guard" :key="item.label">
                             <template #title>
                                 <span>
                                     <component :is="item.icon" />
@@ -55,7 +55,8 @@
                             </a-menu-item>
                         </a-sub-menu>
 
-                        <a-menu-item v-else :key="item.label + '-' + item.label" @click="handleMenuSelect">
+                        <a-menu-item v-else :key="item.label + '-' + item.label" @click="handleMenuSelect"
+                            v-if="!item.guard">
                             <component :is="item.icon" />
                             <router-link v-if="item.to" :to="item.to" class="ml-2">
                                 {{ $t(item.label.toLowerCase()) }}
