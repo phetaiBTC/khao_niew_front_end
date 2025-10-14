@@ -228,20 +228,19 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const images = [
-    "/src/assets/images/1.jpg",
-    "/src/assets/images/2.jpg",
-    "/src/assets/images/3.jpg",
-
-];
+    new URL('/src/assets/images/1.jpg', import.meta.url).href,
+    new URL('/src/assets/images/2.jpg', import.meta.url).href,
+    new URL('/src/assets/images/3.jpg', import.meta.url).href,
+]
 const currentImage = ref(0);
-let interval: number | null = null;
+let interval: any | null = null;
 
 onMounted(() => {
     interval = setInterval(() => {
         currentImage.value = (currentImage.value + 1) % images.length;
     }, 5000);
 });
-onUnmounted(() => clearInterval(interval as number));
+onUnmounted(() => clearInterval(interval as any));
 
 const team = ref([
     { name: "ໂຕ່ຂ້າວເນືອ", position: "ຜູ້ອຳນວຍການ", emoji: "🎬", color: "#d46b08", tagColor: "orange", description: "ຜູ້ກຳກັບທີ່ເຊື່ອວ່າທຸກຄຳເວົ້າມີຊີວິດ." },
