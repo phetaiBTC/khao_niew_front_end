@@ -34,10 +34,10 @@
                         <div class="flex items-center justify-between w-full">
                             <div>
                                 <h1>ລາຄາ: {{ item.concert.price.toLocaleString() }} kip/{{ $t('seat') }}</h1>
-                                <h1>ຈຳນວນທີ່ຈອງ: {{ item.payment.amount }} {{ $t('seat') }}</h1>
+                                <h1>ຈຳນວນທີ່ຈອງ: {{ item.ticket_quantity }} {{ $t('seat') }}</h1>
                             </div>
                             <a-tag color="green" style="padding: 10px;font-weight: bold;">
-                                ລວມ: {{ (item.concert.price * item.payment.amount).toLocaleString() }} kip
+                                ລວມ: {{ (item.total_amount).toLocaleString() }} kip
                             </a-tag>
                         </div>
                     </div>
