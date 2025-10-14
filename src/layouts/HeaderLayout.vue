@@ -46,11 +46,10 @@ const auth = useAuthStore()
 
 const confirmLogout = () => {
   Modal.confirm({
-    title: "ອອກຈາກລະບົບບໍ?",
-    content: "ທ່ານແນ່ໃຈວ່າຕ້ອງການອອກຈາກລະບົບບໍ?",
+    title: token ? "ອອກຈາກລະບົບ" : "ລົງທະບຽນ",
+    content: token ? "ທ່ານແນ່ໃຈວ່າຕ້ອງການອອກຈາກລະບົບບໍ?" : "ທ່ານແນ່ໃຈວ່າຕ້ອງການເຂົ້າສູ່ລະບົບບໍ?",
     okText: "ຕົກລົງ",
     cancelText: "ຍົກເລິກ",
-    okType: "danger",
     centered: true,
     onOk() {
       auth.logout()
