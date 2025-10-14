@@ -39,6 +39,22 @@ export const useBooking = () => {
       loadingBooking.value = false;
     }
   };
+    const fetchBookingListByEmail = async (email:string) => {
+    loadingBooking.value = true;
+    try {
+      const { data } = await clientApi.get("/booking/get-bookings-by-email", {
+        params: {
+          email
+        },
+      });
+      console.log(data);
+      BookingList.value = data;
+    } catch (error: any) {
+      message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ");
+    } finally {
+      loadingBooking.value = false;
+    }
+  };
   const updateStatus = async (id: number, status: string) => {
     try {
       const { data } = await clientApi.patch(`/payment/status/${id}`, {
@@ -80,5 +96,6 @@ export const useBooking = () => {
     updateStatus,
     fetchBooking,
     Booking,
+    fetchBookingListByEmail
   };
 };

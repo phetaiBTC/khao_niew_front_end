@@ -3,6 +3,7 @@
 
         <a-row :gutter="[0, 20]">
             <div class="flex justify-end items-center p-2">
+                <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch" v-if="!token" />
                 <a-select v-model:value="status" :placeholder="$t('status')"
                     @change="setQuery({ status: status ? status : '', page: 1 })">
                     <a-select-option value="pending">{{ $t('pending') }}</a-select-option>
@@ -74,14 +75,22 @@ import { useBooking } from '../composables/useBooking';
 import dayjs from 'dayjs';
 import { EyeOutlined } from '@ant-design/icons-vue';
 import router from '@/router';
+import { useAuthStore } from '@/modules/auth/store/useAuthStore';
+import { storeToRefs } from 'pinia';
+const { token } = storeToRefs(useAuthStore())
 const status = ref<string>("pending");
-
-const { fetchBookingList, BookingList, setQuery, loadingBooking } = useBooking()
+const search = ref<string>("");
+const onSearch = async () => {
+    await fetchBookingListByEmail(search.value)
+}
+const { fetchBookingList, BookingList, setQuery, loadingBooking, fetchBookingListByEmail } = useBooking()
 const onQuery = async () => {
     await setQuery({ page: BookingList.value.pagination.page, per_page: BookingList.value.pagination.per_page })
 }
 onMounted(async () => {
-    await fetchBookingList()
+    if (token.value) {
+        await fetchBookingList()
+    }
 })
 </script>
 
