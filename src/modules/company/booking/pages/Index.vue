@@ -5,7 +5,7 @@
             <div class="flex justify-end items-center p-2">
                 <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch" v-if="!token" />
                 <a-select v-model:value="status" :placeholder="$t('status')"
-                    @change="setQuery({ status: status ? status : '', page: 1 })">
+                    @change="onChange">
                     <a-select-option value="pending">{{ $t('pending') }}</a-select-option>
                     <a-select-option value="success">{{ $t('success') }}</a-select-option>
                     <a-select-option value="failed">{{ $t('failed') }}</a-select-option>
@@ -93,6 +93,10 @@ const onQuery = async () => {
         await fetchBookingListByEmail(search.value, BookingList.value.pagination.page, BookingList.value.pagination.per_page)
     }
 
+}
+const onChange = async () => {
+    setQuery({ status: status.value !== 'all' ? status.value : '', page: 1 })
+    await fetchBookingList();
 }
 onMounted(async () => {
     if (token.value) {
