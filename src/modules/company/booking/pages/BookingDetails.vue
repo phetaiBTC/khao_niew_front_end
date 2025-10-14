@@ -48,7 +48,7 @@
             </a-col>
             <div v-else class=" flex justify-center m-2 shadow p-2 w-full items-center flex-col">
                 <HistoryOutlined style="font-size: 100px;" />
-                <h1 class="text-lg font-bold text-center">ກຳລັງດຳເນີນການ</h1>
+                <a-tag color="yellow">ກຳລັງດຳເນີນການ</a-tag>
             </div>
         </a-row>
     </div>
