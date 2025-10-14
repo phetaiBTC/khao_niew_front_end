@@ -39,8 +39,8 @@
                     <template #bodyCell="{ column, record }">
                         <template v-if="column.key === 'booking_id'">
                             <a-tag color="blue">{{ "# " + record.id }}</a-tag>
-                            <a v-if="record.payment.images.length > 0"
-                                :href="base_api + record.payment.images[0].url" target="_blank">
+                            <a v-if="record.payment.images.length > 0" :href="base_api + record.payment.images[0].url"
+                                target="_blank">
                                 <FileImageOutlined style="cursor: pointer;"></FileImageOutlined>
                             </a>
                         </template>
@@ -48,6 +48,25 @@
                             <h1>
                                 {{ record.user.companies.name }}
                             </h1>
+                        </template>
+                        <template v-if="column.key === 'phone'">
+                            <a :href="`https://wa.me/856${record.user.companies.contact.replace(/^0/, '')}`"
+                                target="_blank">
+                                <PhoneOutlined style="color: green;font-size: 1rem;" class="mr-2" />
+                            </a>
+                            {{ record.user.companies.contact.replace(/(\d{3})(\d{4})(\d{4})/, '$1 $2 $3') }}
+                        </template>
+                        <template v-if="column.key === 'user'">
+                            <h1>
+                                {{ record.user.username }}
+                            </h1>
+                        </template>
+                        <template v-if="column.key === 'user-phone'">
+
+                            <a :href="`https://wa.me/856${record.user.phone.replace(/^0/, '')}`" target="_blank">
+                                <PhoneOutlined style="color: green;font-size: 1rem;" class="mr-2" />
+                            </a>
+                            {{ record.user.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1 $2 $3') }}
                         </template>
                         <template v-if="column.key === 'concert'">
                             <h1>
@@ -97,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined, TagOutlined, CheckOutlined, CloseOutlined, FileImageOutlined } from '@ant-design/icons-vue';
+import { VerticalAlignBottomOutlined, VerticalAlignTopOutlined, TagOutlined, CheckOutlined, CloseOutlined, FileImageOutlined, PhoneOutlined } from '@ant-design/icons-vue';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { BookingEntity } from '@/modules/company/booking/types';
 import dayjs from 'dayjs';
@@ -123,7 +142,10 @@ const onQuery = async (page?: number, pageSize?: number) => {
 
 const BookingCol = new BaseColumns<BookingEntity>([
     { dataIndex: 'booking_id', width: 100 },
-    { dataIndex: 'company', width: 100 },
+    { dataIndex: 'company' },
+    { dataIndex: 'phone' },
+    { dataIndex: 'user' },
+    { dataIndex: 'user-phone' },
     { dataIndex: 'price' },
     { dataIndex: 'concert' },
 ])
