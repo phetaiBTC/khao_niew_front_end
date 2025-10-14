@@ -5,6 +5,6 @@ export const CompanyAboutUstRouter: RouteRecordRaw[] = [
         path: 'aboutus',
         name: 'company.aboutus',
         component: ProfileIndex,
-        meta: { title: 'Profile' },
+        meta: { title: 'Profile', public_auth: true },
     }
 ]

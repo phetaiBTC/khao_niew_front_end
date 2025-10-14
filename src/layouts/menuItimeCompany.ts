@@ -47,7 +47,6 @@ export const menuItemsCompany: {
   {
     label: "aboutus",
     icon: AuditOutlined,
-    
     to: { name: "company.aboutus" },
   },
   // {
