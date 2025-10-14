@@ -1,5 +1,21 @@
 <template>
     <a-layout class="h-screen relative overflow-hidden">
+        <a :href="`https://wa.me/8562022017342}`" target="_blank">
+            <a-float-button @click="">
+                <template #icon>
+                    <PhoneOutlined style="color: green;" />
+                </template>
+            </a-float-button>
+        </a>
+        <a :href="`https://www.facebook.com/khaoniewlittletheater`" target="_blank">
+            <a-float-button shape="circle" :style="{
+                right: '94px',
+            }">
+                <template #icon>
+                    <FacebookOutlined style="color:#1055c9" />
+                </template>
+            </a-float-button>
+        </a>
 
         <transition name="slide">
             <a-layout-sider v-if="!collapsed" key="sidebar" collapsed-width="0" width="250" theme="dark" :trigger="null"
@@ -18,7 +34,8 @@
                     <h1 class="text-center text-white text-2xl">Khao Niew</h1>
                 </div>
 
-                <a-menu v-model:selectedKeys="selectedKeys" :openKeys="openKeys" theme="dark" mode="inline" style="background-color: #1055c9">
+                <a-menu v-model:selectedKeys="selectedKeys" :openKeys="openKeys" theme="dark" mode="inline"
+                    style="background-color: #1055c9">
                     <template v-for="item in menuItemsCompany" :key="item.label">
 
                         <a-sub-menu v-if="item.children" :key="item.label">
@@ -68,6 +85,7 @@ import { ref, watch } from "vue";
 import { menuItemsCompany } from "./menuItimeCompany";
 import HeaderLayout from "./HeaderLayout.vue";
 import { useRoute } from 'vue-router';
+import { FacebookOutlined, PhoneOutlined } from "@ant-design/icons-vue";
 const collapsed = ref(true);
 const selectedKeys = ref<string[]>(["4"]);
 
