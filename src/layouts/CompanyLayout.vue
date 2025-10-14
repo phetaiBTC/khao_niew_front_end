@@ -10,14 +10,15 @@
                     height: '100vh',
                     zIndex: 2000,
                     transition: 'all 0.3s ease'
-                }">
+
+                }" style="background-color: #1055c9">
                 <div class="logo py-4">
                     <img src="/src/assets/images/logoKhaoNiew.png" alt="" class="w-35 mx-auto"
                         style="filter: drop-shadow(0 5px 10px #fff)" />
                     <h1 class="text-center text-white text-2xl">Khao Niew</h1>
                 </div>
 
-                <a-menu v-model:selectedKeys="selectedKeys" :openKeys="openKeys" theme="dark" mode="inline">
+                <a-menu v-model:selectedKeys="selectedKeys" :openKeys="openKeys" theme="dark" mode="inline" style="background-color: #1055c9">
                     <template v-for="item in menuItemsCompany" :key="item.label">
 
                         <a-sub-menu v-if="item.children" :key="item.label">
@@ -35,7 +36,7 @@
                             </a-menu-item>
                         </a-sub-menu>
 
-                        <a-menu-item v-else :key="item.label+'-'+item.label" @click="handleMenuSelect">
+                        <a-menu-item v-else :key="item.label + '-' + item.label" @click="handleMenuSelect">
                             <component :is="item.icon" />
                             <router-link v-if="item.to" :to="item.to" class="ml-2">
                                 {{ $t(item.label.toLowerCase()) }}
