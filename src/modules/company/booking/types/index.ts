@@ -7,7 +7,7 @@ export interface IBooking {
     ticket_quantity: number
     email?: string
     userId?: number
-    username?: string
+    phone?: string
 }
 export interface BookingEntity extends BaseEntity {
     id: number
