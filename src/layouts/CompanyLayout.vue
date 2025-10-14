@@ -70,7 +70,7 @@
         <div v-if="!collapsed" class="fixed inset-0  bg-opacity-60 z-[1500]" @click="collapsed = true"></div>
 
         <a-layout>
-            <HeaderLayout :collapsed="collapsed" @toggleSidebar="collapsed = !collapsed" :text="'khaoNiewLaos'"
+            <HeaderLayout :collapsed="collapsed" @toggleSidebar="collapsed = !collapsed" :data="user"
                 :showbutton="true" />
 
             <a-layout-content :style="{ margin: '24px 16px 0', minHeight: '280px', transition: 'margin-left 0.2s' }"
@@ -84,11 +84,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { menuItemsCompany } from "./menuItimeCompany";
 import HeaderLayout from "./HeaderLayout.vue";
 import { useRoute } from 'vue-router';
 import { FacebookOutlined, PhoneOutlined } from "@ant-design/icons-vue";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/modules/auth/store/useAuthStore";
+import { useAuth } from "@/modules/auth/composables/useAuth";
+const { profile } = useAuth();
+const { user } = storeToRefs(useAuthStore());
 const collapsed = ref(true);
 const selectedKeys = ref<string[]>(["4"]);
 
@@ -128,7 +133,9 @@ watch(
     },
     { immediate: true }
 );
-
+onMounted(async () => {
+  await profile();
+})
 
 </script>
 
