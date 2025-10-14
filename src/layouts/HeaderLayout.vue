@@ -4,7 +4,7 @@
       <div class="flex items-center gap-4">
         <component :is="collapsed ? MenuUnfoldOutlined : MenuFoldOutlined" class="text-2xl cursor-pointer"
           @click="$emit('toggleSidebar')" v-show="showbutton" />
-        <span>{{ text }}</span>
+        <span v-if="data">{{ $t(data.role)+" : "+ data.username }}</span>
       </div>
 
       <div class="flex items-center gap-4">
@@ -24,21 +24,18 @@
 </template>
 
 <script setup lang="ts">
+import type { UserEntity } from "@/modules/admin/users/type";
 import { useAuthStore } from "@/modules/auth/store/useAuthStore";
 import { MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from "@ant-design/icons-vue";
 import { Modal } from "ant-design-vue";
+
+
 const token = localStorage.getItem("token");
-defineProps({
-  collapsed: {
-    type: Boolean,
-  },
-  text: {
-    type: String,
-  },
-  showbutton: {
-    type: Boolean
-  }
-});
+defineProps<{
+  collapsed?: boolean,
+  data: UserEntity | undefined,
+  showbutton: boolean
+}>();
 
 defineEmits(["toggleSidebar"]);
 

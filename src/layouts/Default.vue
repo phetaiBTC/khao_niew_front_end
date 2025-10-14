@@ -49,8 +49,7 @@
       </a-menu>
     </a-layout-sider>
     <a-layout class="min-h-screen">
-      <HeaderLayout :text="'Admin'"
-        :showbutton="false" />
+      <HeaderLayout :data="user" :showbutton="false" />
       <a-layout-content style="margin: 0 16px">
         <a-breadcrumb style="margin: 10px 0">
           <a-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
@@ -77,11 +76,16 @@
 </template>
 <script lang="ts" setup>
 import { useRoute } from "vue-router";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { menuItems } from "./menuItem";
 import HeaderLayout from "./HeaderLayout.vue";
 import router from "@/router";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons-vue";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/modules/auth/store/useAuthStore";
+import { useAuth } from "@/modules/auth/composables/useAuth";
+const { profile } = useAuth();
+const { user } = storeToRefs(useAuthStore());
 const route = useRoute();
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(["1"]);
@@ -91,6 +95,9 @@ const breadcrumbList = computed(() =>
     title: r.meta.title as string,
   }))
 );
+onMounted(async () => {
+  await profile();
+})
 </script>
 <style scoped>
 #components-layout-demo-side .logo {
