@@ -9,7 +9,7 @@ import { type Component } from "vue";
 export const menuItemsCompany: {
   label: string;
   icon: Component;
-  to: string | { name: string };
+  to?: string | { name: string };
   auth?: boolean;
   children?: {
     label: string;
@@ -17,17 +17,6 @@ export const menuItemsCompany: {
     to: string | { name: string };
   }[];
 }[] = [
-  {
-    label: "profile",
-    icon: AuditOutlined,
-    to: { name: "company.profile" },
-  },
-  {
-    label: "user",
-    icon: UserOutlined,
-    to: { name: "company.user" },
-    // auth: true
-  },
   {
     label: "concert",
     icon: PictureOutlined,
@@ -37,6 +26,27 @@ export const menuItemsCompany: {
     label: "booking",
     icon: TagOutlined,
     to: { name: "company.booking" },
+  },
+  {
+    label: "company",
+    icon: AuditOutlined, // icon ของ parent menu
+    children: [
+      {
+        label: "company_report",
+        icon: AuditOutlined,
+        to: { name: "company.profile" },
+      },
+      {
+        label: "company_user",
+        icon: UserOutlined,
+        to: { name: "company.user" },
+      },
+    ],
+  },
+  {
+    label: "aboutus",
+    icon: AuditOutlined,
+    to: { name: "company.aboutus" },
   },
   // {
   //     key: 'sub1',

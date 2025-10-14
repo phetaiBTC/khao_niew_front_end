@@ -19,6 +19,7 @@ import { ScanRouter } from "./modules/admin/scan/router";
 import { CompanyUserRouter } from "./modules/company/users/router";
 import { DashboardRouter } from "./modules/admin/dashboard/router";
 import { CompanyProfileRouter } from "./modules/company/profile/router";
+import { CompanyAboutUstRouter } from "./modules/company/aboutus/router";
 const routes = [
   {
     path: "/admin",
@@ -43,7 +44,8 @@ const routes = [
       ...BookingCompanyRouter,
       ...CompanyConcertRouter,
       ...CompanyUserRouter,
-      ...CompanyProfileRouter
+      ...CompanyProfileRouter,
+      ...CompanyAboutUstRouter
     ],
   },
   {
