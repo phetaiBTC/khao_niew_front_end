@@ -11,10 +11,10 @@
                     <a-select-option value="failed">{{ $t('failed') }}</a-select-option>
                 </a-select>
             </div>
-            <a-col :span="24">
-                <a-card :loading="loadingBooking" v-if="loadingBooking">whatever content</a-card>
+            <a-col :span="24" v-if="loadingBooking">
+                <a-card class="m-1" :loading="loadingBooking" v-if="loadingBooking">whatever content</a-card>
             </a-col>
-            <a-col :span="24" v-for="item in BookingList.data" v-show="!loadingBooking">
+            <a-col :span="24" v-for="item in BookingList.data" v-if="!loadingBooking">
                 <div class="flex justify-between items-center rounded-xl flex-col overflow-hidden m-1"
                     style="box-shadow: 0px 2px 10px #8A959e;">
                     <div class="p-4 w-full flex flex-col gap-2">

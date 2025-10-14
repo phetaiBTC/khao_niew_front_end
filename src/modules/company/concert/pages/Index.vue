@@ -15,7 +15,7 @@
       </div>
     </template>
     <a-row :gutter="[16, 16]">
-      <a-col :span="24">
+      <a-col :span="24" v-if="loadingConcert">
         <a-card :loading="loadingConcert" v-if="loadingConcert">whatever content</a-card>
       </a-col>
       <a-col v-for="concert in ConcertList.data" :key="concert.id" :xs="24" :sm="12" :md="8" :lg="6" v-show="!loadingConcert">
