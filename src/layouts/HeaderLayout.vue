@@ -8,15 +8,15 @@
       </div>
 
       <div class="flex items-center gap-4">
-        <a-badge count="" class="cursor-pointer">
+        <!-- <a-badge count="" class="cursor-pointer">
           <BellOutlined />
-        </a-badge>
+        </a-badge> -->
         <a-button type="primary" @click="confirmLogout" class="flex items-center">
-          <a-badge count="" class="cursor-pointer" style="margin-right: 5px ; color: #fff;" >
+          <a-badge count="" class="cursor-pointer" style="margin-right: 5px ; color: #fff;">
             <LogoutOutlined />
           </a-badge>
 
-          {{ $t('logout') }}
+          {{ $t(token ? "logout" : "login") }}
         </a-button>
       </div>
     </div>
@@ -25,9 +25,9 @@
 
 <script setup lang="ts">
 import { useAuthStore } from "@/modules/auth/store/useAuthStore";
-import { BellOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from "@ant-design/icons-vue";
+import { MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from "@ant-design/icons-vue";
 import { Modal } from "ant-design-vue";
-
+const token = localStorage.getItem("token");
 defineProps({
   collapsed: {
     type: Boolean,
@@ -46,7 +46,7 @@ const auth = useAuthStore()
 
 const confirmLogout = () => {
   Modal.confirm({
-    title: "ອອກຈາກລະບົບ?",
+    title: "ອອກຈາກລະບົບບໍ?",
     content: "ທ່ານແນ່ໃຈວ່າຕ້ອງການອອກຈາກລະບົບບໍ?",
     okText: "ຕົກລົງ",
     cancelText: "ຍົກເລິກ",

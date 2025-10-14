@@ -16,7 +16,7 @@ export function authGuard(
 
   // ✅ 2. ยังไม่ login → ไปหน้า Login
   if (!authStore.isAuthenticated) {
-    return next({ name: "Login" });
+    return next({ name: "company.aboutus" });
   }
 
   // ✅ 3. ถ้ามีการกำหนด role ที่อนุญาตไว้ใน meta (ยืดหยุ่นกว่า)
