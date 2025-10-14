@@ -1,4 +1,5 @@
 <template>
+    <a-card class="m-1" :loading="loadingCompany" v-if="loadingCompany">whatever content</a-card>
 
     <div v-if="companyProfileTotal">
         <div class="text-center mb-4">
@@ -79,7 +80,7 @@
 import { useCompany } from '@/modules/admin/company/composables/useCompany';
 import { onMounted } from 'vue';
 
-const { fetchCompanyTotal, companyProfileTotal } = useCompany()
+const { fetchCompanyTotal, companyProfileTotal,loadingCompany } = useCompany()
 onMounted(async () => {
     await fetchCompanyTotal()
 })
