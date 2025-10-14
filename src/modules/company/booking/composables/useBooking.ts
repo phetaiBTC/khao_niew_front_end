@@ -3,7 +3,7 @@ import { message } from "ant-design-vue";
 import { useBookigStore, type BookingQuery } from "../store";
 import { storeToRefs } from "pinia";
 import { useImage } from "@/modules/images/composables/useImage";
-import router from "@/router";
+// import router from "@/router";
 import type { IBooking } from "../types";
 export const useBooking = () => {
   const { BookingList, loadingBooking, params, Booking } = storeToRefs(
@@ -18,7 +18,7 @@ export const useBooking = () => {
         imageIds: imagesList.value,
       });
       message.success(data.message || "ບັນທຶກຂໍ້ມູນສໍາເລັດ");
-      router.push({ name: "company.booking" });
+      // router.push({ name: "company.booking" });
     } catch (error: any) {
       message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ");
     }
