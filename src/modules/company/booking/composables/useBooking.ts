@@ -84,7 +84,6 @@ export const useBooking = () => {
     params.value.status = newParams.status ?? params.value.status;
     params.value.companyId = newParams.companyId ?? params.value.companyId;
 
-    await fetchBookingList();
   };
   return {
     createBooking,
