@@ -4,7 +4,7 @@
       <div class="flex items-center gap-4">
         <component :is="collapsed ? MenuUnfoldOutlined : MenuFoldOutlined" class="text-2xl cursor-pointer"
           @click="$emit('toggleSidebar')" v-show="showbutton" />
-        <span v-if="data">{{ $t(data.role)+" : "+ data.username }}</span>
+        <span v-if="data">{{ $t(data.role == "admin" ? "admin" : "employee")+" : "+ data.username }}</span>
       </div>
 
       <div class="flex items-center gap-4">
