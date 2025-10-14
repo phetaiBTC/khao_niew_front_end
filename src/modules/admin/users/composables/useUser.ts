@@ -26,7 +26,7 @@ export const useUser = () => {
 
     await fetchUserList();
   };
-  const changePassword = async (id: number, newpassword: string) => {
+  const changePassword = async (newpassword: string, id?: number) => {
     try {
       const { data } = await clientApi.patch(
         `/users/change-password`,
@@ -78,6 +78,6 @@ export const useUser = () => {
     deleteUser,
     createUser,
     updateUser,
-    changePassword
+    changePassword,
   };
 };

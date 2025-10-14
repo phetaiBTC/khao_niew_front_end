@@ -21,9 +21,10 @@
                 </div>
             </a-button>
         </template>
+        
     </BaseCRUD>
     <manageUser :open="open" :data="userRecord" @isOpen="open = $event"></manageUser>
-    <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(id, newpassword)" @cancel="open2 = false">
+    <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(newpassword,id)" @cancel="open2 = false">
         <a-input-password placeholder="Password" v-model:value="newpassword" />
     </a-modal>
 </template>
@@ -37,7 +38,7 @@ import { useUser } from '../composables/useUser';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { UserEntity } from '../type';
 const { UserList, loadingUser, fetchUserList, setQuery, deleteUser,changePassword } = useUser()
-const id = ref<number>(0)
+const id = ref<number|undefined>()
 const open2 = ref<boolean>(false)
 const open = ref<boolean>(false)
 const newpassword = ref<string>('')

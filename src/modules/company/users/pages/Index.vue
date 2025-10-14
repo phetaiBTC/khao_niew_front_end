@@ -22,7 +22,7 @@
             </a-button>
         </template>
     </BaseCRUD>
-    <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(id, newpassword)" @cancel="open2 = false">
+    <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(newpassword, id)" @cancel="open2 = false">
         <a-input-password placeholder="Password" v-model:value="newpassword" />
     </a-modal>
     <manageUser :open="open" :data="userRecord" @isOpen="open = $event"></manageUser>
