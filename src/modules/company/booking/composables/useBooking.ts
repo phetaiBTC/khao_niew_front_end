@@ -5,7 +5,6 @@ import { storeToRefs } from "pinia";
 import { useImage } from "@/modules/images/composables/useImage";
 import router from "@/router";
 import type { IBooking } from "../types";
-
 export const useBooking = () => {
   const { BookingList, loadingBooking, params, Booking } = storeToRefs(
     useBookigStore()
@@ -14,7 +13,6 @@ export const useBooking = () => {
 
   const createBooking = async (formData: IBooking) => {
     try {
-
       const { data } = await clientApi.post("/booking/create", {
         ...formData,
         imageIds: imagesList.value,
@@ -28,7 +26,6 @@ export const useBooking = () => {
   const fetchBookingList = async () => {
     loadingBooking.value = true;
     try {
-      console.log(params.value);
       const { data } = await clientApi.get("/booking/all-bookings", {
         params: params.value,
       });
@@ -39,15 +36,16 @@ export const useBooking = () => {
       loadingBooking.value = false;
     }
   };
-    const fetchBookingListByEmail = async (email:string) => {
+  const fetchBookingListByEmail = async (email: string,page: number,per_page: number) => {
     loadingBooking.value = true;
     try {
       const { data } = await clientApi.get("/booking/get-bookings-by-email", {
         params: {
-          email
+          page,
+          per_page,
+          email,
         },
       });
-      console.log(data);
       BookingList.value = data;
     } catch (error: any) {
       message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ");
@@ -85,6 +83,7 @@ export const useBooking = () => {
     params.value.order_by = newParams.order_by ?? params.value.order_by;
     params.value.status = newParams.status ?? params.value.status;
     params.value.companyId = newParams.companyId ?? params.value.companyId;
+
     await fetchBookingList();
   };
   return {
@@ -96,6 +95,6 @@ export const useBooking = () => {
     updateStatus,
     fetchBooking,
     Booking,
-    fetchBookingListByEmail
+    fetchBookingListByEmail,
   };
 };
