@@ -16,7 +16,7 @@
         </div>
       </template>
       <div class="logo">
-        <img src="/src/assets/images/logoKhaoNiew.png" alt="" srcset="" class="w-35 mx-auto"
+        <img src="/src/assets/images/logoKhaoNiew.png" alt="..." srcset="" class="w-35 mx-auto"
           style="filter: drop-shadow(0 5px 10px #fff)" />
         <h1 v-show="!collapsed" class="text-center text-white text-2xl">
           Khao Niew
