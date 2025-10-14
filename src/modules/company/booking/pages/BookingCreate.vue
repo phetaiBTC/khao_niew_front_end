@@ -19,11 +19,11 @@
             </h1>
             <h1>
                 {{ $t('status') }} : <a-tag :color="Concert.status === 'open' ? 'green' : 'red'">{{ Concert.status
-                }}</a-tag>
+                    }}</a-tag>
             </h1>
             <h1>
                 {{ $t('price') }} : <a-tag color="gold">{{ Concert.price.toLocaleString() + ' kip' }}/{{ $t('seat')
-                }}</a-tag>
+                    }}</a-tag>
             </h1>
             <h1>
                 {{ $t('seat') }} : {{ Concert.totalTicket }} / {{ Concert.limit }}
@@ -57,7 +57,7 @@
                 </a-form-item>
             </div>
             <div class="flex justify-between items-center w-full">
-                <a-upload v-model:file-list="fileList" name="file" :custom-request="handleUpload">
+                <a-upload v-model:file-list="fileList" name="file" :custom-request="handleUpload" :max-count="1" style="overflow: hidden;">
                     <a-button>
                         <UploadOutlined /> เลือกไฟล์
                     </a-button>

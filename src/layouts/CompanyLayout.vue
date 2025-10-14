@@ -1,7 +1,9 @@
 <template>
     <a-layout class="h-screen relative overflow-hidden">
         <a href="https://wa.me/8562055411147" target="_blank">
-            <a-float-button @click="">
+            <a-float-button :style="{
+                bottom: '60px'
+            }">
                 <template #icon>
                     <PhoneOutlined style="color: green;" />
                 </template>
@@ -9,7 +11,7 @@
         </a>
         <a :href="`https://www.facebook.com/khaoniewlittletheater`" target="_blank">
             <a-float-button shape="circle" :style="{
-                right: '94px',
+                bottom: '10px'
             }">
                 <template #icon>
                     <FacebookOutlined style="color:#1055c9" />
