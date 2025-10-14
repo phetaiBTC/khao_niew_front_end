@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import ProfileIndex from './pages/Index.vue'
 export const CompanyAboutUstRouter: RouteRecordRaw[] = [
     {
-        path: 'aboutus',
+        path: '',
         name: 'company.aboutus',
         component: ProfileIndex,
         meta: { title: 'Profile', public_auth: true },
