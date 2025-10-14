@@ -35,7 +35,7 @@
                             </a-menu-item>
                         </a-sub-menu>
 
-                        <a-menu-item v-else :key="item.label" @click="handleMenuSelect">
+                        <a-menu-item v-else :key="item.label+'-'+item.label" @click="handleMenuSelect">
                             <component :is="item.icon" />
                             <router-link v-if="item.to" :to="item.to" class="ml-2">
                                 {{ $t(item.label.toLowerCase()) }}
@@ -49,7 +49,7 @@
         <div v-if="!collapsed" class="fixed inset-0  bg-opacity-60 z-[1500]" @click="collapsed = true"></div>
 
         <a-layout>
-            <HeaderLayout :collapsed="collapsed" @toggleSidebar="collapsed = !collapsed" :text="$t('khaoNiewLaos')"
+            <HeaderLayout :collapsed="collapsed" @toggleSidebar="collapsed = !collapsed" :text="'khaoNiewLaos'"
                 :showbutton="true" />
 
             <a-layout-content :style="{ margin: '24px 16px 0', minHeight: '280px', transition: 'margin-left 0.2s' }"

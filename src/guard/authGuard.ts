@@ -9,25 +9,30 @@ export function authGuard(
 ) {
   const authStore = useAuthStore();
 
-  // ✅ 1. ถ้า route นี้ public ก็ปล่อยผ่านได้เลย
+  // ✅ 1. route สาธารณะ (ไม่ต้อง login)
   if (to.meta.public_auth) {
     return next();
   }
 
-  // ✅ 2. ถ้ายังไม่ login ให้ redirect ไปหน้า Login
+  // ✅ 2. ยังไม่ login → ไปหน้า Login
   if (!authStore.isAuthenticated) {
     return next({ name: "Login" });
   }
 
-  // ✅ 3. ตรวจสิทธิ์ role แล้ว redirect เฉพาะตอนเข้าหน้าไม่ตรง role
-  if (authStore.role === "admin" && to.name !== "dashboard") {
-    return next({ name: "dashboard" });
+  // ✅ 3. ถ้ามีการกำหนด role ที่อนุญาตไว้ใน meta (ยืดหยุ่นกว่า)
+  if (to.meta.roles && Array.isArray(to.meta.roles)) {
+    const allowedRoles = to.meta.roles as string[];
+    if (!allowedRoles.includes(authStore.role)) {
+      // 🔒 ถ้า role ไม่ตรง → redirect ไปหน้าหลักของ role นั้น
+      const redirectMap: Record<string, string> = {
+        admin: "dashboard",
+        company: "company.concert",
+      };
+      const redirectTo = redirectMap[authStore.role] || "Login";
+      return next({ name: redirectTo });
+    }
   }
 
-  if (authStore.role === "company" && to.name !== "company.concert") {
-    return next({ name: "company.concert" });
-  }
-
-  // ✅ 4. ผ่านทุกเงื่อนไขแล้ว ปล่อยให้เข้าได้
+  // ✅ 4. ผ่านทุกเงื่อนไข → เข้าได้
   return next();
 }
