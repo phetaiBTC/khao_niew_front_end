@@ -56,7 +56,7 @@
                     <a-input v-model:value="formState.phone" :placeholder="$t('phone')" />
                 </a-form-item>
             </div>
-            <div class="flex justify-between items-center w-full">
+            <div class="flex justify-between w-full">
                 <a-upload v-model:file-list="fileList" name="file" :custom-request="handleUpload" :max-count="1" style="overflow: hidden;">
                     <a-button>
                         <UploadOutlined /> เลือกไฟล์

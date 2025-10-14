@@ -18,6 +18,21 @@ export const useUser = () => {
             loadingUser.value = false
         }
     }
+      const changePassword = async (id: number, newpassword: string) => {
+    try {
+      const { data } = await clientApi.patch(
+        `/users/change-password`,
+        {
+          newpassword,
+        },
+        { params: { id } }
+      );
+      await fetchUserList();
+      message.success(data.message || "ປ່ຽນລະຫັດຜ່ານສໍາເລັດ");
+    } catch (error: any) {
+      message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ");
+    }
+  };
     const setQuery = async (newParams: Params) => {
         params.value.page = newParams.page ?? params.value.page
         params.value.per_page = newParams.per_page ?? params.value.per_page
@@ -65,6 +80,7 @@ export const useUser = () => {
         setQuery,
         deleteUser,
         createUser,
-        updateUser
+        updateUser,
+        changePassword
     }
 }

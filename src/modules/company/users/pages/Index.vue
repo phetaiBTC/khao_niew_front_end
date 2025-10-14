@@ -15,6 +15,9 @@
             </template>
         </template>
     </BaseCRUD>
+    <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(id, newpassword)" @cancel="open2 = false">
+        <a-input-password placeholder="Password" v-model:value="newpassword" />
+    </a-modal>
     <manageUser :open="open" :data="userRecord" @isOpen="open = $event"></manageUser>
 </template>
 
@@ -26,8 +29,10 @@ import ManageUser from '../components/manageUser.vue';
 import { useUser } from '../composables/useUser';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { UserEntity } from '../type';
-const { UserList, loadingUser, fetchUserList, setQuery, deleteUser } = useUser()
-
+const id = ref<number>(0)
+const open2 = ref<boolean>(false)
+const { UserList, loadingUser, fetchUserList, setQuery, deleteUser, changePassword } = useUser()
+const newpassword = ref<string>('')
 const open = ref<boolean>(false)
 const userRecord = ref<UserEntity | null>(null)
 const onEdit = (record: UserEntity) => {
