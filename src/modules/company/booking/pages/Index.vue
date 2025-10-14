@@ -5,7 +5,7 @@
             <div class="flex justify-end items-center p-2">
                 <a-input-search v-model:value="search" placeholder="ຄົ້ນຫາ..." @search="onSearch" v-if="!token" />
                 <a-select v-model:value="status" :placeholder="$t('status')"
-                    @change="setQuery({ status: status ? status : '', page: 1 })" v-if="token">
+                    @change="setQuery({ status: status ? status : '', page: 1 })">
                     <a-select-option value="pending">{{ $t('pending') }}</a-select-option>
                     <a-select-option value="success">{{ $t('success') }}</a-select-option>
                     <a-select-option value="failed">{{ $t('failed') }}</a-select-option>
