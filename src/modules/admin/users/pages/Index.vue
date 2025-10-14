@@ -14,21 +14,33 @@
                 {{ record.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1 $2 $3') }}
             </template>
         </template>
+        <template #actions="{record}">
+            <a-button type="primary" @click="() => { open2 = true; id = record.id }">
+                <div>
+                    <LockOutlined />
+                </div>
+            </a-button>
+        </template>
     </BaseCRUD>
     <manageUser :open="open" :data="userRecord" @isOpen="open = $event"></manageUser>
+    <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(id, newpassword)" @cancel="open2 = false">
+        <a-input-password placeholder="Password" v-model:value="newpassword" />
+    </a-modal>
 </template>
 
 <script setup lang="ts">
 import BaseCRUD from '@/components/BaseCRUD/BaseCRUD.vue';
-import { PhoneOutlined, UserOutlined } from '@ant-design/icons-vue';
+import { LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from 'vue';
 import ManageUser from '../components/manageUser.vue';
 import { useUser } from '../composables/useUser';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { UserEntity } from '../type';
-const { UserList, loadingUser, fetchUserList, setQuery, deleteUser } = useUser()
-
+const { UserList, loadingUser, fetchUserList, setQuery, deleteUser,changePassword } = useUser()
+const id = ref<number>(0)
+const open2 = ref<boolean>(false)
 const open = ref<boolean>(false)
+const newpassword = ref<string>('')
 const userRecord = ref<UserEntity | null>(null)
 const onEdit = (record: UserEntity) => {
     userRecord.value = record
@@ -44,6 +56,7 @@ const UserCol = new BaseColumns<UserEntity>([
     { dataIndex: 'phone' },
     { dataIndex: 'role' }
 ])
+
 onMounted(async () => {
     await fetchUserList();
 })
