@@ -1,4 +1,7 @@
 <template>
+    <a-button type="primary" @click="() => { open2 = true; id = undefined }">
+        change
+    </a-button>
     <BaseCRUD :columns="UserCol.getColumns()" :data="UserList" :loading="loadingUser" :icon="UserOutlined" title="user"
         @on-delete="deleteUser" @on-edit="onEdit($event)" @on-query="setQuery($event)" @on-create="onCreate"
         @on-search="setQuery($event)">
@@ -36,7 +39,7 @@ import ManageUser from '../components/manageUser.vue';
 import { useUser } from '../composables/useUser';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { UserEntity } from '../type';
-const id = ref<number>(0)
+const id = ref<number|undefined>(undefined)
 const open2 = ref<boolean>(false)
 const { UserList, loadingUser, fetchUserList, setQuery, deleteUser, changePassword } = useUser()
 const newpassword = ref<string>('')

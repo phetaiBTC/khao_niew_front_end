@@ -1,4 +1,7 @@
 <template>
+    <a-button type="primary" @click="() => { open2 = true; id = undefined }">
+        change
+    </a-button>
     <BaseCRUD :columns="UserCol.getColumns()" :data="UserList" :loading="loadingUser" :icon="UserOutlined" title="user"
         @on-delete="deleteUser" @on-edit="onEdit($event)" @on-query="setQuery($event)" @on-create="onCreate"
         @on-search="setQuery($event)">
@@ -14,17 +17,17 @@
                 {{ record.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1 $2 $3') }}
             </template>
         </template>
-        <template #actions="{record}">
+        <template #actions="{ record }">
             <a-button type="primary" @click="() => { open2 = true; id = record.id }">
                 <div>
                     <LockOutlined />
                 </div>
             </a-button>
         </template>
-        
+
     </BaseCRUD>
     <manageUser :open="open" :data="userRecord" @isOpen="open = $event"></manageUser>
-    <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(newpassword,id)" @cancel="open2 = false">
+    <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(newpassword, id)" @cancel="open2 = false">
         <a-input-password placeholder="Password" v-model:value="newpassword" />
     </a-modal>
 </template>
@@ -37,8 +40,8 @@ import ManageUser from '../components/manageUser.vue';
 import { useUser } from '../composables/useUser';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { UserEntity } from '../type';
-const { UserList, loadingUser, fetchUserList, setQuery, deleteUser,changePassword } = useUser()
-const id = ref<number|undefined>()
+const { UserList, loadingUser, fetchUserList, setQuery, deleteUser, changePassword } = useUser()
+const id = ref<number | undefined>()
 const open2 = ref<boolean>(false)
 const open = ref<boolean>(false)
 const newpassword = ref<string>('')

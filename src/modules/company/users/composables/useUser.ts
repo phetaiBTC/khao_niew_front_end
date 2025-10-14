@@ -17,7 +17,7 @@ export const useUser = () => {
       loadingUser.value = false;
     }
   };
-  const changePassword = async (newpassword: string, id: number) => {
+  const changePassword = async (newpassword: string, id?: number) => {
     try {
       const { data } = await clientApi.patch(
         `/users/change-password`,
