@@ -45,16 +45,21 @@ defineEmits(["toggleSidebar"]);
 const auth = useAuthStore()
 
 const confirmLogout = () => {
-  Modal.confirm({
-    title: token ? "ອອກຈາກລະບົບ" : "ລົງທະບຽນ",
-    content: token ? "ທ່ານແນ່ໃຈວ່າຕ້ອງການອອກຈາກລະບົບບໍ?" : "ທ່ານແນ່ໃຈວ່າຕ້ອງການເຂົ້າສູ່ລະບົບບໍ?",
-    okText: "ຕົກລົງ",
-    cancelText: "ຍົກເລິກ",
-    centered: true,
-    onOk() {
-      auth.logout()
-    },
-  })
+  if (token) {
+    Modal.confirm({
+      title: token ? "ອອກຈາກລະບົບ" : "ລົງທະບຽນ",
+      content: token ? "ທ່ານແນ່ໃຈວ່າຕ້ອງການອອກຈາກລະບົບບໍ?" : "ທ່ານແນ່ໃຈວ່າຕ້ອງການເຂົ້າສູ່ລະບົບບໍ?",
+      okText: "ຕົກລົງ",
+      cancelText: "ຍົກເລິກ",
+      centered: true,
+      onOk() {
+        auth.logout()
+      },
+    })
+  }
+  else {
+    auth.logout()
+  }
 }
 
 
