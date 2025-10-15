@@ -6,7 +6,13 @@
             <h2 class="text-lg font-semibold">{{ companyProfileTotal.company.name }}</h2>
             <p class="text-gray-500 text-sm">ຂໍ້ມູນບໍລິສັດ</p>
         </div>
-
+        <div class="flex justify-around">
+            <a-date-picker v-model:value="start_date" :placeholder="$t('startTime')" value-format="YYYY-MM-DD"
+                @change="fetchCompanyTotal(undefined, start_date, end_date)" />
+            <ArrowRightOutlined></ArrowRightOutlined>
+            <a-date-picker v-model:value="end_date" :placeholder="$t('endTime')" value-format="YYYY-MM-DD"
+                @change="fetchCompanyTotal(undefined, start_date, end_date)" />
+        </div>
         <a-divider />
 
         <div class="grid grid-cols-2 gap-3">
@@ -78,11 +84,13 @@
 
 <script setup lang="ts">
 import { useCompany } from '@/modules/admin/company/composables/useCompany';
-import { onMounted } from 'vue';
-
-const { fetchCompanyTotal, companyProfileTotal,loadingCompany } = useCompany()
+import dayjs from 'dayjs';
+import { onMounted, ref } from 'vue';
+const start_date = ref<string>(dayjs().format('YYYY-MM-DD'))
+const end_date = ref<string>(dayjs().format('YYYY-MM-DD'))
+const { fetchCompanyTotal, companyProfileTotal, loadingCompany } = useCompany()
 onMounted(async () => {
-    await fetchCompanyTotal()
+    await fetchCompanyTotal(undefined, start_date.value, end_date.value)
 })
 </script>
 

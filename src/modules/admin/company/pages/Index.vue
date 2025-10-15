@@ -27,11 +27,18 @@
     <ManageUser :open="open1" :company-id="company_id" @isOpen="open1 = $event"></ManageUser>
     <a-modal v-model:open="open2" :footer="null" @cancel="open2 = false" :width="'420px'" centered
         v-if="companyProfileTotal">
+
         <div class="text-center mb-4">
             <h2 class="text-lg font-semibold">{{ companyProfileTotal.company.name }}</h2>
             <p class="text-gray-500 text-sm">ຂໍ້ມູນບໍລິສັດ</p>
         </div>
-
+        <div class="flex justify-around">
+            <a-date-picker v-model:value="start_date" :placeholder="$t('startTime')" value-format="YYYY-MM-DD"
+                @change="fetchCompanyTotal(company_id!, start_date, end_date)" />
+            <ArrowRightOutlined></ArrowRightOutlined>
+            <a-date-picker v-model:value="end_date" :placeholder="$t('endTime')" value-format="YYYY-MM-DD"
+                @change="fetchCompanyTotal(company_id!, start_date, end_date)" />
+        </div>
         <a-divider />
 
         <div class="grid grid-cols-2 gap-3">
@@ -83,21 +90,25 @@
 <script setup lang="ts">
 import BaseCRUD from '@/components/BaseCRUD/BaseCRUD.vue';
 import ManageUser from '../components/addUserCompany.vue';
-import { UserOutlined, BankOutlined, UserAddOutlined } from '@ant-design/icons-vue';
+import { UserOutlined, BankOutlined, UserAddOutlined, ArrowRightOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from 'vue';
 import manageCompany from '../components/ManageCompany.vue';
 import { useCompany } from '../composables/useCompany';
 import { BaseColumns } from '@/common/utils/baseColumn';
 import type { CompanyEntity } from '../type';
+import dayjs from 'dayjs';
 const { setQuery, CompanyList, loadingCompany, deleteCompany, fetchCompanyList, fetchCompanyTotal, companyProfileTotal } = useCompany()
 
 const open = ref<boolean>(false)
 const open1 = ref<boolean>(false)
 const open2 = ref<boolean>(false)
+const start_date = ref<string>(dayjs().format('YYYY-MM-DD'))
+const end_date = ref<string>(dayjs().format('YYYY-MM-DD'))
 const company_id = ref<number | null>(null)
 const companyRecord = ref<CompanyEntity | null>(null)
 const onView = async (record: number) => {
-    await fetchCompanyTotal(record)
+    company_id.value = record
+    await fetchCompanyTotal(company_id.value, start_date.value, end_date.value)
     open2.value = true
 }
 const onEdit = (record: CompanyEntity) => {

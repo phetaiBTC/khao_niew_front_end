@@ -26,13 +26,17 @@ export const useCompany = () => {
       loadingCompany.value = false;
     }
   };
-  const fetchCompanyTotal = async (id?: number) => {
+  const fetchCompanyTotal = async (
+    id?: number,
+    start_date?: string,
+    end_date?: string
+  ) => {
     loadingCompany.value = true;
     try {
-      const { data } = await clientApi.get("/companies/company-proflie", {
-        params: {
-          id: id,
-        },
+      const { data } = await clientApi.post("/companies/company-proflie", {
+        id: id,
+        start_date: start_date,
+        end_date: end_date,
       });
       companyProfileTotal.value = data;
     } catch (error: any) {
