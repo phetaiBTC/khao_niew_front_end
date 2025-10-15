@@ -44,11 +44,11 @@ export const menuItemsCompany: {
       },
     ],
   },
-  {
-    label: "aboutus",
-    icon: AuditOutlined,
-    to: { name: "company.aboutus" },
-  },
+  // {
+  //   label: "aboutus",
+  //   icon: AuditOutlined,
+  //   to: { name: "company.aboutus" },
+  // },
   // {
   //     key: 'sub1',
   //     label: 'User Group',
