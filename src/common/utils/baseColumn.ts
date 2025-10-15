@@ -64,7 +64,7 @@ export class BaseColumns<T> {
           sortDirections: col.sortDirections,
         })),
         {
-          title: "ສ້າງເມື່ອ",
+          title: tI18n("created_at"),
           key: "created_At",
           dataIndex: "created_At",
           align: "center",
@@ -74,7 +74,7 @@ export class BaseColumns<T> {
             formatDayJs((record as BaseEntity).created_At),
         },
         {
-          title: "ແກ້ໄຂເມື່ອ",
+          title: tI18n("updated_at"),
           key: "updated_At",
           dataIndex: "updated_At",
           align: "center",
@@ -84,7 +84,7 @@ export class BaseColumns<T> {
           ellipsis: true,
         },
         {
-          title: "ການດຳເນີນການ",
+          title: tI18n("actions"),
           key: "actions",
           dataIndex: "actions",
           align: "center",

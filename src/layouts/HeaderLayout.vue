@@ -4,13 +4,18 @@
       <div class="flex items-center gap-4">
         <component :is="collapsed ? MenuUnfoldOutlined : MenuFoldOutlined" class="text-2xl cursor-pointer"
           @click="$emit('toggleSidebar')" v-show="showbutton" />
-        <span v-if="data">{{ $t(data.role == "admin" ? "admin" : "employee")+" : "+ data.username }}</span>
+        <span v-if="data">{{ $t(data.role == "admin" ? "admin" : "employee") + " : " + data.username }}</span>
       </div>
 
       <div class="flex items-center gap-4">
         <!-- <a-badge count="" class="cursor-pointer">
           <BellOutlined />
         </a-badge> -->
+
+        <a-radio-group v-model:value="locale" button-style="solid" @change="changeLocale">
+          <a-radio-button value="la"> Lao</a-radio-button>
+          <a-radio-button value="en">Englist</a-radio-button>
+        </a-radio-group>
         <a-button type="primary" @click="confirmLogout" class="flex items-center">
           <a-badge count="" class="cursor-pointer" style="margin-right: 5px ; color: #fff;">
             <LogoutOutlined />
@@ -28,7 +33,9 @@ import type { UserEntity } from "@/modules/admin/users/type";
 import { useAuthStore } from "@/modules/auth/store/useAuthStore";
 import { MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from "@ant-design/icons-vue";
 import { Modal } from "ant-design-vue";
+import { ref } from "vue";
 
+const locale = ref(localStorage.getItem("app-locale") || "la");
 
 const token = localStorage.getItem("token");
 defineProps<{
@@ -38,7 +45,10 @@ defineProps<{
 }>();
 
 defineEmits(["toggleSidebar"]);
-
+const changeLocale = () => {
+  localStorage.setItem("app-locale", locale.value);
+  location.reload();
+}
 const auth = useAuthStore()
 
 const confirmLogout = () => {
