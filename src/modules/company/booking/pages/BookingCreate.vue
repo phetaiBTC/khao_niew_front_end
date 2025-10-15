@@ -19,11 +19,11 @@
             </h1>
             <h1>
                 {{ $t('status') }} : <a-tag :color="Concert.status === 'open' ? 'green' : 'red'">{{ Concert.status
-                    }}</a-tag>
+                }}</a-tag>
             </h1>
             <h1>
                 {{ $t('price') }} : <a-tag color="gold">{{ Concert.price.toLocaleString() + ' kip' }}/{{ $t('seat')
-                    }}</a-tag>
+                }}</a-tag>
             </h1>
             <h1>
                 {{ $t('seat') }} : {{ Concert.totalTicket }} / {{ Concert.limit }}
@@ -31,15 +31,12 @@
             <h1>
                 {{ $t('Show_time') }} : {{ Concert.startTime }} - {{ Concert.endTime }}
             </h1>
-            <div>
+            <div class="w-full">
                 <a-carousel autoplay>
-                    <div v-for="item in listImages">
-                        <!-- {{ base_api + item }} -->
-
-                        <img :src="base_api + item" alt="..." class="w-full h-96 object-cover rounded-lg" />
+                    <div v-for="value in listImages">
+                        <img :src="base_api + value" alt="..." class="w-full object-cover rounded-lg" />
                     </div>
                 </a-carousel>
-
             </div>
         </div>
 
@@ -57,7 +54,8 @@
                 </a-form-item>
             </div>
             <div class="flex justify-between w-full">
-                <a-upload v-model:file-list="fileList" name="file" :custom-request="handleUpload" :max-count="1" style="overflow: hidden;">
+                <a-upload v-model:file-list="fileList" name="file" :custom-request="handleUpload" :max-count="1"
+                    style="overflow: hidden;">
                     <a-button>
                         <UploadOutlined /> เลือกไฟล์
                     </a-button>
