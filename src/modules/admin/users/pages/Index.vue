@@ -1,7 +1,5 @@
 <template>
-    <a-button type="primary" @click="() => { open2 = true; id = undefined }">
-        change
-    </a-button>
+
     <BaseCRUD :columns="UserCol.getColumns()" :data="UserList" :loading="loadingUser" :icon="UserOutlined" title="user"
         @on-delete="deleteUser" @on-edit="onEdit($event)" @on-query="setQuery($event)" @on-create="onCreate"
         @on-search="setQuery($event)">
@@ -24,7 +22,12 @@
                 </div>
             </a-button>
         </template>
-
+        <template #extra>
+            <a-button type="primary" @click="() => { open2 = true; id = undefined }">
+                {{ $t('changePassword') }}
+                
+            </a-button>
+        </template>
     </BaseCRUD>
     <manageUser :open="open" :data="userRecord" @isOpen="open = $event"></manageUser>
     <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(newpassword, id)" @cancel="open2 = false">

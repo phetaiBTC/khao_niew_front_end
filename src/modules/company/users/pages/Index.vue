@@ -24,6 +24,11 @@
                 </div>
             </a-button>
         </template>
+          <template #extra>
+            <a-button type="primary" @click="() => { open2 = true; id = undefined }">
+                {{ $t('changePassword') }}
+            </a-button>
+        </template>
     </BaseCRUD>
     <a-modal v-model:open="open2" title="Change Password" @ok="changePassword(newpassword, id)" @cancel="open2 = false">
         <a-input-password placeholder="Password" v-model:value="newpassword" />

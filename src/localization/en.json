@@ -71,5 +71,6 @@
     "aboutus":"About Us",
     "user-phone":"User Phone",
     "back":"Back",
-    "employee":"Employee"
+    "employee":"Employee",
+    "changePassword": "Change Password"
 }
