@@ -10,9 +10,12 @@ export interface IConcert {
   price: number | null;
   limit: number;
   date: Dayjs | string;
+  startDate: Dayjs | string;
+  endDate: Dayjs | string;
   status: string;
   venueId: number | null;
   entertainmentIds: number[] | null;
+  excludeDays: string[] | null;
 }
 export interface ConcertEntity extends BaseEntity {
   id?: number;

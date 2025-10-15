@@ -73,5 +73,7 @@
   "user-phone": "ເບີໂທລະສັບຜູ້ໃຊ້",
   "back": "ຫນ້າຫຼັກ",
   "employee": "ພະນັກງານ",
-  "changePassword": "ປ່ຽນລະຫັດຜ່ານ"
+  "changePassword": "ປ່ຽນລະຫັດຜ່ານ",
+  "startDate": "ເວລາເລີ່ມສະແດງ",
+  "endDate": "ເວລາສິ້ນສຸດ"
 }

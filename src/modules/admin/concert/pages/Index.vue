@@ -1,7 +1,8 @@
 <template>
     <BaseCRUD :columns="UserCol.getColumns()" :data="ConcertList" :loading="loadingConcert" :icon="PictureOutlined"
         title="concert" @on-delete="deleteConcert" @on-edit="onEdit($event)" @on-query="setQuery($event)"
-        @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 1800 }" :input-search="false" :view="true" @on-view="router.push({name:'concert.detail',params:{id:$event}})">
+        @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 'max-content' }" :input-search="false" :view="true"
+        @on-view="router.push({ name: 'concert.detail', params: { id: $event } })">
         <template #extra>
             <a-date-picker v-model:value="datePicker" format="DD-MM-YYYY" placeholder="ຄົ້ນຫາຕາມວັນທີ"
                 @change="setQuery({ search: datePicker ? dayjs(datePicker).format('YYYY-MM-DD') : '', page: 1 })" />
@@ -17,7 +18,7 @@
             </template>
             <template v-if="column.key === 'price'">
                 <a-tag color="blue">
-                    <div class="flex gap-2 items-center justify-center">
+                    <div class="flex items-center justify-center">
                         <DollarCircleOutlined class="text-xl" />
                         <h1 style="margin: 0;">
                             {{ record.price.toLocaleString() }} kip
@@ -26,9 +27,15 @@
                 </a-tag>
             </template>
             <template v-if="column.key === 'status'">
-                <a-tag :color="record.status === 'open' ? 'green' : 'red'">
-                    <h1 style="margin: 0;font-size: 1rem;">{{ record.status }}</h1>
-                </a-tag>
+                <div>
+                    <a-tag :color="record.status === 'open' ? 'green' : 'red'" class=" flex flex-row">
+                        <h1 style="margin: 0; font-size: 1rem;">{{ record.status }}</h1>
+                        <a-switch :checked="record.status === 'open'"
+                            @change="(checked: boolean) => onToggleStatus(record, checked)" />
+                    </a-tag>
+
+                    <!-- ใช้ computed ต่อแถว -->
+                </div>
             </template>
             <template v-if="column.key === 'limit'">
                 <!-- <UsergroupAddOutlined class="text-xl" /> -->
@@ -76,14 +83,19 @@ import type { ConcertEntity } from '../types/index';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import router from '@/router';
+const onToggleStatus = async (record: ConcertEntity, checked: boolean) => {
+    record.status = checked ? 'open' : 'closed'
+    if (record.id) {
+        await changeStatus(record.id)
+    }
+}
 
 const datePicker = ref<Dayjs | null>(null);
-const { setQuery, ConcertList, loadingConcert, deleteConcert, fetchConcertList } = useConcert()
+const { setQuery, ConcertList, loadingConcert, deleteConcert, fetchConcertList, changeStatus } = useConcert()
 
 const open = ref<boolean>(false)
 const companyRecord = ref<ConcertEntity | null>(null)
 const onEdit = (record: ConcertEntity) => {
-    // console.log(record)
     companyRecord.value = record
     open.value = true
 }
@@ -96,7 +108,7 @@ const UserCol = new BaseColumns<ConcertEntity>([
     { dataIndex: 'price', ellipsis: true },
     { dataIndex: 'limit', ellipsis: true, width: 150, align: "center" },
     { dataIndex: 'date', ellipsis: true },
-    { dataIndex: 'status', ellipsis: true, width: 100, align: "center" },
+    { dataIndex: 'status', ellipsis: true, align: "center" },
     { dataIndex: 'venue', ellipsis: true, align: "center", width: 280 },
     { dataIndex: 'entertainments', ellipsis: true },
 ])

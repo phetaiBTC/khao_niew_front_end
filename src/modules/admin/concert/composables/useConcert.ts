@@ -51,7 +51,7 @@ export const useConcert = () => {
   };
   const createConcert = async (formData: IConcert) => {
     try {
-      const { id, ...rest } = formData;
+      const { id, date, ...rest } = formData;
       const { data } = await clientApi.post("/concerts", rest);
       await fetchConcertList();
       message.success(data.message || "ບັນທຶກຂໍ້ມູນສໍາເລັດ");
@@ -61,7 +61,7 @@ export const useConcert = () => {
   };
   const updateConcert = async (formData: IConcert) => {
     try {
-      const { id, ...rest } = formData;
+      const { id, startDate, endDate, excludeDays, ...rest } = formData;
       const { data } = await clientApi.patch(`/concerts/${formData.id}`, rest);
       await fetchConcertList();
       message.success(data.message || "ແກ້ໄຂຂໍ້ມູນສໍາເລັດ");
@@ -80,6 +80,15 @@ export const useConcert = () => {
       loadingConcert.value = false;
     }
   };
+  const changeStatus = async (id: number) => {
+    try {
+      const { data } = await clientApi.patch(`/concerts/changestatus/${id}`);
+      await fetchConcertList();
+      message.success(data.message || "ແກ້ໄຂຂໍ້ມູນສໍາເລັດ");
+    } catch (error: any) {
+      message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ");
+    }
+  };
   return {
     ConcertList,
     loadingConcert,
@@ -88,6 +97,7 @@ export const useConcert = () => {
     deleteConcert,
     createConcert,
     updateConcert,
+    changeStatus,
     fetchConcert,
     Concert,
     fetchDeiledConcert,

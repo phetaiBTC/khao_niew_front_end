@@ -72,5 +72,7 @@
     "user-phone":"User Phone",
     "back":"Back",
     "employee":"Employee",
-    "changePassword": "Change Password"
+    "changePassword": "Change Password",
+    "startDate": "Start Date",
+    "endDate": "End Date"
 }

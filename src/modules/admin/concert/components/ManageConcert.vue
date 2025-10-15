@@ -9,9 +9,19 @@
                     style="margin: 0 !important; color: var(--ant-primary-color); border-color: var(--ant-primary-color);">
                     {{ $t('information') }}
                 </a-divider>
-                <a-col :span="12">
+                <a-col :span="12" v-if="props.data">
                     <a-form-item name="date" :label="$t('date')">
                         <a-date-picker v-model:value="formState.date" class="w-full" />
+                    </a-form-item>
+                </a-col>
+                <a-col :span="12" v-if="!props.data">
+                    <a-form-item name="date" :label="$t('startDate')">
+                        <a-date-picker v-model:value="formState.startDate" class="w-full" />
+                    </a-form-item>
+                </a-col>
+                <a-col :span="12" v-if="!props.data">
+                    <a-form-item name="date" :label="$t('endDate')">
+                        <a-date-picker v-model:value="formState.endDate" class="w-full" />
                     </a-form-item>
                 </a-col>
                 <a-col :span="12">
@@ -57,7 +67,11 @@
                     </a-form-item>
                 </a-col>
                 <a-col :span="24">
-                    <div class="flex justify-end gap-2">
+                    <a-checkbox-group v-model:value="formState.excludeDays" name="checkboxgroup"
+                        :options="plainOptions" />
+                </a-col>
+                <a-col :span="24">
+                    <div class="flex justify-end gap-2 mt-5">
                         <a-button @click="onClose">{{ $t('cancel') }}</a-button>
                         <a-button type="primary" htmlType="submit" :loading="loadingConcert">{{ $t('save')
                             }}</a-button>
@@ -77,7 +91,15 @@ import { useConcert } from '../composables/useConcert';
 import { UsergroupAddOutlined } from '@ant-design/icons-vue';
 import { useVenue } from '@/modules/admin/venue/composables/useVenue';
 import { useEntertainment } from '@/modules/admin/entertainment/composables/useEntertainment';
-
+const plainOptions = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+];
 const { optionVenue, getOptionsVenue } = useVenue()
 const { optionEntertainment, getOptionsEntertainment } = useEntertainment()
 const { createConcert, updateConcert, loadingConcert } = useConcert()
@@ -95,9 +117,12 @@ const formState = reactive<IConcert>({
     price: null,
     limit: 0,
     date: dayjs(),
+    startDate: dayjs(),
+    endDate: dayjs(),
     status: 'open',
     venueId: null,
-    entertainmentIds: []
+    entertainmentIds: [],
+    excludeDays: []
 })
 const localOpen = computed({
     get: () => props.open,
@@ -133,9 +158,12 @@ const onSumit = async () => {
             endTime: dayjs(formState.endTime).format('HH:mm')
         })
     } else {
+        const { date, ...res } = formState
         await createConcert({
-            ...formState,
+            ...res,
             date: dayjs(formState.date).format('YYYY-MM-DD'),
+            startDate: dayjs(formState.startDate).format('YYYY-MM-DD'),
+            endDate: dayjs(formState.endDate).format('YYYY-MM-DD'),
             startTime: dayjs(formState.startTime).format('HH:mm'),
             endTime: dayjs(formState.endTime).format('HH:mm')
         })
