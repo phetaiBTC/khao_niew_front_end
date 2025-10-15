@@ -66,7 +66,7 @@
                             mode="multiple" :placeholder="$t('entertainment')"></a-select>
                     </a-form-item>
                 </a-col>
-                <a-col :span="24">
+                <a-col :span="24" v-if="!props.data">
                     <a-checkbox-group v-model:value="formState.excludeDays" name="checkboxgroup"
                         :options="plainOptions" />
                 </a-col>
