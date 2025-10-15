@@ -13,8 +13,8 @@
         </a-badge> -->
 
         <a-radio-group v-model:value="locale" button-style="solid" @change="changeLocale">
-          <a-radio-button value="la">Lao</a-radio-button>
-          <a-radio-button value="en">English</a-radio-button>
+          <a-radio-button value="la">La</a-radio-button>
+          <a-radio-button value="en">En</a-radio-button>
         </a-radio-group>
         <a-button type="primary" @click="confirmLogout" class="flex items-center">
           <a-badge count="" class="cursor-pointer" style="margin-right: 5px ; color: #fff;">
