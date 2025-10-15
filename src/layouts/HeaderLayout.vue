@@ -12,7 +12,7 @@
           <BellOutlined />
         </a-badge> -->
 
-        <a-radio-group v-model:value="locale" button-style="solid" @change="changeLocale">
+        <a-radio-group v-model:value="locale" button-style="solid" @change="changeLocale" size="small">
           <a-radio-button value="la">La</a-radio-button>
           <a-radio-button value="en">En</a-radio-button>
         </a-radio-group>
