@@ -9,19 +9,16 @@
                     style="margin: 0 !important; color: var(--ant-primary-color); border-color: var(--ant-primary-color);">
                     {{ $t('information') }}
                 </a-divider>
-                <a-col :span="12" v-if="props.data">
-                    <a-form-item name="date" :label="$t('date')">
-                        <a-date-picker v-model:value="formState.date" class="w-full" />
+
+
+                <a-col :span="12">
+                    <a-form-item name="startTime" :label="$t('startTime')">
+                        <a-time-picker v-model:value="formState.startTime" format="HH:mm" class="w-full" />
                     </a-form-item>
                 </a-col>
-                <a-col :span="12" v-if="!props.data">
-                    <a-form-item name="date" :label="$t('startDate')">
-                        <a-date-picker v-model:value="formState.startDate" class="w-full" />
-                    </a-form-item>
-                </a-col>
-                <a-col :span="12" v-if="!props.data">
-                    <a-form-item name="date" :label="$t('endDate')">
-                        <a-date-picker v-model:value="formState.endDate" class="w-full" />
+                <a-col :span="12">
+                    <a-form-item name="endTime" :label="$t('endTime')">
+                        <a-time-picker v-model:value="formState.endTime" format="HH:mm" class="w-full" />
                     </a-form-item>
                 </a-col>
                 <a-col :span="12">
@@ -31,16 +28,6 @@
                             :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
                             :parser="(value: any) => value.replace(/\$\s?|(,*)/g, '')"
                             :controls="false"></a-input-number>
-                    </a-form-item>
-                </a-col>
-                <a-col :span="12">
-                    <a-form-item name="startTime" :label="$t('startTime')">
-                        <a-time-picker v-model:value="formState.startTime" format="HH:mm" class="w-full" />
-                    </a-form-item>
-                </a-col>
-                <a-col :span="12">
-                    <a-form-item name="endTime" :label="$t('endTime')">
-                        <a-time-picker v-model:value="formState.endTime" format="HH:mm" class="w-full" />
                     </a-form-item>
                 </a-col>
                 <a-col :span="12">
@@ -66,6 +53,25 @@
                             mode="multiple" :placeholder="$t('entertainment')"></a-select>
                     </a-form-item>
                 </a-col>
+                <a-divider
+                    style="margin: 0 !important; color: var(--ant-primary-color); border-color: var(--ant-primary-color);">
+                    {{ $t('date') }}
+                </a-divider>
+                <a-col :span="12" v-if="props.data">
+                    <a-form-item name="date" :label="$t('date')">
+                        <a-date-picker v-model:value="formState.date" class="w-full" />
+                    </a-form-item>
+                </a-col>
+                <a-col :span="12" v-if="!props.data">
+                    <a-form-item name="date" :label="$t('startDate')">
+                        <a-date-picker v-model:value="formState.startDate" class="w-full" />
+                    </a-form-item>
+                </a-col>
+                <a-col :span="12" v-if="!props.data">
+                    <a-form-item name="date" :label="$t('endDate')">
+                        <a-date-picker v-model:value="formState.endDate" class="w-full" />
+                    </a-form-item>
+                </a-col>
                 <a-col :span="24" v-if="!props.data">
                     <a-checkbox-group v-model:value="formState.excludeDays" name="checkboxgroup"
                         :options="plainOptions" />
@@ -74,7 +80,7 @@
                     <div class="flex justify-end gap-2 mt-5">
                         <a-button @click="onClose">{{ $t('cancel') }}</a-button>
                         <a-button type="primary" htmlType="submit" :loading="loadingConcert">{{ $t('save')
-                            }}</a-button>
+                        }}</a-button>
                     </div>
                 </a-col>
             </a-row>
