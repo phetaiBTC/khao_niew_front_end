@@ -48,6 +48,7 @@ export const useEntertainment = () => {
                 imageIds: imagesList.value
             })
             await fetchEntertainmentList()
+            imagesList.value = []
             message.success(data.message || "ບັນທຶກຂໍ້ມູນສໍາເລັດ")
         } catch (error: any) {
             message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
