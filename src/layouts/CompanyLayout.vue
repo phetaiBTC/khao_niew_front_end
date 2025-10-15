@@ -93,7 +93,7 @@ import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/modules/auth/store/useAuthStore";
 import { useAuth } from "@/modules/auth/composables/useAuth";
 const { profile } = useAuth();
-const { user } = storeToRefs(useAuthStore());
+const { user, token, role } = storeToRefs(useAuthStore());
 const collapsed = ref(true);
 const selectedKeys = ref<string[]>(["4"]);
 
@@ -134,7 +134,10 @@ watch(
     { immediate: true }
 );
 onMounted(async () => {
-  await profile();
+    if (token.value && role.value) {
+
+        await profile();
+    }
 })
 
 </script>
