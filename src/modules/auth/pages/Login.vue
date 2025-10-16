@@ -16,7 +16,7 @@
                         {{ $t('login') }}
                     </a-button>
                     <a-button type="primary" class="login-form-button w-full"
-                        style="margin-top: 10px;" @click="$router.push({ name: 'company.aboutus' })">
+                        style="margin-top: 10px;" @click="$router.push({ name: 'company.concert' })">
                         {{ $t('back') }}
                     </a-button>
                 </a-form-item>
