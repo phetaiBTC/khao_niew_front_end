@@ -8,7 +8,7 @@
         <template #cover>
           <a-carousel autoplay>
             <div v-for="item in value.images">
-              <img alt="..." :src="baseUrl + item.url" class="aspect-square w-full object-cover" />
+              <img alt="..." :src="item.url" class="aspect-square w-full object-cover" />
             </div>
           </a-carousel>
         </template>
@@ -44,7 +44,6 @@ import manageCompany from "../components/ManageEntertainment.vue";
 import { useEntertainment } from "../composables/useEntertainment";
 import { BaseColumns } from "@/common/utils/baseColumn";
 import type { EntertainmentEntity } from "../types/index";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const {
   setQuery,
   EntertainmentList,

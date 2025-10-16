@@ -33,7 +33,7 @@
             <a-carousel autoplay>
               <div v-for="(entertainment, i) in concert.entertainments" :key="i">
                 <div v-for="(img, j) in entertainment.images" :key="j">
-                  <img :src="baseUrl + img.url" class="w-full object-cover" />
+                  <img :src="img.url" class="w-full object-cover" />
                   <p class="text-center">{{ entertainment.title }}</p>
                 </div>
               </div>
@@ -85,7 +85,6 @@ import { ShoppingOutlined } from "@ant-design/icons-vue";
 import { ref, onMounted } from "vue";
 import dayjs from "dayjs";
 import "dayjs/locale/lo";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 dayjs.locale("lo");
 import { useConcert } from "@/modules/admin/concert/composables/useConcert";

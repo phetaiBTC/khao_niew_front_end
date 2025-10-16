@@ -39,7 +39,7 @@
                     <template #bodyCell="{ column, record }">
                         <template v-if="column.key === 'booking_id'">
                             <a-tag color="blue">{{ "# " + record.id }}</a-tag>
-                            <a v-if="record.payment.images.length > 0" :href="base_api + record.payment.images[0].url"
+                            <a v-if="record.payment.images.length > 0" :href="record.payment.images[0].url"
                                 target="_blank">
                                 <FileImageOutlined style="cursor: pointer;"></FileImageOutlined>
                             </a>
@@ -130,7 +130,6 @@ const { getOptionsCompany, optionCompany } = useCompany()
 const orderBy = ref<"ASC" | "DESC">('DESC')
 const company_id = ref<number | null>(null)
 const status = ref<string | undefined>('pending')
-const base_api = import.meta.env.VITE_API_BASE_URL
 const onQuery = async (page?: number, pageSize?: number) => {
     setQuery({
         page: page,
