@@ -34,7 +34,7 @@
             <div class="w-full">
                 <a-carousel autoplay>
                     <div v-for="value in listImages">
-                        <img :src="base_api + value" alt="..." class="w-full object-cover rounded-lg" />
+                        <img :src="value" alt="..." class="w-full object-cover rounded-lg" />
                     </div>
                 </a-carousel>
             </div>
@@ -98,7 +98,6 @@ import { tI18n } from '@/common/utils/i18n'
 import { useImage } from '@/modules/images/composables/useImage'
 import { jwtDecode } from 'jwt-decode'
 
-const base_api = import.meta.env.VITE_API_BASE_URL
 const { createBooking } = useBooking()
 const formRef = ref()
 const isToken = computed(() => localStorage.getItem('token'))
