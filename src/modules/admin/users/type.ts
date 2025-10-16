@@ -14,5 +14,6 @@ export interface IUser {
     username: string,
     email: string,
     phone: string
+    role?: 'admin' | 'company',
     password: string
 }

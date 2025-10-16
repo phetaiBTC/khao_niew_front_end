@@ -52,8 +52,13 @@ export const useUser = () => {
   };
   const createUser = async (formData: IUser) => {
     try {
-      const { id, ...rest } = formData;
-      const { data } = await clientApi.post("/users", rest);
+      const isRole = formData.companyId ? "company" : "admin";
+      const { id,role, ...rest } = formData;
+
+      const { data } = await clientApi.post("/users", {
+        role: isRole,
+        ...rest,
+      });
       await fetchUserList();
       message.success(data.message || "ບັນທຶກຂໍ້ມູນສໍາເລັດ");
     } catch (error: any) {
