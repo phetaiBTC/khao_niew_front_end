@@ -24,28 +24,15 @@ export const useImage = () => {
     }
     const deleteImage = async (id: number) => {
         try {
-          
-            
             await clientApi.delete(`/images/${id}`)
-    
-            
-            message.success("ລົບຮູບພາບສຳເລັດແລ້ວ")
         } catch (error: any) {
-          
-            
-            const errorMessage = error.response?.data?.message || 
-                               error.response?.data?.error || 
-                               error.message || 
-                               "ເກີດຂໍ້ຜິດພາດໃນການລົບຮູບພາບ";
-            
-            message.error(errorMessage);
-            throw error; // Re-throw so the calling function knows it failed
+            message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ")
         }
     }
 
     return {
         createImage,
-        deleteImage,
+        
         imagesList
     }
 }

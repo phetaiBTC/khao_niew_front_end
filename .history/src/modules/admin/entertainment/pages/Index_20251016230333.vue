@@ -23,7 +23,7 @@
         <a-card-meta :title="value.title">
           <template #description>
             <span class="text-nowrap overflow-hidden text-ellipsis block max-w-[200px]">
-              {{ value.description }}
+              {{ value.description }}fgdfgdf
             </span>
           </template>
         </a-card-meta>

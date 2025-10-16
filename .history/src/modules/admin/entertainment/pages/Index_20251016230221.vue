@@ -1,5 +1,5 @@
 <template>
-
+  <div>hello</div>
   <BaseCRUD :columns="UserCol.getColumns()" :data="EntertainmentList" :loading="loadingEntertainment"
     :icon="BookOutlined" title="entertainment" @on-delete="deleteEntertainment" @on-edit="onEdit($event)"
     @on-query="setQuery($event)" @on-create="onCreate" @on-search="setQuery($event)" :scroll="{ x: 'max-content' }"

@@ -43,7 +43,6 @@
                                     
                                     <!-- Delete button positioned absolutely inside the image -->
                                     <button
-                                        type="button"
                                         @click="handleDeleteImage(image.id as number)"
                                         class="absolute top-2 right-2 bg-red-400 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-lg z-10 transition-all duration-200"
                                         style="border: 2px solid white;"
@@ -101,7 +100,11 @@ const handleUpload = async (options: any) => {
 
 const handleDeleteImage = async (id: number) => {
     try {
-      
+        console.log("Deleting image with ID:", id);
+        console.log("Current props.data:", props.data);
+        console.log("Image to delete:", props.data?.images.find(img => img.id === id));
+        
+        // Only proceed with local updates if API call succeeds
         await deleteImage(id);
         
         // Update the formState.imageIds to remove the deleted image ID
@@ -118,9 +121,13 @@ const handleDeleteImage = async (id: number) => {
         
         // Emit event to parent component to reload data
         emit('reloadData');
-      
+        
+        console.log('Delete image with id success:', id);
+        console.log("Updated imageIds:", formState.imageIds);
     } catch (error) {
-      
+        console.error('Error deleting image:', error);
+        // Don't update local state if API call failed
+        console.log('Local state not updated due to API error');
     }
 };
 

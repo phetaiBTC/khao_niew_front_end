@@ -26,12 +26,16 @@ export const useImage = () => {
         try {
           
             
-            await clientApi.delete(`/images/${id}`)
+            const response = await clientApi.delete(`/images/${id}`)
     
             
             message.success("ລົບຮູບພາບສຳເລັດແລ້ວ")
         } catch (error: any) {
-          
+            console.error("Delete image error:", error);
+            console.error("Error response:", error.response);
+            console.error("Error response data:", error.response?.data);
+            console.error("Error status:", error.response?.status);
+            console.error("Error message:", error.response?.data?.message);
             
             const errorMessage = error.response?.data?.message || 
                                error.response?.data?.error || 

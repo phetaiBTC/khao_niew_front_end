@@ -1,0 +1,38 @@
+{
+    "sourceFile": "src/modules/admin/entertainment/pages/Index.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1760630530008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760630535975,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <template>\r\n-  div\r\n+  <div\r\n   <BaseCRUD :columns=\"UserCol.getColumns()\" :data=\"EntertainmentList\" :loading=\"loadingEntertainment\"\r\n     :icon=\"BookOutlined\" title=\"entertainment\" @on-delete=\"deleteEntertainment\" @on-edit=\"onEdit($event)\"\r\n     @on-query=\"setQuery($event)\" @on-create=\"onCreate\" @on-search=\"setQuery($event)\" :scroll=\"{ x: 'max-content' }\"\r\n     :tab-list=\"tabList\">\r\n"
+                },
+                {
+                    "date": 1760630541941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <template>\r\n-  <div\r\n+  <div>hello</div>\r\n   <BaseCRUD :columns=\"UserCol.getColumns()\" :data=\"EntertainmentList\" :loading=\"loadingEntertainment\"\r\n     :icon=\"BookOutlined\" title=\"entertainment\" @on-delete=\"deleteEntertainment\" @on-edit=\"onEdit($event)\"\r\n     @on-query=\"setQuery($event)\" @on-create=\"onCreate\" @on-search=\"setQuery($event)\" :scroll=\"{ x: 'max-content' }\"\r\n     :tab-list=\"tabList\">\r\n"
+                },
+                {
+                    "date": 1760630564080,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <template>\r\n-  <div>hello</div>\r\n+\r\n   <BaseCRUD :columns=\"UserCol.getColumns()\" :data=\"EntertainmentList\" :loading=\"loadingEntertainment\"\r\n     :icon=\"BookOutlined\" title=\"entertainment\" @on-delete=\"deleteEntertainment\" @on-edit=\"onEdit($event)\"\r\n     @on-query=\"setQuery($event)\" @on-create=\"onCreate\" @on-search=\"setQuery($event)\" :scroll=\"{ x: 'max-content' }\"\r\n     :tab-list=\"tabList\">\r\n"
+                },
+                {
+                    "date": 1760630613689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n         </template>\r\n         <a-card-meta :title=\"value.title\">\r\n           <template #description>\r\n             <span class=\"text-nowrap overflow-hidden text-ellipsis block max-w-[200px]\">\r\n-              {{ value.description }}\r\n+              {{ value.description }}fgdfgdf\r\n             </span>\r\n           </template>\r\n         </a-card-meta>\r\n       </a-card>\r\n"
+                },
+                {
+                    "date": 1760630638017,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n         </template>\r\n         <a-card-meta :title=\"value.title\">\r\n           <template #description>\r\n             <span class=\"text-nowrap overflow-hidden text-ellipsis block max-w-[200px]\">\r\n-              {{ value.description }}fgdfgdf\r\n+              {{ value.description }}\r\n             </span>\r\n           </template>\r\n         </a-card-meta>\r\n       </a-card>\r\n"
+                }
+            ],
+            "date": 1760630530008,
+            "name": "Commit-0",
+            "content": "<template>\r\n  div\r\n  <BaseCRUD :columns=\"UserCol.getColumns()\" :data=\"EntertainmentList\" :loading=\"loadingEntertainment\"\r\n    :icon=\"BookOutlined\" title=\"entertainment\" @on-delete=\"deleteEntertainment\" @on-edit=\"onEdit($event)\"\r\n    @on-query=\"setQuery($event)\" @on-create=\"onCreate\" @on-search=\"setQuery($event)\" :scroll=\"{ x: 'max-content' }\"\r\n    :tab-list=\"tabList\">\r\n    <template #card=\"{ value }\">\r\n      <a-card hoverable style=\"width: 100%; box-shadow: 0 5px 10px #f4f4f4; overflow: hidden\">\r\n        <template #cover>\r\n          <a-carousel autoplay>\r\n            <div v-for=\"item in value.images\">\r\n              <img alt=\"...\" :src=\"item.url\" class=\"aspect-square w-full object-cover\" />\r\n            </div>\r\n          </a-carousel>\r\n        </template>\r\n        <template #actions>\r\n          <EditOutlined key=\"edit\" @click=\"onEdit(value)\" />\r\n          <a-popconfirm :title=\"$t('Are_you_sure_delete_this')\" @confirm=\"deleteEntertainment(value.id)\"\r\n            :ok-text=\"$t('yes')\" :cancel-text=\"$t('cancel')\">\r\n            <DeleteOutlined key=\"delete\"></DeleteOutlined>\r\n          </a-popconfirm>\r\n        </template>\r\n        <a-card-meta :title=\"value.title\">\r\n          <template #description>\r\n            <span class=\"text-nowrap overflow-hidden text-ellipsis block max-w-[200px]\">\r\n              {{ value.description }}\r\n            </span>\r\n          </template>\r\n        </a-card-meta>\r\n      </a-card>\r\n    </template>\r\n  </BaseCRUD>\r\n  <manageCompany :open=\"open\" :data=\"companyRecord\" @isOpen=\"open = $event\"></manageCompany>\r\n</template>\r\n\r\n<script setup lang=\"ts\">\r\nimport BaseCRUD from \"@/components/BaseCRUD/BaseCRUD.vue\";\r\nimport {\r\n  BookOutlined,\r\n  DeleteOutlined,\r\n  EditOutlined,\r\n} from \"@ant-design/icons-vue\";\r\nimport { onMounted, ref } from \"vue\";\r\nimport manageCompany from \"../components/ManageEntertainment.vue\";\r\nimport { useEntertainment } from \"../composables/useEntertainment\";\r\nimport { BaseColumns } from \"@/common/utils/baseColumn\";\r\nimport type { EntertainmentEntity } from \"../types/index\";\r\nconst {\r\n  setQuery,\r\n  EntertainmentList,\r\n  loadingEntertainment,\r\n  deleteEntertainment,\r\n  fetchEntertainmentList,\r\n} = useEntertainment();\r\nconst tabList = [\r\n  { key: \"table\", tab: \"table\" },\r\n  { key: \"card\", tab: \"card\" },\r\n];\r\nconst open = ref<boolean>(false);\r\nconst companyRecord = ref<EntertainmentEntity | null>(null);\r\nconst onEdit = (record: EntertainmentEntity) => {\r\n  console.log(record);\r\n  companyRecord.value = record;\r\n  open.value = true;\r\n};\r\nconst onCreate = () => {\r\n  companyRecord.value = null;\r\n  open.value = true;\r\n};\r\nconst UserCol = new BaseColumns<EntertainmentEntity>([\r\n  {\r\n    dataIndex: \"title\",\r\n    ellipsis: true,\r\n    width: 200,\r\n    fixed: \"left\",\r\n    sorter: (a: EntertainmentEntity, b: EntertainmentEntity) =>\r\n      a.title.localeCompare(b.title),\r\n  },\r\n  { dataIndex: \"description\", ellipsis: true },\r\n]);\r\nonMounted(async () => {\r\n  await fetchEntertainmentList();\r\n});\r\n</script>\r\n\r\n<style scoped>\r\n:deep(.ant-table) {\r\n  border: 1px solid rgb(204, 204, 204);\r\n}\r\n</style>\r\n"
+        }
+    ]
+}

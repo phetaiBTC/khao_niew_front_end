@@ -43,11 +43,9 @@
                                     
                                     <!-- Delete button positioned absolutely inside the image -->
                                     <button
-                                        type="button"
                                         @click="handleDeleteImage(image.id as number)"
-                                        class="absolute top-2 right-2 bg-red-400 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-lg z-10 transition-all duration-200"
+                                        class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-lg z-10 transition-all duration-200"
                                         style="border: 2px solid white;"
-                                        
                                     >
                                         <CloseOutlined style="font-size: 12px;" />
                                     </button>
@@ -84,15 +82,12 @@ const props = defineProps<{
     open: boolean,
     data: EntertainmentEntity | null
 }>()
-const emit = defineEmits(['isOpen', 'reloadData'])
+const emit = defineEmits(['isOpen'])
 
 const handleUpload = async (options: any) => {
     try {
         await createImage({ file: options.file })
         options.onSuccess()
-        
-        // Emit event to parent component to reload data after successful upload
-        emit('reloadData');
     } catch (error) {
         console.error(error)
         options.onError()
@@ -101,28 +96,15 @@ const handleUpload = async (options: any) => {
 
 const handleDeleteImage = async (id: number) => {
     try {
-      
+        console.log("Deleting image with ID:", id);
         await deleteImage(id);
-        
-        // Update the formState.imageIds to remove the deleted image ID
-        if (formState.imageIds) {
-            formState.imageIds = formState.imageIds.filter(imageId => imageId !== id);
-        }
-        
-        // If props.data exists, update it locally to remove the deleted image
-        if (props.data && props.data.images) {
-            props.data.images = props.data.images.filter((img: any) => img.id !== id);
-            // Update the fileList to remove the deleted image
-            fileList.value = fileList.value.filter((file: any) => file.id !== id);
-        }
-        
-        // Emit event to parent component to reload data
-        emit('reloadData');
-      
+        console.log('Delete image with id success:', id);
     } catch (error) {
-      
+        console.error(error);
+        // Handle the error here
     }
 };
+
 
 const formState = reactive<IEntertainment>({
     id: null,

@@ -1,0 +1,74 @@
+{
+    "sourceFile": "src/modules/images/composables/useImage.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1760630964926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1760630971327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,4 +27,5 @@\n         createImage,\r\n         imagesList\r\n     }\r\n }\r\n+export const \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760630979525,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,5 +27,4 @@\n         createImage,\r\n         imagesList\r\n     }\r\n }\r\n-export const \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1760630985760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n         } catch (error: any) {\r\n             message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n         }\r\n     }\r\n+    const \r\n \r\n     return {\r\n         createImage,\r\n         imagesList\r\n"
+                },
+                {
+                    "date": 1760630992596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n         } catch (error: any) {\r\n             message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n         }\r\n     }\r\n-    const \r\n+    const deleteImage \r\n \r\n     return {\r\n         createImage,\r\n         imagesList\r\n"
+                },
+                {
+                    "date": 1760630999351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,15 @@\n         } catch (error: any) {\r\n             message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n         }\r\n     }\r\n-    const deleteImage \r\n+    const deleteImage = async (id: number) => {\r\n+        try {\r\n+            await clientApi.delete(`/images/${id}`)\r\n+        } catch (error: any) {\r\n+            message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n+        }\r\n+    }\r\n \r\n     return {\r\n         createImage,\r\n         imagesList\r\n"
+                },
+                {
+                    "date": 1760631036027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,7 +31,8 @@\n     }\r\n \r\n     return {\r\n         createImage,\r\n+        \r\n         imagesList\r\n     }\r\n }\r\n"
+                },
+                {
+                    "date": 1760632065018,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,16 +23,17 @@\n         }\r\n     }\r\n     const deleteImage = async (id: number) => {\r\n         try {\r\n+            \r\n             await clientApi.delete(`/images/${id}`)\r\n         } catch (error: any) {\r\n             message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n         }\r\n     }\r\n \r\n     return {\r\n         createImage,\r\n-        \r\n+        deleteImage,\r\n         imagesList\r\n     }\r\n }\r\n"
+                },
+                {
+                    "date": 1760632072071,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n         }\r\n     }\r\n     const deleteImage = async (id: number) => {\r\n         try {\r\n-            \r\n+            console.log(\"\"id);\r\n             await clientApi.delete(`/images/${id}`)\r\n         } catch (error: any) {\r\n             message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n         }\r\n"
+                },
+                {
+                    "date": 1760634854475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,12 +23,29 @@\n         }\r\n     }\r\n     const deleteImage = async (id: number) => {\r\n         try {\r\n-            console.log(\"\"id);\r\n-            await clientApi.delete(`/images/${id}`)\r\n+            console.log(\"Attempting to delete image with ID:\", id);\r\n+            console.log(\"API endpoint:\", `/images/${id}`);\r\n+            \r\n+            const response = await clientApi.delete(`/images/${id}`)\r\n+            console.log(\"Delete response:\", response);\r\n+            \r\n+            message.success(\"ລົບຮູບພາບສຳເລັດແລ້ວ\")\r\n         } catch (error: any) {\r\n-            message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n+            console.error(\"Delete image error:\", error);\r\n+            console.error(\"Error response:\", error.response);\r\n+            console.error(\"Error response data:\", error.response?.data);\r\n+            console.error(\"Error status:\", error.response?.status);\r\n+            console.error(\"Error message:\", error.response?.data?.message);\r\n+            \r\n+            const errorMessage = error.response?.data?.message || \r\n+                               error.response?.data?.error || \r\n+                               error.message || \r\n+                               \"ເກີດຂໍ້ຜິດພາດໃນການລົບຮູບພາບ\";\r\n+            \r\n+            message.error(errorMessage);\r\n+            throw error; // Re-throw so the calling function knows it failed\r\n         }\r\n     }\r\n \r\n     return {\r\n"
+                },
+                {
+                    "date": 1760637363596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,10 +23,9 @@\n         }\r\n     }\r\n     const deleteImage = async (id: number) => {\r\n         try {\r\n-            console.log(\"Attempting to delete image with ID:\", id);\r\n-            console.log(\"API endpoint:\", `/images/${id}`);\r\n+          \r\n             \r\n             const response = await clientApi.delete(`/images/${id}`)\r\n             console.log(\"Delete response:\", response);\r\n             \r\n"
+                },
+                {
+                    "date": 1760637371773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,10 @@\n         }\r\n     }\r\n     const deleteImage = async (id: number) => {\r\n         try {\r\n-          \r\n+            console.log(\"Attempting to delete image with ID:\", id);\r\n+            console.log(\"API endpoint:\", `/images/${id}`);\r\n             \r\n             const response = await clientApi.delete(`/images/${id}`)\r\n             console.log(\"Delete response:\", response);\r\n             \r\n"
+                },
+                {
+                    "date": 1760637376967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,13 +23,12 @@\n         }\r\n     }\r\n     const deleteImage = async (id: number) => {\r\n         try {\r\n-            console.log(\"Attempting to delete image with ID:\", id);\r\n-            console.log(\"API endpoint:\", `/images/${id}`);\r\n+          \r\n             \r\n             const response = await clientApi.delete(`/images/${id}`)\r\n-            console.log(\"Delete response:\", response);\r\n+    \r\n             \r\n             message.success(\"ລົບຮູບພາບສຳເລັດແລ້ວ\")\r\n         } catch (error: any) {\r\n             console.error(\"Delete image error:\", error);\r\n"
+                },
+                {
+                    "date": 1760637384226,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,12 +22,12 @@\n             message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n         }\r\n     }\r\n     const deleteImage = async (id: number) => {\r\n-        try {\r\n+        try \r\n           \r\n             \r\n-            const response = await clientApi.delete(`/images/${id}`)\r\n+            await clientApi.delete(`/images/${id}`)\r\n     \r\n             \r\n             message.success(\"ລົບຮູບພາບສຳເລັດແລ້ວ\")\r\n         } catch (error: any) {\r\n"
+                },
+                {
+                    "date": 1760637391894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,21 +22,17 @@\n             message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n         }\r\n     }\r\n     const deleteImage = async (id: number) => {\r\n-        try \r\n+        try {\r\n           \r\n             \r\n             await clientApi.delete(`/images/${id}`)\r\n     \r\n             \r\n             message.success(\"ລົບຮູບພາບສຳເລັດແລ້ວ\")\r\n         } catch (error: any) {\r\n-            console.error(\"Delete image error:\", error);\r\n-            console.error(\"Error response:\", error.response);\r\n-            console.error(\"Error response data:\", error.response?.data);\r\n-            console.error(\"Error status:\", error.response?.status);\r\n-            console.error(\"Error message:\", error.response?.data?.message);\r\n+          \r\n             \r\n             const errorMessage = error.response?.data?.message || \r\n                                error.response?.data?.error || \r\n                                error.message || \r\n"
+                }
+            ],
+            "date": 1760630964926,
+            "name": "Commit-0",
+            "content": "import { clientApi } from \"@/plugins/axiosPlugin\"\r\nimport { message } from \"ant-design-vue\"\r\nimport { storeToRefs } from \"pinia\"\r\n\r\nimport { useImageStore } from \"../store/useImageStore\"\r\nimport type { IImage, ImageEntity } from \"../types\"\r\n\r\nexport const useImage = () => {\r\n    const { imagesList } = storeToRefs(useImageStore())\r\n    const createImage = async (req: IImage) => {\r\n        try {\r\n            const formData = new FormData()\r\n            if (req.file) {\r\n                formData.append('files', req.file)\r\n            }\r\n            const { data } = await clientApi.post('/images', formData)\r\n            data.forEach((element: ImageEntity) => {\r\n                imagesList.value.push(element.id)\r\n            });\r\n            console.log(imagesList.value);\r\n        } catch (error: any) {\r\n            message.error(error.response.data.message || \"ເກີດຂໍ້ຜິດພາດ\")\r\n        }\r\n    }\r\n\r\n    return {\r\n        createImage,\r\n        imagesList\r\n    }\r\n}\r\n"
+        }
+    ]
+}

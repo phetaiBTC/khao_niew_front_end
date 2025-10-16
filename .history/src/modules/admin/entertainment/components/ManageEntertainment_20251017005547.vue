@@ -120,7 +120,9 @@ const handleDeleteImage = async (id: number) => {
         emit('reloadData');
       
     } catch (error) {
-      
+        console.error('Error deleting image:', error);
+        // Don't update local state if API call failed
+        console.log('Local state not updated due to API error');
     }
 };
 

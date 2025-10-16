@@ -101,7 +101,11 @@ const handleUpload = async (options: any) => {
 
 const handleDeleteImage = async (id: number) => {
     try {
-      
+        console.log("Deleting image with ID:", id);
+        console.log("Current props.data:", props.data);
+        console.log("Image to delete:", props.data?.images.find(img => img.id === id));
+        
+        // Only proceed with local updates if API call succeeds
         await deleteImage(id);
         
         // Update the formState.imageIds to remove the deleted image ID
@@ -118,9 +122,13 @@ const handleDeleteImage = async (id: number) => {
         
         // Emit event to parent component to reload data
         emit('reloadData');
-      
+        
+        console.log('Delete image with id success:', id);
+        console.log("Updated imageIds:", formState.imageIds);
     } catch (error) {
-      
+        console.error('Error deleting image:', error);
+        // Don't update local state if API call failed
+        console.log('Local state not updated due to API error');
     }
 };
 
