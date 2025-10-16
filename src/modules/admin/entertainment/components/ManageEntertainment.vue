@@ -26,13 +26,21 @@
                     </a-upload>
                 </a-col>
                 <a-col :span="24">
+                    <div class="w-full overflow-x-scroll my-5">
+                        <div class="flex flex-nowrap gap-2 flex-row">
+                            <a-image v-for="item in props.data?.images.map((item: any) => item.url)"
+                                style="width: 100% !important;" :src="item" />
+                        </div>
+                    </div>
+                </a-col>
+                <a-col :span="24">
                     <div class="flex justify-end gap-2">
                         <a-button @click="onClose">{{ $t('cancel') }}</a-button>
                         <a-button type="primary" htmlType="submit" :loading="loadingEntertainment">{{ $t('save')
                             }}</a-button>
                     </div>
                 </a-col>
-            </a-row>
+            </a-row>    
         </a-form>
     </a-modal>
 </template>
@@ -70,7 +78,7 @@ const formState = reactive<IEntertainment>({
     id: null,
     title: '',
     description: '',
-    imageIds: null
+    imageIds: []
 })
 const localOpen = computed({
     get: () => props.open,
@@ -83,7 +91,7 @@ watch(
             formState.id = value.id
             formState.description = value.description
             formState.title = value.title
-            formState.imageIds = null
+            formState.imageIds = value.images.map((item: any) => item.id)
         }
     }
 )
