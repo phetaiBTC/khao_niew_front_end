@@ -18,12 +18,13 @@
       <a-col :span="24" v-if="loadingConcert">
         <a-card :loading="loadingConcert" v-if="loadingConcert">whatever content</a-card>
       </a-col>
-      <a-col v-for="concert in ConcertList.data" :key="concert.id" :xs="24" :sm="12" :md="8" :lg="6" v-show="!loadingConcert">
+      <a-col v-for="concert in ConcertList.data" :key="concert.id" :xs="24" :sm="12" :md="8" :lg="6"
+        v-show="!loadingConcert">
         <div
           class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-200 overflow-hidden flex flex-col items-center">
           <div class="w-full text-center py-2 font-semibold" :class="concert.limit != concert.totalTicket
-              ? 'bg-green-100 text-green-700'
-              : 'bg-red-100 text-red-700'
+            ? 'bg-green-100 text-green-700'
+            : 'bg-red-100 text-red-700'
             ">
             {{ dayjs(concert.date).format("dddd DD-MM-YYYY") }}
           </div>
@@ -66,6 +67,15 @@
           </a-button>
         </div>
       </a-col>
+      <a-col :span="24">
+        <div class="flex justify-end">
+          <a-pagination v-model:current="ConcertList.pagination.page" v-model:pageSize="ConcertList.pagination.per_page"
+            :total="ConcertList.pagination.total" show-size-changer show-quick-jumper
+            :show-total="(total: number) => `ລາຍການທັງຫມົດ ${total}`" :page-size-options="['6', '10', '20', '30']"
+            @change="onQuery">
+          </a-pagination>
+        </div>
+      </a-col>
     </a-row>
   </a-card>
 </template>
@@ -81,8 +91,12 @@ dayjs.locale("lo");
 import { useConcert } from "@/modules/admin/concert/composables/useConcert";
 import router from "@/router";
 const { fetchConcertList, ConcertList, setQuery, loadingConcert } = useConcert();
-const search = ref<string>("");
+const onQuery = async () => {
+  await setQuery({ page: ConcertList.value.pagination.page, per_page: ConcertList.value.pagination.per_page })
+}
+const search = ref<string>(dayjs().format("YYYY-MM-DD"));
 onMounted(async () => {
+  await setQuery({search: search.value, page: 1});
   await fetchConcertList();
 });
 </script>
