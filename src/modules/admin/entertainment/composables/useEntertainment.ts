@@ -47,7 +47,7 @@ export const useEntertainment = () => {
   };
   const createEntertainment = async (formData: IEntertainment) => {
     try {
-      const { id, imageIds, ...rest } = formData;
+      const { id, ...rest } = formData;
       const { data } = await clientApi.post("/entertainments", {
         ...rest,
         imageIds: imagesList.value,
@@ -67,6 +67,7 @@ export const useEntertainment = () => {
         imageIds: imagesList.value,
       });
       await fetchEntertainmentList();
+      imagesList.value = [];
       message.success(data.message || "ແກ້ໄຂຂໍ້ມູນສໍາເລັດ");
     } catch (error: any) {
       message.error(error.response.data.message || "ເກີດຂໍ້ຜິດພາດ");

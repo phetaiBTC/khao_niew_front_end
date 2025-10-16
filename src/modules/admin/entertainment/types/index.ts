@@ -11,7 +11,7 @@ export interface IEntertainment {
     id?: number | null
     title: string
     description: string
-    imageIds: File[] | null
+    imageIds: number[] | null 
 }
 
 export interface imagesEntity extends BaseEntity {
