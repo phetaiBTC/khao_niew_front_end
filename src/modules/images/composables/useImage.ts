@@ -11,7 +11,7 @@ export const useImage = () => {
         try {
             const formData = new FormData()
             if (req.file) {
-                formData.append('file', req.file)
+                formData.append('files', req.file)
             }
             const { data } = await clientApi.post('/images', formData)
             data.forEach((element: ImageEntity) => {
